@@ -1,0 +1,25 @@
+<?php
+/**
+ * Local Configuration Override
+ *
+ * This configuration override file is for overriding environment-specific and
+ * security-sensitive configuration information. Copy this file without the
+ * .dist extension at the end and populate values as needed.
+ * 
+ * The local.php files shouldn't commmitet to source control and are 
+ * ignerd by git per default.
+ */
+
+return array(
+    'db' => array(
+        'username' => '',
+        'user' => '',
+        'password' => '',
+        'dsn' => 'mysql:dbname=carnasso;host=localhost',
+        'dbname' => 'carnasso',
+        'driver' => 'pdo_mysql',
+    ),
+    'doctrine' => array(
+        'dev' => true,
+    ),
+);
