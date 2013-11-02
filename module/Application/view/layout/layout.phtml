@@ -1,0 +1,29 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- styles -->
+
+        <!-- Scripts -->
+
+    </head>
+    <body>
+        <nav>
+        </nav>
+        <div class="container">
+            <?php echo $this->content; ?>
+            <hr>
+            <footer>
+                footer goes here
+            </footer>
+        </div> <!-- /container -->
+        <?php echo $this->inlineScript() ?>
+    </body>
+</html>
