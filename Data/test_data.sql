@@ -1,9 +1,9 @@
 LOCK TABLES `CarnivalYear` WRITE;
 /*!40000 ALTER TABLE `CarnivalYear` DISABLE KEYS */;
-INSERT INTO `CarnivalYear` VALUES (1,'Flyer2011.jpg','background2011.jpg',2011);
-INSERT INTO `CarnivalYear` VALUES (2,'Flyer2012.jpg','background2012.jpg',2012);
-INSERT INTO `CarnivalYear` VALUES (3,'Flyer2013.jpg','background2013.jpg',2013);
-INSERT INTO `CarnivalYear` VALUES (4,'Flyer2014.jpg','background2014.jpg',2014);
+INSERT INTO `CarnivalYear` VALUES (1,2011,'background2011.jpg','Flyer2011.jpg');
+INSERT INTO `CarnivalYear` VALUES (2,2012,'background2012.jpg','Flyer2012.jpg');
+INSERT INTO `CarnivalYear` VALUES (3,2013,'background2013.jpg','Flyer2013.jpg');
+INSERT INTO `CarnivalYear` VALUES (4,2014,'background2014.jpg','Flyer2014.jpg');
 /*!40000 ALTER TABLE `CarnivalYear` ENABLE KEYS */;
 UNLOCK TABLES;
 
