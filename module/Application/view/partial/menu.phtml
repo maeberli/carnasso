@@ -1,0 +1,20 @@
+<?php //menu.phtml
+    $this->year = $this->escapeHtml($this->year);
+?>
+
+<nav class="navbar opacity2" role="navigation">
+    <ul class="nav navbar-nav">
+        <li class="active"><a href="<?php echo $this->year; ?>">Home</a></li>
+        <li class="active"><a href="<?php echo $this->year; ?>">Events</a></li>
+        <li class="active"><a href="<?php echo $this->year; ?>">Verein</a></li>
+        <li class="active"><a href="<?php echo $this->year; ?>">Gallerie</a></li>
+    </ul>
+    <div id="menu">
+        <div class="topmenu">
+            <a id="yearBtn" href="">2013</a>
+            <ul id="yearList">
+                <li class="submenu"><a href="">2012</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>

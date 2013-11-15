@@ -3,27 +3,43 @@
 <html lang="de">
     <head>
         <meta charset="utf-8">
-
         <?php echo $this->headMeta()
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
             ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
         ?>
 
-        <!-- styles -->
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                        ->prependStylesheet($this->basePath() . '/css/style.css')
+                        ->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
+                        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
 
         <!-- Scripts -->
-
+        <?php echo $this->headScript()
+            ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+            ->prependFile($this->basePath() . '/js/jquery.min.js')
+            ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
+        ; ?>
+        
     </head>
     <body>
-        <nav>
-        </nav>
-        <div class="container">
-            <?php echo $this->content; ?>
-            <hr>
-            <footer>
-                footer goes here
-            </footer>
-        </div> <!-- /container -->
+        <img class="bg" src="img/bg.jpg" alt="page background" />
+            <div id="main-container">
+                
+                <header class="roundedDouble opacity1 clearfix">
+                    <img src="img/logo.png" alt="Fasnachts Logo"/>
+                    <h1 class="logo" >Fasnacht Hirzel</h1>
+                </header>
+                
+                <div id="middle" class="roundedDouble opacity1">
+                        <?php echo $this->content; ?>
+                </div>
+                
+                <footer class="roundedDouble opacity1">
+                    <p style="text-align:center">Copyright © 2013 by Verein Fasnacht Hirzel</p>
+                </footer>
+            </div> <!-- div .container -->
         <?php echo $this->inlineScript() ?>
     </body>
 </html>
