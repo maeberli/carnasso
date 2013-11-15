@@ -16,12 +16,15 @@ class CarnivalYear {
     /** @Id @Column(type="integer") @GeneratedValue * */
     protected $id;
     
+    /** @Column(type="integer") * */
+    protected $year;
+        
     /** @Column(type="string") * */
     protected $backgroundImgPath;
 
     /** @Column(type="string") * */
     protected $flyerImgPath;
-    
+
     /**
      * @OneToMany(targetEntity="Organisator",mappedBy="carnivalYear")
      * @var Organisator[]
@@ -51,6 +54,20 @@ class CarnivalYear {
      */
     public function setId($id) {
         $this->id = $id;
+    }
+    
+        /**
+     * @return int
+     */
+    public function getYear() {
+        return $this->year;
+    }
+    
+    /**
+     * @param int $carnevalYear
+     */
+    public function setYear($year) {
+        $this->year = $year;
     }
     
     /**

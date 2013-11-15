@@ -1,5 +1,8 @@
 <?php
 
+use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\EntityManager;
+
 return array(
     'router' => array(
         'routes' => array(
@@ -16,6 +19,20 @@ return array(
         ),
     ),
     'service_manager' => array(
+        'factories' => array(
+            'entityManager' => function($sm) {
+                $paths = array("Application\src\Model\Entity");
+                $db = require 'config/autoload/local.php';
+
+                // the connection configuration
+                $dbParams = $db['db'];
+                $isDevMode = $db['doctrine']['dev'];
+
+                $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
+                $em = EntityManager::create($dbParams, $config);
+                return $em;
+            },
+        ),
         'abstract_factories' => array(
             'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
             'Zend\Log\LoggerAbstractServiceFactory',
@@ -24,6 +41,11 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
+        ),
+    ),
+    'controller_plugins' => array(
+        'invokables' => array(
+            'entity' => 'Application\Controller\Plugin\Entity',
         ),
     ),
     'view_manager' => array(
