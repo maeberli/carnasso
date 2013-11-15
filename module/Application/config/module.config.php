@@ -9,9 +9,41 @@ return array(
             'home' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route'    => '[/[:controllers[/:action[/:year]]]]',
+                    'route' => '[/[:action[/[:id]]]]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z]+',
+                        'id'     => '[0-9]+',
+                    ),
                     'defaults' => array(
                         'controller' => 'Application\Controller\Index',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'general' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route'    => '[/[association[/[:action[/[:year]]]]]]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z]+',
+                        'year'     => '[0-9]+', // Could also be an ID
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Index',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'events' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/events[/[:action[/[:id]]]]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z]+',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Events',
                         'action'     => 'index',
                     ),
                 ),
@@ -41,6 +73,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
+            'Application\Controller\Events' => 'Application\Controller\EventsController',
         ),
     ),
     'controller_plugins' => array(
