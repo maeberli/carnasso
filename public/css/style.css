@@ -1,0 +1,207 @@
+html, body {
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+
+/******************
+ * Page Header and Footer
+ ******************/
+header {
+	background-image: url(../img/logo.png);
+	margin: -10px auto 15px auto;
+	padding: 10px;
+	max-width: 800px;
+}
+header img {
+	float:left;
+}
+header h1 {
+	float:left;
+	margin: 10px;
+	margin-top: 10px;
+	padding: 0px;
+}
+header h1.logo {
+	color: #EFEFEF;
+	font-size: 70px;
+	font-weight: bolder;
+	text-shadow: -1px -1px 1px #000000, -1px -1px 7px #000000;
+}
+
+footer {
+	height: 60px;
+	margin-top: 15px;
+	padding: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 800px;
+}
+
+centered{
+	text-align: center;
+}
+
+#middle{
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 760px;
+	padding: 10px;
+}
+
+/******************
+ * Hacks
+ ******************/
+.clearfix:after {
+	content: " ";
+	display: block;
+	font-size: 0;
+	clear: both;
+	height: 0;
+	visibility: hidden;
+}
+
+/******************
+ * Page background
+ ******************/
+.bg {
+  min-height: 100%;
+  min-width: 2716px;
+	
+  width: 100%;
+  height: auto;
+	
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+@media screen and (max-width: 2716px) {
+  img.bg {
+    left: 50%;
+    margin-left: -1358px;   /* 50% */
+  }
+}
+
+/******************
+ * Year menu
+ ******************/
+#menu {
+  position: absolute;
+  right: 0px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  vertical-align: middle;
+}
+#yearBtn {
+  float: left;
+  width: 110px;
+  text-align:center;
+}
+#yearList {
+  background-color: #FFFFFF;
+}
+.topmenu ul{
+  display:none;
+  list-style-type:none;
+  list-style-image:none;
+ }
+.topmenu a, .submenu a{
+  padding:1px 5px;
+  border-collapse:collapse;
+  font-weight:bold;
+  text-decoration:none;
+  margin:0;  
+}
+.submenu a {
+  width: 110px;
+}
+.topmenu:hover ul {
+  display:block;
+  z-index:500;
+}
+
+/******************
+ * Div classes
+ ******************/
+.roundedDouble{
+	border: 2px solid #999999;
+	position:relative;
+    z-index:10;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	box-shadow: -1px -1px 5px #666666;
+}
+.roundedDouble:before {
+	content:"";
+	display:block;
+	position:absolute;
+	z-index:-1;
+	top:1px;
+	left:1px;
+	right:1px;
+	bottom:1px;
+	border:2px solid #BFBFBF;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+}
+
+.rounded{
+	border: 2px solid #999999;
+	position:relative;
+    z-index:5;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.opacity1 {
+	background: rgba(255, 255, 255, 0.4);
+}
+.opacity2 {
+	background: rgba(255, 255, 255, 0.6);
+}
+
+/******************
+ * Event page
+ ******************/
+.event {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.date, .time {
+}
+.date {
+	background: #000000;
+	color: white;
+}
+.time {
+	background: #000000;
+	color: white;
+}
+.title{
+}
+.weekday {
+	font-size: 15px;
+}
+.day {
+	font-size: 18px;
+}
+
+.hour {
+	font-size: 18px;
+}
+
+
+/******************
+ * Bootstrap modifications
+ ******************/
+@media (min-width: 768px) {
+	.container {
+		max-width: 730px;
+	}
+}
