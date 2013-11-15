@@ -6,10 +6,10 @@ use Doctrine\ORM\EntityManager;
 return array(
     'router' => array(
         'routes' => array(
-            'home' => array(
+            'index' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '[/[:action[/[:year]]]]',
+                    'route' => '/[:action[/:year]]',
                     'constraints' => array(
                         'action' => '[a-zA-Z]+',
                         'year'     => '[0-9]{4}',
@@ -23,13 +23,29 @@ return array(
             'events' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/events[/[:action[/[:id]]]]',
+                    'route' => '/events[/:action[/:year][/:id]]',
                     'constraints' => array(
                         'action' => '[a-zA-Z]+',
+                        'year'   => '[0-9]{4}',
                         'id'     => '[0-9]+',
                     ),
                     'defaults' => array(
                         'controller' => 'Application\Controller\Events',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'association' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/asociation[/:action[/:year][/:id]]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z]+',
+                        'year'   => '[0-9]{4}',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Association',
                         'action'     => 'index',
                     ),
                 ),
@@ -60,6 +76,7 @@ return array(
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
             'Application\Controller\Events' => 'Application\Controller\EventsController',
+            'Application\Controller\Association' => 'Application\Controller\AssociationController',
         ),
     ),
     'controller_plugins' => array(
