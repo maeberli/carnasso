@@ -118,6 +118,12 @@ centered{
 .submenu a {
   width: 110px;
 }
+
+.selectedYear
+{
+    background-color: #EFEFEF;
+}
+
 .topmenu:hover ul {
   display:block;
   z-index:500;

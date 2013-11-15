@@ -15,6 +15,12 @@ class Entity extends AbstractPlugin {
         
         return $this->em;
     }
+    
+    public function getCarnivalYearRepository()
+    {
+        $em = $this->getEntityManager();
+        return $em->getRepository('Application\Model\Entity\CarnivalYear');
+    }
 }
 
 ?>

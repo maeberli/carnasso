@@ -11,13 +11,32 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Application\Model\Entity\CarnivalYear;
+
 
 class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
+        
+        $carinvalYearRepository = $this->entity()->getCarnivalYearRepository();
+        $carnivalYears = $carinvalYearRepository->findBy(array(), array('year' => 'DESC'));
+            
+        $years = array();
+        foreach($carnivalYears as $year)
+        {
+            array_push($years, $year->getYear());
+        }
+        
+        $year = (int) $this->params()->fromRoute('year', 0);
+        if(!$year || !in_array($year, $years))
+        {
+            $year = $carnivalYears[0]->getYear();
+        }
+        
         return new ViewModel(array(
-            'year' => '2013',
+            'currentYear' => $year,
+            'years' => $years,
         ));
     }
 }
