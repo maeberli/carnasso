@@ -18,7 +18,6 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-        
         $carinvalYearRepository = $this->entity()->getCarnivalYearRepository();
         $carnivalYears = $carinvalYearRepository->findBy(array(), array('year' => 'DESC'));
             

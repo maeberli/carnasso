@@ -9,11 +9,29 @@ return array(
             'home' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '[/[:action[/[:year]]]]',
+<<<<<<< HEAD
+                    'route'    => '[/[:controllers[/:action[/:year]]]]',
+=======
+                    'route' => '[/[:action[/[:id]]]]',
                     'constraints' => array(
                         'action' => '[a-zA-Z]+',
-                        'year'     => '[0-9]{4}',
+                        'id'     => '[0-9]+',
                     ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Index',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'general' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route'    => '[/[association[/[:action[/[:year]]]]]]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z]+',
+                        'year'     => '[0-9]+', // Could also be an ID
+                    ),
+>>>>>>> b5599f44277a5458818087cbb60df23783815be8
                     'defaults' => array(
                         'controller' => 'Application\Controller\Index',
                         'action'     => 'index',
