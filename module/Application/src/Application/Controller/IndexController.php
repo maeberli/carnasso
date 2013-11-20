@@ -16,7 +16,7 @@ use Application\Model\Entity\CarnivalYear;
 
 class IndexController extends AbstractActionController
 {
-    public function indexAction()
+    private function getMenuParameters()
     {
         $carinvalYearRepository = $this->entity()->getCarnivalYearRepository();
         $carnivalYears = $carinvalYearRepository->findBy(array(), array('year' => 'DESC'));
@@ -33,9 +33,18 @@ class IndexController extends AbstractActionController
             $year = $carnivalYears[0]->getYear();
         }
         
-        return new ViewModel(array(
+        return array(
             'currentYear' => $year,
             'years' => $years,
+            'currentController' => 'index',
+            'currentAction' => $this->params('action'),
+        );
+    }
+    
+    public function indexAction()
+    {           
+        return new ViewModel(array(
+            'menuParams' => $this->getMenuParameters(),
         ));
     }
 }

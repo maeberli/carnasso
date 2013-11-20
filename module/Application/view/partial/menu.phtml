@@ -3,17 +3,18 @@
 ?>
 <nav class="navbar opacity2" role="navigation">
     <ul class="nav navbar-nav">
-        <li class="active"><a href="index/<?php echo $currentYearEscaped; ?>">Home</a></li>
-        <li class="active"><a href="event/<?php echo $currentYearEscaped; ?>">Events</a></li>
-        <li class="active"><a href="association/<?php echo $currentYearEscaped; ?>">Verein</a></li>
-        <li class="active"><a href="gallery/<?php echo $currentYearEscaped; ?>">Gallerie</a></li>
+        <li class="active"><a href="<?php echo $this->url('index', array('action'=>'index', 'year' => $this->currentYear));?>">Home</a></li>
+        <li class="active"><a href="<?php echo $this->url('events', array('action'=>'index', 'year' => $this->currentYear));?>">Events</a></li>
+        <li class="active"><a href="<?php echo $this->url('association', array('action'=>'index', 'year' => $this->currentYear));?>">Verein</a></li>
     </ul>
     <div id="menu">
         <div class="topmenu">
             <a id="yearBtn" href=""><?php echo $this->currentYear; ?></a>
             <ul id="yearList">
                 <?php foreach ($this->years as $year) : ?>
-                    <li class="submenu<?php echo ($year == $this->currentYear ? ' selectedYear rounded' : '') ?>"><a href="<?php echo $this->escapeHtml($year); ?>"><?php echo $this->escapeHtml($year); ?></a></li>
+                    <li class="submenu<?php echo ($year == $this->currentYear ? ' selectedYear rounded' : '') ?>">
+                        <a href="<?php echo $this->url( $this->currentController, array('action'=>$this->currentAction, 'year'=>$year)); ?>"><?php echo $this->escapeHtml($year); ?></a>
+                    </li>
                 <?php endforeach; ?>
             </ul>
         </div>
