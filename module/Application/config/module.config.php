@@ -20,6 +20,16 @@ return array(
                     ),
                 ),
             ),
+            'login' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/login',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Management',
+                        'action'     => 'login',
+                    ),
+                ),
+            ),
             'events' => array(
                 'type' => 'segment',
                 'options' => array(
@@ -77,6 +87,7 @@ return array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
             'Application\Controller\Events' => 'Application\Controller\EventsController',
             'Application\Controller\Association' => 'Application\Controller\AssociationController',
+            'Application\Controller\Management' => 'Application\Controller\ManagementController',
         ),
     ),
     'controller_plugins' => array(

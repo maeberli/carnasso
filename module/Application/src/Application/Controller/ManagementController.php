@@ -9,18 +9,20 @@
 
 namespace Application\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Application\Model\Entity\CarnivalYear;
+
+use Application\Form\LoginForm;
 use Application\Controller\AbstractCarnassoController;
 
-class IndexController extends AbstractCarnassoController
+class ManagementController extends AbstractCarnassoController
 {
-    
-    public function indexAction()
-    {           
-        return new ViewModel(array(
-            'menuParams' => $this->getMenuParameters(),
+    public function loginAction()
+    {
+        $form = new LoginForm();
+        //$form->get('submit')->setValue('Login');
+        
+        return new ViewModel( array(
+            'form'        => $form
         ));
     }
 }
