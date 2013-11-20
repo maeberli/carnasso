@@ -87,7 +87,7 @@ class Member {
     /**
      * @param string $imagePath
      */
-    public function setDate($imagePath) {
+    public function setImagePath($imagePath) {
         $this->imagePath = $imagePath;
     }
     
