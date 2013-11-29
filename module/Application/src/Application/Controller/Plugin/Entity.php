@@ -21,6 +21,12 @@ class Entity extends AbstractPlugin {
         $em = $this->getEntityManager();
         return $em->getRepository('Application\Model\Entity\CarnivalYear');
     }
+    
+    public function getEventRepository()
+    {
+        $em = $this->getEntityManager();
+        return $em->getRepository('Application\Model\Entity\Event');
+    }
 }
 
 ?>

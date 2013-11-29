@@ -9,7 +9,7 @@ return array(
             'index' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/[:action[/:year]]',
+                    'route' => '/[:action[/[:year]]]',
                     'constraints' => array(
                         'action' => '[a-zA-Z]+',
                         'year'     => '[0-9]{4}',
@@ -23,7 +23,7 @@ return array(
             'events' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/events[/:action[/:year][/:id]]',
+                    'route' => '/events[/[:action[/[:year][/[:id]]]]]',
                     'constraints' => array(
                         'action' => '[a-zA-Z]+',
                         'year'   => '[0-9]{4}',

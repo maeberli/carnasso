@@ -32,7 +32,7 @@ class CarnivalYear {
     protected $organisators;
     
     /**
-     * @OneToMany(targetEntity="Event",mappedBy="carnevalYear")
+     * @OneToMany(targetEntity="Event",mappedBy="carnivalYear")
      * @var Event[]
      */
     protected $events;
