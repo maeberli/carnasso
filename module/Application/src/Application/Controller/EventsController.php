@@ -13,23 +13,38 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Model\Entity\Event;
+use Application\Form\EditForm;
+use Application\Form\DeleteForm;
 
 class EventsController extends AbstractActionController {
 
     public function indexAction() {
         // Getting last year
         $carinvalYearRepository = $this->entity()->getCarnivalYearRepository();
-        // TODO remove array('year' => '2012')
-        $lastCarnivalYear = $carinvalYearRepository->findOneBy(array('year' => '2012'), array('year' => 'DESC'));
+        // TODO not get last year but current year
+        $currentCarnivalYear = $carinvalYearRepository->findOneBy(array(), array('year' => 'DESC'));
 
         // Setting view
         return new ViewModel(array(
-            'eventList' => $lastCarnivalYear->getEvents(),
+            'eventList' => $currentCarnivalYear->getEvents(),
         ));
     }
 
     public function manageAction() {
+        // Getting last year
+        $carinvalYearRepository = $this->entity()->getCarnivalYearRepository();
+        $currentCarnivalYear = $carinvalYearRepository->findOneBy(array('year' => '2012'), array('year' => 'DESC'));
         
+        
+        $editForm = new EditForm();
+        $deleteForm = new DeleteForm();
+
+        // Setting view
+        return new ViewModel(array(
+            'eventList' => $currentCarnivalYear->getEvents(),
+            'editForm' => $editForm,
+            'deleteForm' => $deleteForm,
+        ));
     }
 
     public function addAction() {

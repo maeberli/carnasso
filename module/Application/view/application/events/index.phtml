@@ -1,9 +1,10 @@
-﻿<?php 
+<?php 
 // Receiving event list and parsing
 foreach($eventList as $event)
 {
     echo $this->partial('application/events/partial/event.phtml', array(
         'date' => $event->getDate(),
+        'id' => $event->getId(),
         'startHour' => $event->getStartTime(),
         'endHour' => $event->getEndTime(),
         'title' => $event->getTitle(),
