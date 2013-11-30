@@ -179,15 +179,16 @@ centered{
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
-.date, .time {
-}
+
 .date {
 	background: #000000;
 	color: white;
+        float: left;
 }
 .time {
 	background: #000000;
 	color: white;
+        float: right;
 }
 .title{
 }
@@ -202,6 +203,9 @@ centered{
 	font-size: 18px;
 }
 
+.blackBackground {
+    background-color: black;
+}
 
 /******************
  * Bootstrap modifications
