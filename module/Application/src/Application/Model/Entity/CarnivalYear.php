@@ -34,7 +34,7 @@ class CarnivalYear {
     protected $organisators;
     
     /**
-     * @ORM\OneToMany(targetEntity="Event",mappedBy="carnevalYear")
+     * @ORM\OneToMany(targetEntity="Event",mappedBy="carnivalYear")
      * @var Event[]
      */
     protected $events;

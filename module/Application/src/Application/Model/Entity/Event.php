@@ -26,6 +26,12 @@ class Event {
     /** @ORM\Column(type="date") * */
     protected $date;
 
+    /** @ORM\Column(type="time") * */
+    protected $startTime;
+
+    /** @ORM\Column(type="time") * */
+    protected $endTime;
+
     /** @ORM\Column(type="string") * */
     protected $location;
 

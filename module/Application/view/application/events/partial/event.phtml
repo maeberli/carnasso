@@ -1,0 +1,56 @@
+﻿<?php
+// Partial view of entity event
+// 
+// Arguments :
+// date         Php DateTime    Date when the event is occuring
+// id           int             Id of event
+// startHour    Php DateTime    Start time of event
+// endHour      Php DateTime    End time of event
+// title        String          Event title
+// content      String          Event description
+// editMode     Boolean         Is the view use to edit
+// editForm     Zend Form       Edit button form (only needed when editMode is true)
+// deleteForm   Zend Form       Delete button form (only needed when editMode is true)
+// Event        Event entity    Object to be shown
+
+// Set german as main language
+setlocale(LC_TIME, 'deu_deu');
+?>
+<div class="event rounded opacity2">
+    <div class="col-md-4 blackBackground">
+        <div id="<?php echo $id;?>" class="heading">
+            <div class="date">
+                <div class="weekday text-center"><?php echo strftime('%A',$date->getTimestamp()); ?></div>
+                <div class="day text-center"><?php echo date('j. ',$date->getTimestamp()).strftime('%B',$date->getTimestamp()); ?></div>
+            </div>
+            <div class="time">
+                <div class="hour text-center"><?php echo date('H:i \U\h\r',$startHour->getTimestamp()); ?></div>
+                <div class="hour text-center"><?php echo date('H:i \U\h\r',$endHour->getTimestamp()); ?></div>
+            </div>
+        </div>
+    </div>
+    <div class="title col-md-8">
+        <h2><?php echo utf8_encode($title); ?></h2>
+    </div>
+    <div class="description col-md-<?php echo $editMode?"10":"12";?>">
+        <p><?php echo utf8_encode($content); ?></p>
+    </div>
+    <?php if(isset($editMode) && $editMode){
+        echo '<div class="management-buttons col-md-2">';
+        // Edit form
+        $editForm->setAttribute('action', 'edit/'.$id);
+        $editForm->prepare();
+        echo $this->form()->openTag($editForm);
+        echo $this->formSubmit($editForm->get('edit'));
+        echo $this->form()->closeTag();
+        
+        //Delete form
+        $deleteForm->setAttribute('action', 'delete/'.$id);
+        $deleteForm->prepare();
+        echo $this->form()->openTag($deleteForm);
+        echo $this->formSubmit($deleteForm->get('delete'));
+        echo $this->form()->closeTag();
+        echo '</div>';
+    }?>
+<div style="clear:both;"></div>
+</div>

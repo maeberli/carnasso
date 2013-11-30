@@ -179,17 +179,19 @@ centered{
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
-.date, .time {
-}
+
 .date {
 	background: #000000;
 	color: white;
+        float: left;
 }
 .time {
 	background: #000000;
 	color: white;
+        float: right;
 }
 .title{
+    
 }
 .weekday {
 	font-size: 15px;
@@ -202,6 +204,14 @@ centered{
 	font-size: 18px;
 }
 
+.blackBackground {
+    background-color: black;
+}
+
+.management-buttons input {
+    width: 100%;
+    margin-bottom: 5px;
+}
 
 /******************
  * Bootstrap modifications
