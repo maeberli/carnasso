@@ -9,10 +9,10 @@ UNLOCK TABLES;
 
 LOCK TABLES `Event` WRITE;
 /*!40000 ALTER TABLE `Event` DISABLE KEYS */;
-INSERT INTO `Event` VALUES (1,'Kinderfasnacht','Die Kinderfasnacht bietet...','2013-01-31','Pausenplatz Schulhause Schützenmatt',2);
-INSERT INTO `Event` VALUES (2,'Maskenball','Der winderbare Maskenball.','2013-01-31','Gemeindesaal Schützenmatt, Hirzel',2);
-INSERT INTO `Event` VALUES (3,'Ü30','Die Party für alle über 30 jährigen.','2013-01-30','Gemeindesaal Schützenmatt, Hirzel',2);
-INSERT INTO `Event` VALUES (4,'Seniorenfasnacht','Der gemütliche Kaffee- und Kuchen-Nachmittag für die Senioren.','2013-01-29','Gemeindesaal Schützenmatt, Hirzel',2);
+INSERT INTO `Event` VALUES (1,'Kinderfasnacht','Die Kinderfasnacht bietet...','2013-01-31','12:30','16:00','Pausenplatz Schulhause Schützenmatt',2);
+INSERT INTO `Event` VALUES (2,'Maskenball','Der winderbare Maskenball.','2013-01-31','16:30','18:00','Gemeindesaal Schützenmatt, Hirzel',2);
+INSERT INTO `Event` VALUES (3,'Ü30','Die Party für alle über 30 jährigen.','2013-01-30','20:30','03:30','Gemeindesaal Schützenmatt, Hirzel',2);
+INSERT INTO `Event` VALUES (4,'Seniorenfasnacht','Der gemütliche Kaffee- und Kuchen-Nachmittag für die Senioren.','2013-01-29','20:30','03:30','Gemeindesaal Schützenmatt, Hirzel',2);
 /*!40000 ALTER TABLE `Event` ENABLE KEYS */;
 UNLOCK TABLES;
 
