@@ -42,7 +42,6 @@ class Event {
     
     public function __construct() {
     }
-
     /**
      * @return int
      */
@@ -97,6 +96,34 @@ class Event {
      */
     public function setDate($date) {
         $this->date = $date;
+    }
+
+    /**
+     * @return DateTime 
+     */
+    public function getStartTime() {
+        return $this->startTime;
+    }
+
+    /**
+     * @param DateTime $startTime
+     */
+    public function setStartTime($startTime) {
+        $this->startTime = $startTime;
+    }
+
+    /**
+     * @return DateTime 
+     */
+    public function getEndTime() {
+        return $this->endTime;
+    }
+
+    /**
+     * @param DateTime $endTime
+     */
+    public function setEndTime($endTime) {
+        $this->endTime = $endTime;
     }
 
     /**
