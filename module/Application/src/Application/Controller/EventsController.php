@@ -22,7 +22,7 @@ class EventsController extends AbstractActionController {
         // Getting last year
         $carinvalYearRepository = $this->entity()->getCarnivalYearRepository();
         // TODO not get last year but current year
-        $currentCarnivalYear = $carinvalYearRepository->findOneBy(array(), array('year' => 'DESC'));
+        $currentCarnivalYear = $carinvalYearRepository->findOneBy(array('year' => '2012'), array('year' => 'DESC'));
 
         // Setting view
         return new ViewModel(array(

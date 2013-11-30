@@ -12,13 +12,16 @@
 // editForm     Zend Form       Edit button form (only needed when editMode is true)
 // deleteForm   Zend Form       Delete button form (only needed when editMode is true)
 // Event        Event entity    Object to be shown
+
+// Set german as main language
+setlocale(LC_TIME, 'deu_deu');
 ?>
 <div class="event rounded opacity2">
     <div class="col-md-4 blackBackground">
         <div id="<?php echo $id;?>" class="heading">
             <div class="date">
-                <div class="weekday text-center"><?php echo date('l',$date->getTimestamp()); ?></div>
-                <div class="day text-center"><?php echo date('j. F',$date->getTimestamp()); ?></div>
+                <div class="weekday text-center"><?php echo strftime('%A',$date->getTimestamp()); ?></div>
+                <div class="day text-center"><?php echo date('j. ',$date->getTimestamp()).strftime('%B',$date->getTimestamp()); ?></div>
             </div>
             <div class="time">
                 <div class="hour text-center"><?php echo date('H:i \U\h\r',$startHour->getTimestamp()); ?></div>
