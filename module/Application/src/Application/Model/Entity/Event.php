@@ -25,6 +25,12 @@ class Event {
     /** @Column(type="date") * */
     protected $date;
 
+    /** @Column(type="time") * */
+    protected $startTime;
+
+    /** @Column(type="time") * */
+    protected $endTime;
+
     /** @Column(type="string") * */
     protected $location;
 
@@ -90,6 +96,34 @@ class Event {
      */
     public function setDate($date) {
         $this->date = $date;
+    }
+
+    /**
+     * @return DateTime 
+     */
+    public function getStartTime() {
+        return $this->startTime;
+    }
+
+    /**
+     * @param DateTime $startTime
+     */
+    public function setStartTime($startTime) {
+        $this->startTime = $startTime;
+    }
+
+    /**
+     * @return DateTime 
+     */
+    public function getEndTime() {
+        return $this->endTime;
+    }
+
+    /**
+     * @param DateTime $endTime
+     */
+    public function setEndTime($endTime) {
+        $this->endTime = $endTime;
     }
 
     /**

@@ -2,10 +2,7 @@
 // Receiving event list and parsing
 foreach($eventList as $event)
 {
-    //$timestamp = $event->getDate()
-    //$dayName = date('l',$timestamp);
     echo $this->partial('application/events/partial/event.phtml', array(
-        //'dayName' => $dayName,
         'date' => $event->getDate(),
         //'startHour' => $event->startHour,
         //'endHour' => $event->endHour,
