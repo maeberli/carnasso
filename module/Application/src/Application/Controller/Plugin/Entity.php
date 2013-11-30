@@ -9,8 +9,9 @@ class Entity extends AbstractPlugin {
     protected $em;
     
     public function getEntityManager() {
-        if(!$this->em) {
-            $this->em = $this->getController()->getServiceLocator()->get('entityManager');
+        if(!$this->em)
+        {
+            $this->em = $this->getController()->getServiceLocator()->get('doctrine.entitymanager.orm_default');
         }
         
         return $this->em;
@@ -20,6 +21,12 @@ class Entity extends AbstractPlugin {
     {
         $em = $this->getEntityManager();
         return $em->getRepository('Application\Model\Entity\CarnivalYear');
+    }
+    
+    public function getUserRepository()
+    {
+        $em = $this->getEntityManager();
+        return $em->getRepository('Application\Model\Entity\User');
     }
 }
 

@@ -12,12 +12,12 @@
 
 return array(
     'db' => array(
-        'username' => '',
         'user' => '',
         'password' => '',
-        'dsn' => 'mysql:dbname=carnasso;host=localhost',
         'dbname' => 'carnasso',
         'driver' => 'pdo_mysql',
+        'host'     => 'localhost',
+        'port'     => '3306',
     ),
     'doctrine' => array(
         'dev' => true,

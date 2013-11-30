@@ -4,19 +4,20 @@ namespace Application\Model\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="StaticPageInfo")
+ * @ORM\Entity
+ * @ORM\Table(name="StaticPageInfo")
  *
  * @author marco.aeberli
  */
 class StaticPageInfo {
 
-    /** @Id @Column(type="integer") @GeneratedValue * */
+    /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue * */
     protected $id;
 
-    /** @Column(type="string") * */
+    /** @ORM\Column(type="string") * */
     protected $staticText;
     
     public function __construct() {

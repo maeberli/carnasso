@@ -4,35 +4,37 @@ namespace Application\Model\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\Mapping as ORM;
+
 
 /**
- * @Entity
- * @Table(name="CarnivalYear")
+ * @ORM\Entity
+ * @ORM\Table(name="CarnivalYear")
  *
  * @author marco.aeberli
  */
 class CarnivalYear {
 
-    /** @Id @Column(type="integer") @GeneratedValue * */
+    /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue * */
     protected $id;
     
-    /** @Column(type="integer") * */
+    /** @ORM\Column(type="integer") * */
     protected $year;
         
-    /** @Column(type="string") * */
+    /** @ORM\Column(type="string") * */
     protected $backgroundImgPath;
 
-    /** @Column(type="string") * */
+    /** @ORM\Column(type="string") * */
     protected $flyerImgPath;
 
     /**
-     * @OneToMany(targetEntity="Organisator",mappedBy="carnivalYear")
+     * @ORM\OneToMany(targetEntity="Organisator",mappedBy="carnivalYear")
      * @var Organisator[]
      */
     protected $organisators;
     
     /**
-     * @OneToMany(targetEntity="Event",mappedBy="carnevalYear")
+     * @ORM\OneToMany(targetEntity="Event",mappedBy="carnevalYear")
      * @var Event[]
      */
     protected $events;

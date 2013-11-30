@@ -1,7 +1,8 @@
 <div>
+    <span class="errorMsg"><?php echo $this->messages; ?></span>
 <?php
 $form = $this->form;
-$form->setAttribute('action', $this->url('login', array('controller' => 'management', 'action' => 'login')));
+$form->setAttribute('action', $this->url('admin', array('controller' => 'admin', 'action' => 'login')));
 $form->prepare();
 ?>
 

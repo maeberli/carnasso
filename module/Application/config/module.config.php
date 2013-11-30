@@ -1,4 +1,5 @@
 <?php
+namespace Application;
 
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
@@ -20,12 +21,12 @@ return array(
                     ),
                 ),
             ),
-            'login' => array(
+            'admin' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/login',
+                    'route' => '/admin[/:action]',
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Management',
+                        'controller' => 'Application\Controller\Admin',
                         'action'     => 'login',
                     ),
                 ),
@@ -64,17 +65,8 @@ return array(
     ),
     'service_manager' => array(
         'factories' => array(
-            'entityManager' => function($sm) {
-                $paths = array("Application\src\Model\Entity");
-                $db = require 'config/autoload/local.php';
-
-                // the connection configuration
-                $dbParams = $db['db'];
-                $isDevMode = $db['doctrine']['dev'];
-
-                $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
-                $em = EntityManager::create($dbParams, $config);
-                return $em;
+            'Zend\Authentication\AuthenticationService' => function($sm) {
+                return $sm->get('doctrine.authenticationservice.orm_default');
             },
         ),
         'abstract_factories' => array(
@@ -87,7 +79,7 @@ return array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
             'Application\Controller\Events' => 'Application\Controller\EventsController',
             'Application\Controller\Association' => 'Application\Controller\AssociationController',
-            'Application\Controller\Management' => 'Application\Controller\ManagementController',
+            'Application\Controller\Admin' => 'Application\Controller\AdminController',
         ),
     ),
     'controller_plugins' => array(
@@ -112,7 +104,29 @@ return array(
             __DIR__ . '/../view',
         ),
     ),
-    // Placeholder for console routes
+    'doctrine' => array(
+        'driver' => array(
+			__NAMESPACE__ . '_driver' => array(
+                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => array(
+					__DIR__ . '/../src/' . __NAMESPACE__ . '/Model/Entity',
+                ),
+            ),
+            'orm_default' => array(
+                'drivers' => array(
+					__NAMESPACE__ . '\Model\Entity' => __NAMESPACE__ . '_driver',
+                ),
+            ),
+        ),
+        'authentication' => array(
+            'orm_default' => array(
+                'identity_class' => __NAMESPACE__ . '\Model\Entity\User',
+                'identity_property' => 'usrName',
+                'credential_property' => 'usrPassword',
+            ),
+        ),
+    ),
     'console' => array(
         'router' => array(
             'routes' => array(

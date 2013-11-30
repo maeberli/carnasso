@@ -4,29 +4,30 @@ namespace Application\Model\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="Member")
+ * @ORM\Entity
+ * @ORM\Table(name="Member")
  *
  * @author marco.aeberli
  */
 class Member {
 
-    /** @Id @Column(type="integer") @GeneratedValue * */
+    /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue * */
     protected $id;
 
-    /** @Column(type="string") * */
+    /** @ORM\Column(type="string") * */
     protected $prename;
 
-    /** @Column(type="string") * */
+    /** @ORM\Column(type="string") * */
     protected $name;
 
-    /** @Column(type="string") * */
+    /** @ORM\Column(type="string") * */
     protected $imagePath;
     
     /**
-     * @OneToMany(targetEntity="Organisator",mappedBy="member")
+     * @ORM\OneToMany(targetEntity="Organisator",mappedBy="member")
      * @var Organisators[]
      */
     protected $organisators;
