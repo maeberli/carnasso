@@ -16,6 +16,8 @@ use Application\Model\Entity\CarnivalYear;
 
 class AbstractCarnassoController extends AbstractActionController
 {
+    const BACKGROUNDIMGPATH = "/img/bgs/";
+
     protected function getMenuParameters()
     {
         $carinvalYearRepository = $this->entity()->getCarnivalYearRepository();
@@ -46,7 +48,6 @@ class AbstractCarnassoController extends AbstractActionController
         
         if($yearNumber)
         {
-            print($yearNumber);
             $year = $carinvalYearRepository->findOneBy(array('year' => $yearNumber));
         }
         else
@@ -57,4 +58,10 @@ class AbstractCarnassoController extends AbstractActionController
         
         return $year;
     }
+    
+    protected function setBackgroundImage()
+    {
+        $styles = 'img.bg{content: url(\''.self::BACKGROUNDIMGPATH.$this->getCurrentCarnivalYear()->getBackgroundImgPath().'\');}';
+        $this->getServiceLocator()->get('ViewRenderer')->headStyle()->appendStyle($styles);
+    }    
 }

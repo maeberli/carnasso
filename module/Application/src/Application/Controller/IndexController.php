@@ -20,6 +20,8 @@ class IndexController extends AbstractCarnassoController
     
     public function indexAction()
     {
+        $this->setBackgroundImage();
+        
         $currentYear = $this->getCurrentCarnivalYear();
         
         return new ViewModel(array(
