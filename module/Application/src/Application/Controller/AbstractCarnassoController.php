@@ -27,11 +27,7 @@ class AbstractCarnassoController extends AbstractActionController
             array_push($years, $year->getYear());
         }
         
-        $year = (int) $this->params()->fromRoute('year', 0);
-        if(!$year || !in_array($year, $years))
-        {
-            $year = $carnivalYears[0]->getYear();
-        }
+        $year = $this->getCurrentCarnivalYear()->getYear();
         
         return array(
             'currentYear' => $year,
@@ -39,5 +35,26 @@ class AbstractCarnassoController extends AbstractActionController
             'currentController' => 'index',
             'currentAction' => $this->params('action'),
         );
+    }
+    
+    protected function getCurrentCarnivalYear()
+    {
+        $carinvalYearRepository = $this->entity()->getCarnivalYearRepository();
+        $year = null;
+        
+        $yearNumber = (int) $this->params()->fromRoute('year', 0);
+        
+        if($yearNumber)
+        {
+            print($yearNumber);
+            $year = $carinvalYearRepository->findOneBy(array('year' => $yearNumber));
+        }
+        else
+        {
+            $years =  $carinvalYearRepository->findBy(array(), array('year' => 'DESC'));
+            $year = (count($years)>0 ? $years[0] : null);
+        }
+        
+        return $year;
     }
 }

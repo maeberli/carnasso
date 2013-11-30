@@ -16,11 +16,15 @@ use Application\Controller\AbstractCarnassoController;
 
 class IndexController extends AbstractCarnassoController
 {
+    const FLYERIMGPATH = "/img/flyers/";
     
     public function indexAction()
-    {           
+    {
+        $currentYear = $this->getCurrentCarnivalYear();
+        
         return new ViewModel(array(
             'menuParams' => $this->getMenuParameters(),
+            'flyerpath' => self::FLYERIMGPATH.$currentYear->getFlyerImgPath(),
         ));
     }
 }
