@@ -32,7 +32,7 @@
     <div class="description col-md-<?php echo $editMode?"10":"12";?>">
         <p><?php echo utf8_encode($content); ?></p>
     </div>
-    <?php if($editMode){
+    <?php if(isset($editMode) && $editMode){
         echo '<div class="management-buttons col-md-2">';
         // Edit form
         $editForm->setAttribute('action', 'edit/'.$id);
