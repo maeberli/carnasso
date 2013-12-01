@@ -20,6 +20,9 @@ use Application\Form\AddEventForm;
 class EventsController extends AbstractCarnassoController {
 
     public function indexAction() {
+        
+        $this->setBackgroundImage();
+        
         // Getting last year
         $currentCarnivalYear = $this->getCurrentCarnivalYear();
 
@@ -31,6 +34,9 @@ class EventsController extends AbstractCarnassoController {
     }
 
     public function manageAction() {
+        
+        $this->setBackgroundImage();
+        
         // Getting last year
         $carinvalYearRepository = $this->entity()->getCarnivalYearRepository();
         $currentCarnivalYear = $carinvalYearRepository->findOneBy(array('year' => $this->getCurrentCarnivalYear()->getYear()), array('year' => 'DESC'));
