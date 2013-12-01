@@ -8,6 +8,10 @@ class AddEventForm extends Form {
 
     public function __construct($options = null) {
         parent::__construct($options);
+
+        // Set german as main language
+        setlocale(LC_TIME, 'deu_deu');
+        
         $this->setName('add_form');
         $this->setAttribute('method', 'post');
         
@@ -29,7 +33,7 @@ class AddEventForm extends Form {
         
         $months = array();
         for($i = 1;$i<13;$i++)
-            $months[$i] = strftime("%B", mktime(0,0,0,$i));
+            $months[$i] = utf8_encode(strftime("%B", mktime(0,0,0,$i)));
         $this->add(array(
             'type' => 'Zend\Form\Element\Select',
             'name' => 'month',
@@ -80,7 +84,8 @@ class AddEventForm extends Form {
                 'type' => 'text',
                 'value' => 'Title',
                 'id' => 'title',
-                'onClick' => 'this.value = ""',
+                'onClick' => 'if(this.value=="Title")this.value = ""',
+                'onBlur' => 'if(this.value=="")this.value="Title"',
             ),
         ));
 
@@ -90,7 +95,8 @@ class AddEventForm extends Form {
                 'type' => 'textarea',
                 'value' => 'Description',
                 'id' => 'description',
-                'onClick' => 'this.value = ""',
+                'onClick' => 'if(this.value=="Description")this.value = ""',
+                'onBlur' => 'if(this.value=="")this.value="Description"',
             ),
         ));
 
