@@ -190,6 +190,10 @@ centered{
 .title{
     margin-top: -10px;
 }
+
+.title input {
+    width:75%;
+}
 .weekday {
 	font-size: 15px;
 }
@@ -201,8 +205,16 @@ centered{
 	font-size: 18px;
 }
 
+#addButton {
+    margin-top:20px;
+}
+
 .description {
     padding: 0 5px;
+}
+
+.description textarea {
+    width:100%;
 }
 
 .blackBackground {
