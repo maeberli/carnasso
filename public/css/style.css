@@ -130,6 +130,29 @@ centered{
 }
 
 /******************
+ * Admin menu
+ ******************/
+#logout {
+    position: absolute;
+    right: 0px;  
+}
+.admin_navbar{
+    background-color:rgba(255, 0, 0, 0.6);
+    min-height:30px;
+}
+.admin_navbar-nav{
+    height:30px;
+    min-height:30px;
+}
+.admin_navbar-nav>li>a{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: #FFF;
+}
+.admin_navbar-nav>li>a:focus, .admin_navbar-nav>li>a:hover{
+    background-color:rgba(255, 0, 0, 0.8);
+}
+/******************
  * Div classes
  ******************/
 .roundedDouble{

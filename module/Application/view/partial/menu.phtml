@@ -20,13 +20,22 @@
         </div>
     </div>
 </nav>
-    
+
 <?php
 if ($user = $this->identity()) {
 ?>
-<nav class="opacity2">
-    <h2>Administration menu</h2>
-    <span><a href="<?php echo $this->url('admin',array('action'=>'logout')); ?>">Logout <?php echo $this->escapeHtml($user->getUsrName()); ?></a></span>
+<nav class="navbar admin_navbar">
+
+    <ul class="nav navbar-nav admin_navbar-nav">
+        <li class="active">
+            <a href="<?php echo $this->url($this->currentController, array('action'=>'manage', 'year' => $this->currentYear));?>">Bearbeiten</a>
+        </li>
+    </ul>
+    <ul id="logout" class="nav navbar-nav admin_navbar-nav">
+        <li class="active">
+            <a href="<?php echo $this->url('admin',array('action'=>'logout')); ?>">Logout <?php echo $this->escapeHtml($user->getUsrName()); ?></a>
+        </li>
+    </ul>
 </nav>
 <?php
 }
