@@ -19,6 +19,7 @@ class AbstractCarnassoController extends AbstractActionController
     const BACKGROUNDIMGPATH = "/img/bgs/";
     
     private $currentYear = null;
+    private $basePath = null;
 
     protected function getMenuParameters()
     {
@@ -65,9 +66,19 @@ class AbstractCarnassoController extends AbstractActionController
         return $this->currentYear;
     }
     
+    protected function getBasePath()
+    {
+        if($this->basePath == null)
+        {
+            $basePath = $this->getServiceLocator()->get('viewhelpermanager')->get('basePath');
+            $this->basePath = $basePath();
+        }
+        return $this->basePath;
+    }
+    
     protected function setBackgroundImage()
     {
-        $styles = 'img.bg{content: url(\''.self::BACKGROUNDIMGPATH.$this->getCurrentCarnivalYear()->getBackgroundImgPath().'\');}';
+        $styles = 'img.bg{content: url(\''.$this->getBasePath().self::BACKGROUNDIMGPATH.$this->getCurrentCarnivalYear()->getBackgroundImgPath().'\');}';
         $this->getServiceLocator()->get('ViewRenderer')->headStyle()->appendStyle($styles);
     }    
 }

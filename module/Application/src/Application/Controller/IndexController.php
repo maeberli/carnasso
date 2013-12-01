@@ -26,7 +26,7 @@ class IndexController extends AbstractCarnassoController
         
         return new ViewModel(array(
             'menuParams' => $this->getMenuParameters(),
-            'flyerpath' => self::FLYERIMGPATH.$currentYear->getFlyerImgPath(),
+            'flyerpath' => $this->getBasePath().self::FLYERIMGPATH.$currentYear->getFlyerImgPath(),
         ));
     }
 }
