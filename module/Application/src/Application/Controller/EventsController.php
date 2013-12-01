@@ -16,16 +16,15 @@ use Application\Model\Entity\Event;
 use Application\Form\EditForm;
 use Application\Form\DeleteForm;
 
-class EventsController extends AbstractActionController {
+class EventsController extends AbstractCarnassoController {
 
     public function indexAction() {
         // Getting last year
-        $carinvalYearRepository = $this->entity()->getCarnivalYearRepository();
-        // TODO not get last year but current year
-        $currentCarnivalYear = $carinvalYearRepository->findOneBy(array('year' => '2012'), array('year' => 'DESC'));
+        $currentCarnivalYear = $this->getCurrentCarnivalYear();
 
         // Setting view
         return new ViewModel(array(
+            'menuParams' => $this->getMenuParameters(),
             'eventList' => $currentCarnivalYear->getEvents(),
         ));
     }
@@ -35,12 +34,13 @@ class EventsController extends AbstractActionController {
         $carinvalYearRepository = $this->entity()->getCarnivalYearRepository();
         $currentCarnivalYear = $carinvalYearRepository->findOneBy(array('year' => '2012'), array('year' => 'DESC'));
         
-        
+        // Management buttons
         $editForm = new EditForm();
         $deleteForm = new DeleteForm();
 
         // Setting view
         return new ViewModel(array(
+            'menuParams' => $this->getMenuParameters(),
             'eventList' => $currentCarnivalYear->getEvents(),
             'editForm' => $editForm,
             'deleteForm' => $deleteForm,

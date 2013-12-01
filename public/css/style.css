@@ -191,7 +191,7 @@ centered{
         float: right;
 }
 .title{
-    
+    margin-top: -10px;
 }
 .weekday {
 	font-size: 15px;
@@ -202,6 +202,10 @@ centered{
 
 .hour {
 	font-size: 18px;
+}
+
+.description {
+    padding: 0 5px;
 }
 
 .blackBackground {
