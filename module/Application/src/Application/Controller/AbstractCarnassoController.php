@@ -20,6 +20,7 @@ class AbstractCarnassoController extends AbstractActionController
     
     private $currentYear = null;
     private $basePath = null;
+    private $auth = null;
 
     protected function getMenuParameters()
     {
@@ -75,6 +76,16 @@ class AbstractCarnassoController extends AbstractActionController
         }
         return $this->basePath;
     }
+    
+    protected function auth()
+    {
+        if($this->auth == null)
+        {
+            $this->auth = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
+        }
+        return $this->auth;
+    }
+
     
     protected function setBackgroundImage()
     {
