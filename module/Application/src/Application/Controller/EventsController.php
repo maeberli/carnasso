@@ -33,7 +33,7 @@ class EventsController extends AbstractCarnassoController {
     public function manageAction() {
         // Getting last year
         $carinvalYearRepository = $this->entity()->getCarnivalYearRepository();
-        $currentCarnivalYear = $carinvalYearRepository->findOneBy(array(), array('year' => 'DESC'));
+        $currentCarnivalYear = $carinvalYearRepository->findOneBy(array('year' => $this->getCurrentCarnivalYear()->getYear()), array('year' => 'DESC'));
         
         // Management buttons
         $editForm = new EditForm();
@@ -94,8 +94,6 @@ class EventsController extends AbstractCarnassoController {
         
         $date->setDate($this->getCurrentCarnivalYear()->getYear(), $request->getPost('month'), $request->getPost('day'));
         $event->setDate($date);
-        
-        $event->setCarnivalYear($carnivalYear);
         
         $start = explode(":",$request->getPost('start_time'));
         $startTime = new \DateTime();
