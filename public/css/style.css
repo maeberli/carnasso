@@ -88,45 +88,18 @@ centered{
 /******************
  * Year menu
  ******************/
-#menu {
-  position: absolute;
-  right: 0px;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  vertical-align: middle;
+#yearSelection {
+    position: absolute;
+    right: 0px;
+    z-index: 999;
 }
-#yearBtn {
-  float: left;
-  width: 110px;
-  text-align:center;
+.yearSelection_dropdown-menu {
+    width:78px;
+    min-width:78px;
+    border:none;
 }
-#yearList {
-  background-color: #FFFFFF;
-}
-.topmenu ul{
-  display:none;
-  list-style-type:none;
-  list-style-image:none;
- }
-.topmenu a, .submenu a{
-  padding:1px 5px;
-  border-collapse:collapse;
-  font-weight:bold;
-  text-decoration:none;
-  margin:0;  
-}
-.submenu a {
-  width: 110px;
-}
-
-.selectedYear
-{
-    background-color: #EFEFEF;
-}
-
-.topmenu:hover ul {
-  display:block;
-  z-index:500;
+.selectedYear {
+    background-color: #eee;
 }
 
 /******************
@@ -134,11 +107,12 @@ centered{
  ******************/
 #logout {
     position: absolute;
-    right: 0px;  
+    right: 0px;
 }
 .admin_navbar{
     background-color:rgba(255, 0, 0, 0.6);
     min-height:30px;
+    z-index: 20;
 }
 .admin_navbar-nav{
     height:30px;
