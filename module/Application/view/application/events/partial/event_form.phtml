@@ -1,0 +1,40 @@
+<?php
+// Partial view of entity event
+// 
+// Arguments :
+// addForm     Zend Form       AddEventForm
+?>
+<div class="event rounded opacity2">
+    <?php
+    $addForm->setAttribute('action', 'add');
+    $addForm->prepare();
+    echo $this->form()->openTag($addForm);
+    ?>
+    <div class="col-md-4 blackBackground">
+        <div id="append" class="heading">
+            <div class="date">
+                <div class="weekday text-center"><?php echo $this->formSelect($addForm->get('day')); ?></div>
+                <div class="day text-center"><?php echo $this->formSelect($addForm->get('month')); ?></div>
+            </div>
+            <div class="time">
+                <div class="hour text-center"><?php echo $this->formSelect($addForm->get('start_time')); ?></div>
+                <div class="hour text-center"><?php echo $this->formSelect($addForm->get('stop_time')); ?></div>
+            </div>
+        </div>
+    </div>
+    <div class="title col-md-8">
+        <h2><?php echo $this->formText($addForm->get('title')); ?></h2>
+    </div>
+    <div class="description col-md-10">
+        <p><?php echo $this->formTextarea($addForm->get('description')); ?></p>
+    </div>
+    <div class="management-buttons col-md-2">
+        <?php 
+        echo $this->formSubmit($addForm->get('append'));
+        ?>
+    </div>
+    <?php
+    echo $this->form()->closeTag();
+    ?>
+    <div style="clear:both;"></div>
+</div>

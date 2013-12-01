@@ -46,6 +46,20 @@ return array(
                     ),
                 ),
             ),
+            'events_management' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/events/:action/:id',
+                    'constraints' => array(
+                        'action' => 'edit|delete',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Events',
+                        'action'     => 'manage',
+                    ),
+                ),
+            ),
             'association' => array(
                 'type' => 'segment',
                 'options' => array(

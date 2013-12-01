@@ -15,3 +15,5 @@ foreach($eventList as $event)
         'editForm' => $editForm,
         'deleteForm' => $deleteForm,));
 }
+
+echo $this->partial('application/events/partial/event_form.phtml', array('addForm' => $addForm,));
