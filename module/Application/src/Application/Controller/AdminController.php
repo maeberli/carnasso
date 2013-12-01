@@ -21,6 +21,8 @@ class AdminController extends AbstractCarnassoController
 {
     public function loginAction()
     {
+        $this->setBackgroundImage();
+        
         $form = new LoginForm();
         $messages = null;
 
@@ -61,6 +63,8 @@ class AdminController extends AbstractCarnassoController
     
     public function logoutAction()
     {
+        $this->setBackgroundImage();
+        
         $auth = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
         
         if ($auth->hasIdentity()) {
