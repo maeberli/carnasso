@@ -13,8 +13,8 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Model\Entity\Event;
-use Application\Form\EditForm;
-use Application\Form\DeleteForm;
+use Application\Form\EditEventButton;
+use Application\Form\DeleteEventButton;
 use Application\Form\AddEventForm;
 
 class EventsController extends AbstractCarnassoController {
@@ -42,8 +42,8 @@ class EventsController extends AbstractCarnassoController {
         $currentCarnivalYear = $carinvalYearRepository->findOneBy(array('year' => $this->getCurrentCarnivalYear()->getYear()), array('year' => 'DESC'));
         
         // Management buttons
-        $editForm = new EditForm();
-        $deleteForm = new DeleteForm();
+        $editForm = new EditEventButton();
+        $deleteForm = new DeleteEventButton();
         $addForm = new AddEventForm();
 
         // Setting view
@@ -86,8 +86,6 @@ class EventsController extends AbstractCarnassoController {
         // Inserting event to database
         $this->entity()->getEntityManager()->persist($event);
         $this->entity()->getEntityManager()->flush();
-        
-        $this->redirect('events/manage');
     }
 
     public function editAction() {
@@ -115,10 +113,8 @@ class EventsController extends AbstractCarnassoController {
         $event->setLocation("");
         
         // Updating event to database
-        $this->getEntityManager()->persist($event);
-        $this->getEntityManager()->flush();
-        
-        $this->redirect('events/manage');
+        $this->entity()->getEntityManager()->persist($event);
+        $this->entity()->getEntityManager()->flush();
     }
 
     public function deleteAction() {
@@ -126,10 +122,8 @@ class EventsController extends AbstractCarnassoController {
         $eventRepository = $this->entity()->getEventRepository();
         $event = $eventRepository->findOneBy(array('id' => $this->params()->fromRoute('id', 0)));
         // Delete event from database
-        $this->getEntityManager()->remove($event);
-        $this->getEntityManager()->flush();
-        
-        $this->redirect('events/manage');
+        $this->entity()->getEntityManager()->remove($event);
+        $this->entity()->getEntityManager()->flush();
     }
 
 }

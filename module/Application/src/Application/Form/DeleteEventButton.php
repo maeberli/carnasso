@@ -4,7 +4,7 @@ namespace Application\Form;
 
 use Zend\Form\Form;
 
-class EditForm extends Form {
+class DeleteEventButton extends Form {
 
     public function __construct($options = null) {
         parent::__construct($options);
@@ -12,10 +12,10 @@ class EditForm extends Form {
         $this->setAttribute('method', 'post');
 
         $this->add(array(
-            'name' => 'edit',
+            'name' => 'delete',
             'attributes' => array(
                 'type' => 'submit',
-                'value' => 'Edit',
+                'value' => 'Remove',
                 'id' => 'editButton',
             ),
         ));
