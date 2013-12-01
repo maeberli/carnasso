@@ -36,7 +36,7 @@ class AbstractCarnassoController extends AbstractActionController
         return array(
             'currentYear' => $year,
             'years' => $years,
-            'currentController' => 'index',
+            'currentController' => $this->getEvent()->getRouteMatch()->getMatchedRouteName(),
             'currentAction' => $this->params('action'),
         );
     }
