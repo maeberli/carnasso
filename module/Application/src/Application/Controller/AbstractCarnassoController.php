@@ -16,9 +16,9 @@ use Application\Model\Entity\CarnivalYear;
 
 class AbstractCarnassoController extends AbstractActionController
 {
-    const BACKGROUNDIMGPATH = "/img/bgs/";
+    const PUBLIC_IMGPATH = "/img/carnasso/";
+    const LOCAL_IMGPATH = "./public/img/carnasso/";
     
-    private $currentYear = null;
     private $basePath = null;
     private $auth = null;
 
@@ -44,27 +44,23 @@ class AbstractCarnassoController extends AbstractActionController
     }
     
     protected function getCurrentCarnivalYear()
-    {
-        if($this->currentYear == null)
-        {
-            $carinvalYearRepository = $this->entity()->getCarnivalYearRepository();
-            $year = null;
-            
-            $yearNumber = (int) $this->params()->fromRoute('year', 0);
-            
-            if($yearNumber)
-            {
-                $this->currentYear = $carinvalYearRepository->findOneBy(array('year' => $yearNumber));
-            }
-            else
-            {
-                $years =  $carinvalYearRepository->findBy(array(), array('year' => 'DESC'));
-                $this->currentYear = (count($years)>0 ? $years[0] : null);
-            }
-            
-        }
+    {   
+        $carinvalYearRepository = $this->entity()->getCarnivalYearRepository();
+        $year = null;
         
-        return $this->currentYear;
+        $yearNumber = (int) $this->params()->fromRoute('year', 0);
+        
+        $currentYear=null;
+        if($yearNumber)
+        {
+            $currentYear = $carinvalYearRepository->findOneBy(array('year' => $yearNumber));
+        }
+        else
+        {
+            $years =  $carinvalYearRepository->findBy(array(), array('year' => 'DESC'));
+            $currentYear = (count($years)>0 ? $years[0] : null);
+        }
+        return $currentYear;
     }
     
     protected function getBasePath()
@@ -89,7 +85,7 @@ class AbstractCarnassoController extends AbstractActionController
     
     protected function setBackgroundImage()
     {
-        $styles = 'img.bg{content: url(\''.$this->getBasePath().self::BACKGROUNDIMGPATH.$this->getCurrentCarnivalYear()->getBackgroundImgPath().'\');}';
+        $styles = 'img.bg{content: url(\''.$this->getBasePath().self::PUBLIC_IMGPATH.$this->getCurrentCarnivalYear()->getBackgroundImgPath().'\');}';
         $this->getServiceLocator()->get('ViewRenderer')->headStyle()->appendStyle($styles);
     }    
 }

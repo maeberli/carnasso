@@ -1,0 +1,22 @@
+<?php echo $this->partial('partial/menu', $menuParams);?>
+
+
+<div>
+    <?php
+    $editForm->setAttribute('action', $this->url('index', array('action' => 'manage', 'year'=>$menuParams['currentYear'])));
+    $editForm->prepare();
+    echo $this->form()->openTag($editForm);
+    ?>
+    
+    <h2>Hintergrund Bild</h2>
+    <img class="preview" src="<?php echo $backgroundImg ?>" alt="Hintergrund">
+    <?php echo $this->formRow($editForm->get('backgroundImgPathNew'));?><br /><br />
+    <h2>Flyer</h2>
+    <img class="preview" src="<?php echo $flyerImg ?>" alt="Flyer">
+    <?php echo $this->formRow($editForm->get('flyerImgPathNew'));?><br /><br/>
+    <? echo $this->formSubmit($editForm->get('savebutton')); ?><br />
+
+</div>
+<?php
+echo $this->form()->closeTag();
+?>

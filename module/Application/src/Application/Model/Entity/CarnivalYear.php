@@ -113,7 +113,6 @@ class CarnivalYear {
     public function getEvents() {
         return $this->events;
     }
-    
 }
 
 ?>
