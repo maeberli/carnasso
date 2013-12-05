@@ -84,8 +84,7 @@ class AddEventForm extends Form {
                 'type' => 'text',
                 'value' => 'Title',
                 'id' => 'title',
-                'onClick' => 'if(this.value=="Title")this.value = ""',
-                'onBlur' => 'if(this.value=="")this.value="Title"',
+                'placeholder' => 'Title',
             ),
         ));
 
@@ -95,8 +94,7 @@ class AddEventForm extends Form {
                 'type' => 'textarea',
                 'value' => 'Description',
                 'id' => 'description',
-                'onClick' => 'if(this.value=="Description")this.value = ""',
-                'onBlur' => 'if(this.value=="")this.value="Description"',
+                'placeholder' => 'Description',
             ),
         ));
 
