@@ -133,6 +133,7 @@ centered{
 .roundedDouble{
 	border: 2px solid #999999;
 	position:relative;
+    z-index:1;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
@@ -142,6 +143,7 @@ centered{
 	content:"";
 	display:block;
 	position:absolute;
+    z-index:-1;
 	top:1px;
 	left:1px;
 	right:1px;
