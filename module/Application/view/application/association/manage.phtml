@@ -10,5 +10,10 @@ foreach($organisatorList as $organisator)
         'prename' => $member->getPrename(),
         'name' => $member->getName(),
         'imagePath' => $imagePath.$member->getImagePath(),
-		'responsabilites' =>$organisator->getResponsabilites() ));
+		'responsabilites' =>$organisator->getResponsabilites(),
+        'editMode' => true,
+        'editForm' => $editForm,
+        'deleteForm' => $deleteForm,));
 }
+
+echo $this->partial('application/association/partial/member_form.phtml', array('addForm' => $addForm,));

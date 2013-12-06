@@ -1,0 +1,51 @@
+﻿<?php
+// Partial view of entity event
+// 
+// Arguments :
+// id           int             Id of member
+// name         String          Member name
+// prename      String          Member prename
+// imagePath    String          Member image
+// responsabilites ????			???
+// editMode     Boolean         Is the view use to edit
+// editForm     Zend Form       Edit button form (only needed when editMode is true)
+// deleteForm   Zend Form       Delete button form (only needed when editMode is true)
+// Member       Member entity   Object to be shown
+
+// Set german as main language
+setlocale(LC_TIME, 'deu_deu');
+
+?>
+<div class="member rounded opacity2">
+    <div class="image col-md-2">
+		<img id="photo" src="<?php echo $imagePath ?>" alt="Photo">
+    </div>
+	<div class="col-dm-4">
+		<div class="name col-md-8">
+			<h2><?php echo utf8_encode($name . " " . $prename); ?></h2>
+		</div>
+	
+		<div class="responsabilites col-md-8">
+			<p><?php echo utf8_encode($responsabilites); ?></p>
+		</div>
+	</div>
+	
+    <?php if(isset($editMode) && $editMode){
+        echo '<div class="management-buttons col-md-2">';
+        // Edit form
+        $editForm->setAttribute('action', 'edit/'.$id);
+        $editForm->prepare();
+        echo $this->form()->openTag($editForm);
+        echo $this->formSubmit($editForm->get('edit'));
+        echo $this->form()->closeTag();
+        
+        //Delete form
+        $deleteForm->setAttribute('action', 'delete/'.$id);
+        $deleteForm->prepare();
+        echo $this->form()->openTag($deleteForm);
+        echo $this->formSubmit($deleteForm->get('delete'));
+        echo $this->form()->closeTag();
+        echo '</div>';
+    }?>
+<div style="clear:both;"></div>
+</div>

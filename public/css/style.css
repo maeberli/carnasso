@@ -230,17 +230,27 @@ centered{
  * Event page
  ******************/
  
-#flyerImage {
-   width: 60%;
-   display: block;
-   margin-left: auto;
-   margin-right: auto; 
-}
+ #flyerImage {
+    width: 60%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto; 
+ }
  
 .preview {
     width:100px;
 }
 
+ /******************
+ * Member page
+ ******************/
+ 
+ #photo {
+    width: 90px;
+    display: block;
+    margin-left: 0px;
+    margin-top: 5px; 
+ } 
 
 /******************
  * Bootstrap modifications
