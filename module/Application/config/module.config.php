@@ -63,10 +63,24 @@ return array(
             'association' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/asociation[/:action[/:year][/:id]]',
+                    'route' => '/association[/:action[/:year][/:id]]',
                     'constraints' => array(
                         'action' => '[a-zA-Z]+',
                         'year'   => '[0-9]{4}',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Association',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+			'association_management' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/association/:action/:id',
+                    'constraints' => array(
+                        'action' => 'edit|delete',
                         'id'     => '[0-9]+',
                     ),
                     'defaults' => array(
