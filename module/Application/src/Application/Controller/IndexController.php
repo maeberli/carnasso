@@ -9,15 +9,19 @@
 
 namespace Application\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Model\Entity\CarnivalYear;
 use Application\Controller\AbstractCarnassoController;
 use Application\Form\CarnivalYearEditForm;
 use Application\Form\CarnivalYearEditFilter;
+use Application\Form\CarnivalYearNewForm;
+use Application\Form\CarnivalYearNewFilter;
 
 class IndexController extends AbstractCarnassoController
 {
+    private $extraAdminActions = array(
+            'new'=>'Neues Jahr',
+        );
     
     public function indexAction()
     {
@@ -26,13 +30,13 @@ class IndexController extends AbstractCarnassoController
         $currentYear = $this->getCurrentCarnivalYear();
         
         return new ViewModel(array(
-            'menuParams' => $this->getMenuParameters(),
+            'menuParams' => $this->getMenuParameters($this->extraAdminActions),
             'flyerpath' => $this->getBasePath().self::PUBLIC_IMGPATH.$currentYear->getFlyerImgPath(),
         ));
     }
     
     public function manageAction()
-    {   
+    {
         // Authentification
         if (! $this->auth()->hasIdentity() ){
             return $this->redirect()->toRoute('admin', array('action' => 'login'));
@@ -108,10 +112,71 @@ class IndexController extends AbstractCarnassoController
         
         $this->setBackgroundImage();
         return new ViewModel(array(
-            'menuParams' => $this->getMenuParameters(),
+            'menuParams' => $this->getMenuParameters($this->extraAdminActions),
             'editForm' => $editForm,
             'flyerImg' => $this->getBasePath().self::PUBLIC_IMGPATH.$currentYear->getFlyerImgPath(),
             'backgroundImg' => $this->getBasePath().self::PUBLIC_IMGPATH.$currentYear->getBackgroundImgPath(),
+        ));
+    }
+    
+    public function newAction()
+    {
+        // Authentification
+        if (! $this->auth()->hasIdentity() ){
+            return $this->redirect()->toRoute('admin', array('action' => 'login'));
+        }
+        
+        // create form for the new carnival year.
+        $newForm = new CarnivalYearNewForm(
+            $this->entity()->getEntityManager(),
+            $this->entity()->getCarnivalYearRepository()
+        );
+        
+        $request = $this->getRequest();
+        if ($request->isPost())
+        {
+            $newForm->setInputFilter(
+                new CarnivalYearNewFilter($this->entity()->getCarnivalYearRepository()));
+            
+            $files = $request->getFiles();
+            
+            // Merge and post data together to pass as one unit to the edit form
+            $data = array_merge_recursive(
+                $request->getPost()->toArray(),           
+                $request->getFiles()->toArray()
+            );
+            $newForm->setData($data);
+            
+            if ($newForm->isValid())
+            {
+                $newCarnivalYear = new CarnivalYear();
+                
+                $backgroundImgPath = $this->uploadFile($newForm, $files, 'backgroundImgPath');
+                $flyerImgPath = $this->uploadFile($newForm, $files, 'flyerImgPath');
+                if($backgroundImgPath != null && $flyerImgPath != null)
+                {   
+                    $newCarnivalYear->setYear($data['year']);
+                    $newCarnivalYear->setBackgroundImgPath($backgroundImgPath);
+                    $newCarnivalYear->setFlyerImgPath($flyerImgPath);
+                    
+                    $this->entity()->getEntityManager()->persist($newCarnivalYear);
+                    $this->entity()->getEntityManager()->flush();
+                }
+            
+            }
+        }
+        
+        
+        
+        
+        // set the background image path.
+        $this->setBackgroundImage();
+        
+        // return the ViewModel with the parameters for the menus
+        // and the form.
+        return new ViewModel(array(
+            'menuParams' => $this->getMenuParameters($this->extraAdminActions),
+            'newForm' => $newForm,
         ));
     }
     
@@ -132,7 +197,6 @@ class IndexController extends AbstractCarnassoController
             }
             $editForm->setMessages(array($fieldname=>$error ));
             
-            print("not valid");
             return null;
         }
         else

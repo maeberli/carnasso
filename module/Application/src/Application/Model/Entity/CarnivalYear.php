@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="CarnivalYear")
+ * @ORM\Table(name="CarnivalYear", uniqueConstraints={@ORM\UniqueConstraint(name="year_unique", columns={"year"})})
  *
  * @author marco.aeberli
  */

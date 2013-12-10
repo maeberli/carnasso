@@ -1,0 +1,19 @@
+<?php echo $this->partial('partial/menu', $menuParams);?>
+
+
+<div>
+    <?php
+    $newForm->setAttribute('action', $this->url('index', array('action' => 'new', 'year'=>$menuParams['currentYear'])));
+    $newForm->prepare();
+    echo $this->form()->openTag($newForm);
+    ?>
+    <h2>Neues Jahr</h2>
+    <?php echo $this->formRow($newForm->get('year'));?><br /><br />
+    <h2>Hintergrund Bild</h2>
+    <?php echo $this->formRow($newForm->get('backgroundImgPath'));?><br /><br />
+    <h2>Flyer</h2>
+    <?php echo $this->formRow($newForm->get('flyerImgPath'));?><br /><br/>
+    <? echo $this->formSubmit($newForm->get('savebutton')); ?><br />
+    
+    <?php echo $this->form()->closeTag();?>
+</div>
