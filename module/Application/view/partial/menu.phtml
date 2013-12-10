@@ -33,6 +33,11 @@ if ($user = $this->identity()) {
         <li class="active">
             <a href="<?php echo $this->url($this->currentController, array('action'=>'manage', 'year' => $this->currentYear));?>">Bearbeiten</a>
         </li>
+        <?php foreach($this->extraAdminActions as $action=>$title) { ?>
+        <li class="active">
+            <a href="<?php echo $this->url($this->currentController,array('action'=>$action, 'year' => $this->currentYear)); ?>"><?php echo($title); ?></a>
+        </li>
+        <?php } ?>
     </ul>
     <ul id="logout" class="nav navbar-nav admin_navbar-nav">
         <li class="active">

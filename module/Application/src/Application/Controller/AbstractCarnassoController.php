@@ -22,7 +22,7 @@ class AbstractCarnassoController extends AbstractActionController
     private $basePath = null;
     private $auth = null;
 
-    protected function getMenuParameters()
+    protected function getMenuParameters($extraAdminActions=array())
     {
         $carinvalYearRepository = $this->entity()->getCarnivalYearRepository();
         $carnivalYears = $carinvalYearRepository->findBy(array(), array('year' => 'DESC'));
@@ -40,6 +40,7 @@ class AbstractCarnassoController extends AbstractActionController
             'years' => $years,
             'currentController' => $this->getEvent()->getRouteMatch()->getMatchedRouteName(),
             'currentAction' => $this->params('action'),
+            'extraAdminActions' => $extraAdminActions,
         );
     }
     
