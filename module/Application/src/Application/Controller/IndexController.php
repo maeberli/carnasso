@@ -16,11 +16,13 @@ use Application\Form\CarnivalYearEditForm;
 use Application\Form\CarnivalYearEditFilter;
 use Application\Form\CarnivalYearNewForm;
 use Application\Form\CarnivalYearNewFilter;
+use Application\Form\CarnivalYearDeleteForm;
 
 class IndexController extends AbstractCarnassoController
 {
     private $extraAdminActions = array(
             'new'=>'Neues Jahr',
+            'delete'=>'Aktuelles Jahr löschen',
         );
     
     public function indexAction()
@@ -177,6 +179,57 @@ class IndexController extends AbstractCarnassoController
         return new ViewModel(array(
             'menuParams' => $this->getMenuParameters($this->extraAdminActions),
             'newForm' => $newForm,
+        ));
+    }
+    
+    public function deleteAction()
+    {
+        // Authentification
+        if (! $this->auth()->hasIdentity() )
+        {
+            return $this->redirect()->toRoute('admin', array('action' => 'login'));
+        }
+        
+        $request = $this->getRequest();
+        if ($request->isPost())
+        {
+            $currentYear = $this->getCurrentCarnivalYear();
+            
+            if($request->getPost()['cancelbutton'] != null)
+            {
+                // deletion aborted, redirect to manage action.
+                return $this->redirect()->toRoute('index', array('action' => 'manage', 'year' => $currentYear->getYear()));
+            }
+            else if($request->getPost()['confirmbutton'] != null)
+            {
+                $flyerImgPath = $currentYear->getFlyerImgPath();
+                $backgroundImgPath = $currentYear->getBackgroundImgPath();
+                
+                // remove current year form db
+                $this->entity()->getEntityManager()->remove($currentYear);
+                $this->entity()->getEntityManager()->flush();
+                
+                // remove images from filesystem
+                $this->removeImage($flyerImgPath);
+                $this->removeImage($backgroundImgPath);
+                
+                
+                
+                // Delete successfull executed, redirect to index action
+                return $this->redirect()->toRoute('index', array('action' => 'index'));
+            }
+        }
+        
+        $deleteForm = new CarnivalYearDeleteForm();
+        
+        // set the background image path.
+        $this->setBackgroundImage();
+        
+        // return the ViewModel with the parameters for the menus
+        // and the form.
+        return new ViewModel(array(
+            'menuParams' => $this->getMenuParameters($this->extraAdminActions),
+            'deleteForm' => $deleteForm,
         ));
     }
     

@@ -1,0 +1,16 @@
+<?php echo $this->partial('partial/menu', $menuParams);?>
+
+
+<div>
+    <?php
+    $deleteForm->setAttribute('action', $this->url('index', array('action' => 'delete', 'year'=>$menuParams['currentYear'])));
+    $deleteForm->prepare();
+    echo $this->form()->openTag($deleteForm);
+    ?>
+    <h2>Jahr l&ouml;schen</h2>
+    <p>M&ouml;chten Sie dass Jahr &lt;<?php echo $menuParams['currentYear']; ?>&gt; wirklich entfernen?</p>
+    <?php echo $this->formSubmit($deleteForm->get('cancelbutton')); ?>
+    <?php echo $this->formSubmit($deleteForm->get('confirmbutton')); ?><br />
+    
+    <?php echo $this->form()->closeTag();?>
+</div>
