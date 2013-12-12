@@ -152,6 +152,20 @@ return array(
                 'identity_class' => __NAMESPACE__ . '\Model\Entity\User',
                 'identity_property' => 'usrName',
                 'credential_property' => 'usrPassword',
+                'credential_callable' => function(Model\Entity\User $user, $passwordGiven)
+                {
+                    $saltedPassword =  $passwordGiven.$user->getPasswordSalt();
+                    $hashedPassword = hash('sha256', $saltedPassword);
+                    
+                    if ($user->getUsrPassword() == $hashedPassword)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                },
             ),
         ),
     ),
