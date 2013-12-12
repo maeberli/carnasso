@@ -28,13 +28,13 @@ class CarnivalYear {
     protected $flyerImgPath;
 
     /**
-     * @ORM\OneToMany(targetEntity="Organisator",mappedBy="carnivalYear")
+     * @ORM\OneToMany(targetEntity="Organisator",mappedBy="carnivalYear", cascade={"remove"})
      * @var Organisator[]
      */
     protected $organisators;
     
     /**
-     * @ORM\OneToMany(targetEntity="Event",mappedBy="carnivalYear")
+     * @ORM\OneToMany(targetEntity="Event",mappedBy="carnivalYear", cascade={"remove"})
      * @var Event[]
      */
     protected $events;
