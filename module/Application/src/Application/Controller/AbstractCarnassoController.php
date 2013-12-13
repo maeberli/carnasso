@@ -86,7 +86,21 @@ class AbstractCarnassoController extends AbstractActionController
     
     protected function setBackgroundImage()
     {
-        $styles = 'div.bg{background: url(\''.$this->getBasePath().self::PUBLIC_IMGPATH.$this->getCurrentCarnivalYear()->getBackgroundImgPath().'\');}';
+        // get pathes of the current background image
+        $currentYear = $this->getCurrentCarnivalYear();
+        $localImgPath = self::LOCAL_IMGPATH.$currentYear->getBackgroundImgPath();
+        $publicImgPath = $this->getBasePath().self::PUBLIC_IMGPATH.$currentYear->getBackgroundImgPath();
+        
+        // Calculate the width of the background image
+        $imgWidth = getimagesize($localImgPath)[0];
+        $halfImgWidth = $imgWidth / 2;
+        
+        // Create the css appropriate to the background image
+        $styles = 'div.bg{background: url(\''.$publicImgPath.'\');}';
+        $styles .= '@media screen and (max-width: '.$imgWidth.'px) { div.bg { left: 50%; margin-left: -'.$halfImgWidth.'px; }}';
+        $styles .= '.bg { min-width: '.$imgWidth.'px; }';
+        
+        // Pass the style sheeto the view renderer.
         $this->getServiceLocator()->get('ViewRenderer')->headStyle()->appendStyle($styles);
     }    
 }
