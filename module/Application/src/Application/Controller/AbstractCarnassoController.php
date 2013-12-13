@@ -86,7 +86,7 @@ class AbstractCarnassoController extends AbstractActionController
     
     protected function setBackgroundImage()
     {
-        $styles = 'img.bg{content: url(\''.$this->getBasePath().self::PUBLIC_IMGPATH.$this->getCurrentCarnivalYear()->getBackgroundImgPath().'\');}';
+        $styles = 'div.bg{background: url(\''.$this->getBasePath().self::PUBLIC_IMGPATH.$this->getCurrentCarnivalYear()->getBackgroundImgPath().'\');}';
         $this->getServiceLocator()->get('ViewRenderer')->headStyle()->appendStyle($styles);
     }    
 }
