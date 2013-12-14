@@ -26,9 +26,7 @@ class IndexController extends AbstractCarnassoController
         );
     
     public function indexAction()
-    {
-        $this->setBackgroundImage();
-        
+    {   
         $currentYear = $this->getCurrentCarnivalYear();
         
         return new ViewModel(array(
@@ -163,16 +161,11 @@ class IndexController extends AbstractCarnassoController
                     
                     $this->entity()->getEntityManager()->persist($newCarnivalYear);
                     $this->entity()->getEntityManager()->flush();
+                    
+                    $this->setBackgroundImage();
                 }
-            
             }
         }
-        
-        
-        
-        
-        // set the background image path.
-        $this->setBackgroundImage();
         
         // return the ViewModel with the parameters for the menus
         // and the form.
@@ -221,9 +214,6 @@ class IndexController extends AbstractCarnassoController
         }
         
         $deleteForm = new CarnivalYearDeleteForm();
-        
-        // set the background image path.
-        $this->setBackgroundImage();
         
         // return the ViewModel with the parameters for the menus
         // and the form.

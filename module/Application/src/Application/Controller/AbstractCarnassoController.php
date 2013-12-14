@@ -9,6 +9,7 @@
 
 namespace Application\Controller;
 
+use Zend\EventManager\EventManagerInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Model\Entity\CarnivalYear;
@@ -21,6 +22,43 @@ class AbstractCarnassoController extends AbstractActionController
     
     private $basePath = null;
     private $auth = null;
+    
+    public function setEventManager(EventManagerInterface $events)
+    {
+        parent::setEventManager($events);
+
+        $controller = $this;
+        
+        $events->attach('dispatch', function ($e) use ($controller) {
+
+            
+            if($controller->getCurrentCarnivalYear() == Null)
+            {
+                $routeName = $controller->getEvent()->getRouteMatch()->getMatchedRouteName();
+                $action = $controller->params('action');
+                $logged = $controller->auth()->hasIdentity();
+                
+                if($routeName != "admin" && $action != "login"
+                    &&  !$logged)
+                {
+                    return $this->redirect()->toRoute('admin', array('action' => 'login'));
+                }
+                else if( !( ($routeName == "admin" && $action == "logout") || ($routeName == "index" && $action == "new")) && $logged)
+                {
+                    return $this->redirect()->toRoute('index', array('action' => 'new'));
+                }
+                    
+            }
+            
+            if($controller->getCurrentCarnivalYear() != Null)
+            {
+                // set the background image for every page charged.
+                $controller->setBackgroundImage();
+            }
+            
+            return;
+        }, 100); // execute before executing action logic
+    }
 
     protected function getMenuParameters($extraAdminActions=array())
     {
@@ -33,7 +71,8 @@ class AbstractCarnassoController extends AbstractActionController
             array_push($years, $year->getYear());
         }
         
-        $year = $this->getCurrentCarnivalYear()->getYear();
+        $currentYear = $this->getCurrentCarnivalYear();
+        $year = ( $currentYear != Null ? $currentYear->getYear() : "" );
         
         return array(
             'currentYear' => $year,
