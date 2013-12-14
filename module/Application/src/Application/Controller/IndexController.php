@@ -161,6 +161,8 @@ class IndexController extends AbstractCarnassoController
                     
                     $this->entity()->getEntityManager()->persist($newCarnivalYear);
                     $this->entity()->getEntityManager()->flush();
+                    
+                    $this->setBackgroundImage();
                 }
             }
         }
