@@ -9,6 +9,7 @@
 
 namespace Application\Controller;
 
+use Zend\EventManager\EventManagerInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Model\Entity\CarnivalYear;
@@ -21,6 +22,21 @@ class AbstractCarnassoController extends AbstractActionController
     
     private $basePath = null;
     private $auth = null;
+    
+    public function setEventManager(EventManagerInterface $events)
+    {
+        parent::setEventManager($events);
+
+        $controller = $this;
+        
+        $events->attach('dispatch', function ($e) use ($controller) {
+
+            // set the background image for every page charged.
+            $controller->setBackgroundImage();
+
+            return;
+        }, 100); // execute before executing action logic
+    }
 
     protected function getMenuParameters($extraAdminActions=array())
     {
