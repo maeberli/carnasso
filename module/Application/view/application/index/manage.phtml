@@ -15,8 +15,6 @@
     <img class="preview" src="<?php echo $flyerImg ?>" alt="Flyer">
     <?php echo $this->formRow($editForm->get('flyerImgPathNew'));?><br /><br/>
     <? echo $this->formSubmit($editForm->get('savebutton')); ?><br />
-
+    
+    <?php echo $this->form()->closeTag(); ?>
 </div>
-<?php
-echo $this->form()->closeTag();
-?>

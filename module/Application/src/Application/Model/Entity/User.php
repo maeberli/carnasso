@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Zend\Form\Annotation;
 
 /**
- * @ORM\Table(name="User")
+ * @ORM\Table(name="User", uniqueConstraints={@ORM\UniqueConstraint(name="usrName_unique", columns={"usr_name"})})
  * @ORM\Entity
  * @Annotation\Name("user")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ClassMethods")
@@ -41,6 +41,14 @@ class User {
      */
     protected $usrPassword;
     
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="usr_password_salt", type="string", length=100, nullable=false)
+     */
+    protected $passwordSalt;
+    
+    
     public function __construct()
     {
         $this->usrRegistrationDate = new \DateTime();
@@ -66,7 +74,7 @@ class User {
     
     /**
      * @param string $usrPassword
-     * @return Users
+     * @return User
      */
     public function setUsrPassword($usrPassword)
     {
@@ -80,6 +88,14 @@ class User {
     public function getUsrPassword()
     {
         return $this->usrPassword;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getPasswordSalt()
+    {
+        return $this->passwordSalt;
     }
 
     /**
