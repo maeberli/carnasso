@@ -11,6 +11,7 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Application\Model\Entity\Organisator;
 use Application\Model\Entity\Member;
 use Application\Form\EditEventButton;
 use Application\Form\DeleteEventButton;
@@ -37,7 +38,10 @@ class AssociationController extends AbstractCarnassoController
 	
 	
     public function manageAction() {
-        
+		// Authentification
+        if (! $this->auth()->hasIdentity() ){
+            return $this->redirect()->toRoute('admin', array('action' => 'login'));
+        }
         $this->setBackgroundImage();
         
         // Getting last year
@@ -70,9 +74,14 @@ class AssociationController extends AbstractCarnassoController
         $member->setPrename($request->getPost('prename'));
         $member->setName($request->getPost('name'));
         $member->setCarnivalYear($this->getCurrentCarnivalYear());
+		
+		$organisator = new Organisator;
+		$organisator->setMember($member);
+		$organisator->setCarnivalYear($this->getCurrentCarnivalYear());
+		$organisator->setResponsabilities($request->getPost('responsabilities'));
         
         // Inserting event to database
-        $this->entity()->getEntityManager()->persist($member);
+        $this->entity()->getEntityManager()->persist($organisator);
         $this->entity()->getEntityManager()->flush();
     }
 

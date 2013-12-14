@@ -39,13 +39,13 @@ class AddMemberForm extends Form {
         ));
 
         $this->add(array(
-            'name' => 'description',
+            'name' => 'responsabilities',
             'attributes' => array(
                 'type' => 'textarea',
-                'value' => 'Description',
-                'id' => 'description',
-                'onClick' => 'if(this.value=="Description")this.value = ""',
-                'onBlur' => 'if(this.value=="")this.value="Description"',
+                'value' => 'Responsabilities',
+                'id' => 'responsabilities',
+                'onClick' => 'if(this.value=="Responsabilities")this.value = ""',
+                'onBlur' => 'if(this.value=="")this.value="Responsabilities"',
             ),
         ));
 

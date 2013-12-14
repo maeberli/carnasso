@@ -16,22 +16,19 @@
 setlocale(LC_TIME, 'deu_deu');
 
 ?>
-<div class="member rounded opacity2">
-    <div class="image col-md-2">
+<div class="member rounded opacity2" style="width:300px;align:left;">
+    <div class="image col-md-5">
 		<img id="photo" src="<?php echo $imagePath ?>" alt="Photo">
     </div>
-	<div class="col-dm-4">
-		<div class="name col-md-8">
+	<div class="col-md-7">
 			<h2><?php echo utf8_encode($name . " " . $prename); ?></h2>
-		</div>
-	
-		<div class="responsabilites col-md-8">
-			<p><?php echo utf8_encode($responsabilites); ?></p>
-		</div>
+		<p><?php echo utf8_encode($responsabilites); ?></p>
+	</div>
+	<div class="col-md-12">
 	</div>
 	
     <?php if(isset($editMode) && $editMode){
-        echo '<div class="management-buttons col-md-2">';
+        echo '<div class="management-buttons col-md-12">';
         // Edit form
         $editForm->setAttribute('action', 'edit/'.$id);
         $editForm->prepare();
@@ -47,5 +44,5 @@ setlocale(LC_TIME, 'deu_deu');
         echo $this->form()->closeTag();
         echo '</div>';
     }?>
-<div style="clear:both;"></div>
+	<div style="clear:both;"></div>
 </div>
