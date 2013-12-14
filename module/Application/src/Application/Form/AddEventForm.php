@@ -82,7 +82,7 @@ class AddEventForm extends Form {
             'name' => 'title',
             'attributes' => array(
                 'type' => 'text',
-                'value' => 'Title',
+                'value' => '',
                 'id' => 'title',
                 'placeholder' => 'Title',
             ),
@@ -92,18 +92,9 @@ class AddEventForm extends Form {
             'name' => 'description',
             'attributes' => array(
                 'type' => 'textarea',
-                'value' => 'Description',
+                'value' => '',
                 'id' => 'description',
                 'placeholder' => 'Description',
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'append',
-            'attributes' => array(
-                'type' => 'submit',
-                'value' => 'Append',
-                'id' => 'addButton',
             ),
         ));
     }

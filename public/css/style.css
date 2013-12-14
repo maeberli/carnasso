@@ -203,10 +203,6 @@ centered{
 	font-size: 18px;
 }
 
-#addButton {
-    margin-top:20px;
-}
-
 .description {
     padding: 0 5px;
 }
@@ -219,9 +215,13 @@ centered{
     background-color: black;
 }
 
-.management-buttons input {
+.management-buttons button {
     width: 100%;
     margin-bottom: 5px;
+}
+
+.postButton {
+    margin-top: 20px;
 }
 
 /******************

@@ -13,8 +13,6 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Model\Entity\Event;
-use Application\Form\EditEventButton;
-use Application\Form\DeleteEventButton;
 use Application\Form\AddEventForm;
 
 class EventsController extends AbstractCarnassoController {
@@ -35,9 +33,9 @@ class EventsController extends AbstractCarnassoController {
 
     public function manageAction() {
         // Authentification
-        if (! $this->auth()->hasIdentity() ){
-            return $this->redirect()->toRoute('admin', array('action' => 'login'));
-        }
+//        if (! $this->auth()->hasIdentity() ){
+//            return $this->redirect()->toRoute('admin', array('action' => 'login'));
+//        }
         
         $this->setBackgroundImage();
         
@@ -46,8 +44,6 @@ class EventsController extends AbstractCarnassoController {
         $currentCarnivalYear = $carinvalYearRepository->findOneBy(array('year' => $this->getCurrentCarnivalYear()->getYear()), array('year' => 'DESC'));
         
         // Management buttons
-        $editForm = new EditEventButton();
-        $deleteForm = new DeleteEventButton();
         $addForm = new AddEventForm();
 
         // Setting view
@@ -55,16 +51,14 @@ class EventsController extends AbstractCarnassoController {
             'menuParams' => $this->getMenuParameters(),
             'eventList' => $currentCarnivalYear->getEvents(),
             'addForm' => $addForm,
-            'editForm' => $editForm,
-            'deleteForm' => $deleteForm,
         ));
     }
 
     public function addAction() {
         // Authentification
-        if (! $this->auth()->hasIdentity() ){
-            return $this->redirect()->toRoute('admin', array('action' => 'login'));
-        }
+//        if (! $this->auth()->hasIdentity() ){
+//            return $this->redirect()->toRoute('admin', array('action' => 'login'));
+//        }
         
         $request = $this->getRequest();
         // Creating new Event entity
@@ -94,6 +88,13 @@ class EventsController extends AbstractCarnassoController {
         // Inserting event to database
         $this->entity()->getEntityManager()->persist($event);
         $this->entity()->getEntityManager()->flush();
+        
+        // Setting view and return partial view to be added in manage
+        $this->_helper->getHelper('layout')->disableLayout();
+        return new ViewModel(array(
+            'event' => $event,
+        ));
+        
     }
 
     public function editAction() {
@@ -131,9 +132,9 @@ class EventsController extends AbstractCarnassoController {
 
     public function deleteAction() {
         // Authentification
-        if (! $this->auth()->hasIdentity() ){
-            return $this->redirect()->toRoute('admin', array('action' => 'login'));
-        }
+//        if (! $this->auth()->hasIdentity() ){
+//            return $this->redirect()->toRoute('admin', array('action' => 'login'));
+//        }
         // Getting event
         $eventRepository = $this->entity()->getEventRepository();
         $event = $eventRepository->findOneBy(array('id' => $this->params()->fromRoute('id', 0)));

@@ -2,6 +2,7 @@
 echo $this->partial('partial/menu', $menuParams);
 
 // Receiving event list and parsing
+echo '<div class="eventsContainer" id="allEvents">';
 foreach($eventList as $event)
 {
     echo $this->partial('application/events/partial/event.phtml', array(
@@ -11,9 +12,71 @@ foreach($eventList as $event)
         'endHour' => $event->getEndTime(),
         'title' => $event->getTitle(),
         'content' => $event->getDescription(),
-        'editMode' => true,
-        'editForm' => $editForm,
-        'deleteForm' => $deleteForm,));
+        'editMode' => true,));
 }
+echo '</div>';
 
-echo $this->partial('application/events/partial/event_form.phtml', array('addForm' => $addForm,));
+echo $this->partial('application/events/partial/event_form.phtml', array('addForm' => $addForm,)); ?>
+<script type="text/javascript">
+$(".postButton").click(function() {
+        var title = $('input#title').val();
+        var description = $('textarea#description').val();
+        var day = $('input#day').val();
+        var month = $('input#month').val();
+        var start_time = $('input#start_time').val();
+        var stop_time = $('input#stop_time').val();
+        
+        // TODO Verification
+            $.ajax({
+                url: 'add',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    title: title,
+                    description: description,
+                    day: day,
+                    month: month,
+                    start_time: start_time,
+                    stop_time: stop_time
+                },
+                success: function(json) {
+                    document.getElementById('allEvents').innerHTML += json;
+                }
+            });
+        
+    });
+    
+    $(".editButton").click(function() {
+        var id = $(this).attr('data-id');
+        
+        // TODO Verification
+            $.ajax({
+                url: 'edit/'+id,
+                type: 'POST',
+                dataType: 'JSON',
+                data: {},
+                success: function(json) {
+                }
+            });
+        
+    });
+    
+    $(".deleteButton").click(function() {
+        var id = $(this).attr('data-id');
+        
+        // Remove from page
+        var div = document.getElementById('event-'+id);
+        div.parentNode.removeChild(div);
+        
+        // TODO Verification
+            $.ajax({
+                url: 'delete/'+id,
+                type: 'POST',
+                dataType: 'JSON',
+                data: {},
+                success: function(json) {
+                }
+            });
+        
+    });
+    </script>
