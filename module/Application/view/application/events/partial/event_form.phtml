@@ -2,11 +2,19 @@
 // Partial view of entity event
 // 
 // Arguments :
-// addForm     Zend Form       AddEventForm
+// date         Php DateTime    Date when the event is occuring
+// id           int             Id of event
+// startHour    Php DateTime    Start time of event
+// endHour      Php DateTime    End time of event
+// title        String          Event title
+// content      String          Event description
+// editMode     Boolean         Is the view use to edit
+// addForm      Zend Form       AddEventForm
 ?>
+<?php if(!$editMode) {?>
 <div class="event rounded opacity2">
+<?php }?>
     <?php
-    $addForm->setAttribute('action', 'add');
     $addForm->prepare();
     ?>
     <div class="col-md-4 blackBackground">
@@ -28,7 +36,14 @@
         <p><?php echo $this->formTextarea($addForm->get('description')); ?></p>
     </div>
     <div class="management-buttons col-md-2">
-        <button class="postButton">Append</button>
+        <?php
+        if($editMode)
+            echo $this->formElement($addForm->get('saveButton'));
+        else
+            echo $this->formElement($addForm->get('postButton'));
+        ?>
     </div>
     <div style="clear:both;"></div>
+<?php if(!$editMode) {?>
 </div>
+<?php }?>

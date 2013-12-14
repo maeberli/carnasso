@@ -15,8 +15,10 @@
 
 // Set german as main language
 setlocale(LC_TIME, 'deu_deu');
-?>
+
+if(!isset($ajaxMode)) {?>
 <div class="event rounded opacity2" id="event-<?php echo $id;?>">
+<?php }?>
     <div class="col-md-4 blackBackground">
         <div id="<?php echo $id;?>" class="heading">
             <div class="date">
@@ -42,4 +44,6 @@ setlocale(LC_TIME, 'deu_deu');
     </div>
     <?php }?>
 <div style="clear:both;"></div>
+<?php if(!isset($ajaxMode)) {?>
 </div>
+<?php }

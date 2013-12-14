@@ -97,6 +97,24 @@ class AddEventForm extends Form {
                 'placeholder' => 'Description',
             ),
         ));
+        
+        $this->add(array(
+            'name' => 'postButton',
+            'attributes' => array(
+                'type' => 'button',
+                'value' => 'Append',
+                'class' => 'insertButton postButton',
+            ),
+        ));
+        
+        $this->add(array(
+            'name' => 'saveButton',
+            'attributes' => array(
+                'type' => 'button',
+                'value' => 'Save',
+                'class' => 'insertButton saveButton',
+            ),
+        ));
     }
 
 }
