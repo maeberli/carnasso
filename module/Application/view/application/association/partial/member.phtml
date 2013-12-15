@@ -16,15 +16,13 @@
 setlocale(LC_TIME, 'deu_deu');
 
 ?>
-<div class="member rounded opacity2" style="width:300px;align:left;">
-    <div class="image col-md-5">
+<div class="member rounded opacity2">
+    <div class="image col-md-3">
 		<img id="photo" src="<?php echo $imagePath ?>" alt="Photo">
     </div>
-	<div class="col-md-7">
+	<div class="col-md-9">
 			<h2><?php echo utf8_encode($name . " " . $prename); ?></h2>
-		<p><?php echo utf8_encode($responsabilites); ?></p>
-	</div>
-	<div class="col-md-12">
+			<p><?php echo utf8_encode($responsabilites); ?></p>
 	</div>
 	
     <?php if(isset($editMode) && $editMode){

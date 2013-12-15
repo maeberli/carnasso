@@ -39,9 +39,11 @@ class AssociationController extends AbstractCarnassoController
 	
     public function manageAction() {
 		// Authentification
+		/*
         if (! $this->auth()->hasIdentity() ){
             return $this->redirect()->toRoute('admin', array('action' => 'login'));
         }
+		*/
         $this->setBackgroundImage();
         
         // Getting last year
@@ -65,7 +67,12 @@ class AssociationController extends AbstractCarnassoController
     }
 
     public function addAction() {
-        
+		// Authentification
+		/*
+        if (! $this->auth()->hasIdentity() ){
+            return $this->redirect()->toRoute('admin', array('action' => 'login'));
+        }
+		*/
         $request = $this->getRequest();
         // Creating new Member entity
         $member = new Member;
@@ -73,40 +80,67 @@ class AssociationController extends AbstractCarnassoController
         $member->setImagePath($request->getPost('imagePath'));
         $member->setPrename($request->getPost('prename'));
         $member->setName($request->getPost('name'));
-        $member->setCarnivalYear($this->getCurrentCarnivalYear());
 		
 		$organisator = new Organisator;
 		$organisator->setMember($member);
 		$organisator->setCarnivalYear($this->getCurrentCarnivalYear());
 		$organisator->setResponsabilities($request->getPost('responsabilities'));
         
-        // Inserting event to database
+        // Inserting member to database
+        $this->entity()->getEntityManager()->persist($member);
         $this->entity()->getEntityManager()->persist($organisator);
         $this->entity()->getEntityManager()->flush();
     }
 
     public function editAction() {
-        // Getting event
+		// Authentification
+		/*
+        if (! $this->auth()->hasIdentity() ){
+            return $this->redirect()->toRoute('admin', array('action' => 'login'));
+        }
+		*/
+		
+        $request = $this->getRequest();
+        // Getting member
         $memberRepository = $this->entity()->getMemberRepository();
         $member = $memberRepository->findOneBy(array('id' => $this->params()->fromRoute('id', 0)));
+		
+        $organisatorRepository = $this->entity()->getOrganisatorRepository();
+        $organisator = $organisatorRepository->findOneBy(array('id' => $this->params()->fromRoute('id', 0)));
         
         $member->setImagePath($request->getPost('imagePath'));
         $member->setPrename($request->getPost('prename'));
         $member->setName($request->getPost('name'));
-        $member->setCarnivalYear($this->getCurrentCarnivalYear());
+		
+        $organisator->setResponsabilities($request->getPost('responsabilities'));
+        $organisator->setCarnivalYear($this->getCurrentCarnivalYear());
+		$organisator->setMember($member);
         
         
-        // Updating event to database
+        // Updating member to database
         $this->entity()->getEntityManager()->persist($member);
+        $this->entity()->getEntityManager()->persist($organisator);
         $this->entity()->getEntityManager()->flush();
     }
 
     public function deleteAction() {
-        // Getting event
+		// Authentification
+		/*
+        if (! $this->auth()->hasIdentity() ){
+            return $this->redirect()->toRoute('admin', array('action' => 'login'));
+        }
+		*/
+		
+        // Getting member
         $memberRepository = $this->entity()->getMemberRepository();
         $member = $memberRepository->findOneBy(array('id' => $this->params()->fromRoute('id', 0)));
-        // Delete event from database
+        
+        $organisatorRepository = $this->entity()->getOrganisatorRepository();
+        $organisator = $organisatorRepository->findOneBy(array('id' => $this->params()->fromRoute('id', 0)));
+        
+		// Delete member from database
         $this->entity()->getEntityManager()->remove($member);
+        $this->entity()->getEntityManager()->remove($organisator);
         $this->entity()->getEntityManager()->flush();
     }
 }
