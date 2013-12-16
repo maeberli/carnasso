@@ -31,9 +31,9 @@ class EventsController extends AbstractCarnassoController {
 
     public function manageAction() {
         // Authentification
-//        if (! $this->auth()->hasIdentity() ){
-//            return $this->redirect()->toRoute('admin', array('action' => 'login'));
-//        }
+        if (! $this->auth()->hasIdentity() ){
+            return $this->redirect()->toRoute('admin', array('action' => 'login'));
+        }
         
         // Getting last year
         $carinvalYearRepository = $this->entity()->getCarnivalYearRepository();
@@ -53,9 +53,9 @@ class EventsController extends AbstractCarnassoController {
 
     public function addAction() {
         // Authentification
-//        if (! $this->auth()->hasIdentity() ){
-//            return $this->redirect()->toRoute('admin', array('action' => 'login'));
-//        }
+        if (! $this->auth()->hasIdentity() ){
+            return $this->redirect()->toRoute('admin', array('action' => 'login'));
+        }
         
         $request = $this->getRequest();
         // Creating new Event entity
@@ -77,9 +77,9 @@ class EventsController extends AbstractCarnassoController {
     
     public function geteditformAction() {
         // Authentification
-//        if (! $this->auth()->hasIdentity() ){
-//            return $this->redirect()->toRoute('admin', array('action' => 'login'));
-//        }
+        if (! $this->auth()->hasIdentity() ){
+            return $this->redirect()->toRoute('admin', array('action' => 'login'));
+        }
         
         // Getting event
         $eventRepository = $this->entity()->getEventRepository();
@@ -117,9 +117,10 @@ class EventsController extends AbstractCarnassoController {
 
     public function editAction() {
         // Authentification
-//        if (! $this->auth()->hasIdentity() ){
-//            return $this->redirect()->toRoute('admin', array('action' => 'login'));
-//        }
+        if (! $this->auth()->hasIdentity() ){
+            return $this->redirect()->toRoute('admin', array('action' => 'login'));
+        }
+        
         // Getting event
         $eventRepository = $this->entity()->getEventRepository();
         // TODO Control ID
@@ -141,9 +142,10 @@ class EventsController extends AbstractCarnassoController {
 
     public function deleteAction() {
         // Authentification
-//        if (! $this->auth()->hasIdentity() ){
-//            return $this->redirect()->toRoute('admin', array('action' => 'login'));
-//        }
+        if (! $this->auth()->hasIdentity() ){
+            return $this->redirect()->toRoute('admin', array('action' => 'login'));
+        }
+        
         // Getting event
         $eventRepository = $this->entity()->getEventRepository();
         // TODO Control ID
