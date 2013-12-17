@@ -15,7 +15,6 @@ class AddMemberForm extends Form {
         $this->setName('add_form');
         $this->setAttribute('method', 'post');
         
-
         $this->add(array(
             'name' => 'name',
             'attributes' => array(
@@ -58,5 +57,4 @@ class AddMemberForm extends Form {
             ),
         ));
     }
-
 }

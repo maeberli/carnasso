@@ -28,11 +28,14 @@
         <p><?php echo $this->formTextarea($addForm->get('responsabilities')); ?></p>
     </div>
     <div class="management-buttons col-md-2">
-        <?php 
-        echo $this->formSubmit($addForm->get('append'));
+         <?php
+        if($editMode)
+            echo $this->formElement($addForm->get('saveButton'));
+        else
+            echo $this->formElement($addForm->get('postButton'));
         ?>
     </div>
-    <?php
-    echo $this->form()->closeTag();
-    ?><div style="clear:both;"></div>
+    <div style="clear:both;"></div>
+<?php if(!$editMode) {?>
 </div>
+<?php }?>
