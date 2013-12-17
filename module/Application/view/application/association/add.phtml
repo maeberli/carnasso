@@ -1,7 +1,9 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-?>
+	$member = $organisator->getMember();
+    echo $this->partial('application/association/partial/member.phtml', array(
+        'id' => $member->getId(),
+        'prename' => $member->getPrename(),
+        'name' => $member->getName(),
+        'imagePath' => $imagePath.$member->getImagePath(),
+		'responsabilites' =>$organisator->getResponsabilites(),
+        'editMode' => true,));

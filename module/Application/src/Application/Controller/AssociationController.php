@@ -22,9 +22,7 @@ class AssociationController extends AbstractCarnassoController
     const MEMBERIMGPATH = "/img/members/";
 	
     public function indexAction()
-    {
-        $this->setBackgroundImage();
-        
+    {   
         // Getting last year
         $currentCarnivalYear = $this->getCurrentCarnivalYear();
 
@@ -44,8 +42,8 @@ class AssociationController extends AbstractCarnassoController
             return $this->redirect()->toRoute('admin', array('action' => 'login'));
         }
 		*/
-        $this->setBackgroundImage();
-        
+        //$this->setBackgroundImage();
+		
         // Getting last year
         $carinvalYearRepository = $this->entity()->getCarnivalYearRepository();
         $currentCarnivalYear = $carinvalYearRepository->findOneBy(array('year' => $this->getCurrentCarnivalYear()->getYear()), array('year' => 'DESC'));

@@ -15,8 +15,10 @@
 
 // Set german as main language
 setlocale(LC_TIME, 'deu_deu');
-?>
-<div class="event rounded opacity2">
+
+if(!isset($ajaxMode)) {?>
+<div class="event rounded opacity2" id="event-<?php echo $id;?>">
+<?php }?>
     <div class="col-md-4 blackBackground">
         <div id="<?php echo $id;?>" class="heading">
             <div class="date">
@@ -35,22 +37,13 @@ setlocale(LC_TIME, 'deu_deu');
     <div class="description col-md-<?php echo $editMode?"10":"12";?>">
         <p><?php echo utf8_encode($content); ?></p>
     </div>
-    <?php if(isset($editMode) && $editMode){
-        echo '<div class="management-buttons col-md-2">';
-        // Edit form
-        $editForm->setAttribute('action', 'edit/'.$id);
-        $editForm->prepare();
-        echo $this->form()->openTag($editForm);
-        echo $this->formSubmit($editForm->get('edit'));
-        echo $this->form()->closeTag();
-        
-        //Delete form
-        $deleteForm->setAttribute('action', 'delete/'.$id);
-        $deleteForm->prepare();
-        echo $this->form()->openTag($deleteForm);
-        echo $this->formSubmit($deleteForm->get('delete'));
-        echo $this->form()->closeTag();
-        echo '</div>';
-    }?>
+    <?php if(isset($editMode) && $editMode){ ?>
+    <div class="management-buttons col-md-2">
+    <button class="editButton" data-id="<?php echo $id;?>">Edit</button>
+    <button class="deleteButton" data-id="<?php echo $id;?>">Delete</button>
+    </div>
+    <?php }?>
 <div style="clear:both;"></div>
+<?php if(!isset($ajaxMode)) {?>
 </div>
+<?php }

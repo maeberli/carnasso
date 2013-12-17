@@ -51,7 +51,7 @@ return array(
                 'options' => array(
                     'route' => '/events/:action/:id',
                     'constraints' => array(
-                        'action' => 'edit|delete',
+                        'action' => 'geteditform|edit|delete',
                         'id'     => '[0-9]+',
                     ),
                     'defaults' => array(

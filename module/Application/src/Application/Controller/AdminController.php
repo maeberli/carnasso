@@ -21,8 +21,6 @@ class AdminController extends AbstractCarnassoController
 {
     public function loginAction()
     {
-        $this->setBackgroundImage();
-        
         $form = new LoginForm();
         $messages = null;
 
@@ -45,7 +43,6 @@ class AdminController extends AbstractCarnassoController
                 if ($authResult->isValid()) {
                         $identity = $authResult->getIdentity();
                         $authService->getStorage()->write($identity);
-                        $time = 18000; // 5 hours:  18000  / 3600 = 5h
                         return $this->redirect()->toRoute('index');
                 }
                 foreach ($authResult->getMessages() as $message)
@@ -63,8 +60,6 @@ class AdminController extends AbstractCarnassoController
     
     public function logoutAction()
     {
-        $this->setBackgroundImage();
-        
         $auth = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
         
         if ($auth->hasIdentity()) {

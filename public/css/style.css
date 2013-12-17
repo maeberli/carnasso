@@ -156,10 +156,10 @@ centered{
 }
 
 .opacity1 {
-	background: rgba(255, 255, 255, 0.4);
+	background: rgba(255, 255, 255, 0.55);
 }
 .opacity2 {
-	background: rgba(255, 255, 255, 0.6);
+	background: rgba(255, 255, 255, 0.75);
 }
 
 /******************
@@ -198,10 +198,6 @@ centered{
 	font-size: 18px;
 }
 
-#addButton {
-    margin-top:20px;
-}
-
 .description {
     padding: 0 5px;
 }
@@ -214,9 +210,13 @@ centered{
     background-color: black;
 }
 
-.management-buttons input {
+.management-buttons button {
     width: 100%;
     margin-bottom: 5px;
+}
+
+.insertButton {
+    margin-top: 20px;
 }
 
 /******************

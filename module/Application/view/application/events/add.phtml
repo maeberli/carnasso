@@ -1,7 +1,9 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-?>
+echo $this->partial('application/events/partial/event.phtml', array(
+        'date' => $event->getDate(),
+        'id' => $event->getId(),
+        'startHour' => $event->getStartTime(),
+        'endHour' => $event->getEndTime(),
+        'title' => $event->getTitle(),
+        'content' => $event->getDescription(),
+        'editMode' => true,));
