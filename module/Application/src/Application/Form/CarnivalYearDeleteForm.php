@@ -20,6 +20,7 @@ class CarnivalYearDeleteForm extends Form
                 'type'  => 'submit',
                 'value' => 'Nein',
                 'id' => 'cancelbutton',
+                'class' => 'btn btn-default',
             ),
         ));
 
@@ -29,6 +30,7 @@ class CarnivalYearDeleteForm extends Form
                 'type'  => 'submit',
                 'value' => 'Ja',
                 'id' => 'confirmbutton',
+                'class' => 'btn btn-primary',
             ),
         ));
     }

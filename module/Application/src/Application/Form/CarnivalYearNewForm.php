@@ -54,6 +54,7 @@ class CarnivalYearNewForm extends Form
                 'type'  => 'submit',
                 'value' => 'Speichern',
                 'id' => 'savebutton',
+                'class' => 'btn btn-default',
             ),
         ));
     }
