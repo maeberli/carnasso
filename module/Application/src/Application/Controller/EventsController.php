@@ -47,6 +47,7 @@ class EventsController extends AbstractCarnassoController {
             'menuParams' => $this->getMenuParameters(),
             'eventList' => $currentCarnivalYear->getEvents(),
             'addForm' => $addForm,
+            'base_url' => preg_replace('#manage.*#', '', $this->getRequest()->getUri()),
         ));
     }
 
@@ -59,27 +60,9 @@ class EventsController extends AbstractCarnassoController {
         $request = $this->getRequest();
         // Creating new Event entity
         $event = new Event;
-        
-        $event->setTitle($request->getPost('title'));
-        $date = new \DateTime();
-        
-        $date->setDate($this->getCurrentCarnivalYear()->getYear(), $request->getPost('month'), $request->getPost('day'));
-        $event->setDate($date);
+        $this->setEventWithRequest($event, $request);
         
         $event->setCarnivalYear($this->getCurrentCarnivalYear());
-        
-        $start = explode(":",$request->getPost('start_time'));
-        $startTime = new \DateTime();
-        $startTime->setTime($start[0], $start[1]);
-        $event->setStartTime($startTime);
-        
-        $stop = explode(":",$request->getPost('stop_time'));
-        $stopTime = new \DateTime();
-        $stopTime->setTime($stop[0], $stop[1]);
-        $event->setEndTime($stopTime);
-        
-        $event->setDescription($request->getPost('description'));
-        $event->setLocation("");
         
         // Inserting event to database
         $this->entity()->getEntityManager()->persist($event);
@@ -100,6 +83,7 @@ class EventsController extends AbstractCarnassoController {
         
         // Getting event
         $eventRepository = $this->entity()->getEventRepository();
+        // TODO Control ID
         $event = $eventRepository->findOneBy(array('id' => $this->params()->fromRoute('id', 0)));
         
         // Event form
@@ -121,7 +105,7 @@ class EventsController extends AbstractCarnassoController {
         $addForm->get('description')->setValue($event->getDescription());
         $addForm->get('description')->setAttribute('id', $addForm->get('description')->getAttribute('id').'-'.$event->getId());
         
-        $addForm->get('saveButton')->setAttribute('data-id', $event->getId())->setAttribute('style', 'width:100%;');
+        $addForm->get('saveButton')->setAttribute('data-id', $event->getId());
         
         // Setting view and return partial view to be added in manage
         $this->layout('layout/empty');
@@ -136,12 +120,43 @@ class EventsController extends AbstractCarnassoController {
         if (! $this->auth()->hasIdentity() ){
             return $this->redirect()->toRoute('admin', array('action' => 'login'));
         }
+        
         // Getting event
         $eventRepository = $this->entity()->getEventRepository();
+        // TODO Control ID
         $event = $eventRepository->findOneBy(array('id' => $this->params()->fromRoute('id', 0)));
         
         $request = $this->getRequest();
+        $this->setEventWithRequest($event, $request);
         
+        // Updating event to database
+        $this->entity()->getEntityManager()->persist($event);
+        $this->entity()->getEntityManager()->flush();
+        
+        // Setting view and return partial view to be added in manage
+        $this->layout('layout/empty');
+        return new ViewModel(array(
+            'event' => $event,
+        ));
+    }
+
+    public function deleteAction() {
+        // Authentification
+        if (! $this->auth()->hasIdentity() ){
+            return $this->redirect()->toRoute('admin', array('action' => 'login'));
+        }
+        
+        // Getting event
+        $eventRepository = $this->entity()->getEventRepository();
+        // TODO Control ID
+        $event = $eventRepository->findOneBy(array('id' => $this->params()->fromRoute('id', 0)));
+        // Delete event from database
+        $this->entity()->getEntityManager()->remove($event);
+        $this->entity()->getEntityManager()->flush();
+    }
+    
+    public function setEventWithRequest($event, $request)
+    {
         $event->setTitle($request->getPost('title'));
         $date = new \DateTime();
         
@@ -160,29 +175,6 @@ class EventsController extends AbstractCarnassoController {
         
         $event->setDescription($request->getPost('description'));
         $event->setLocation("");
-        
-        // Updating event to database
-        $this->entity()->getEntityManager()->persist($event);
-        $this->entity()->getEntityManager()->flush();
-        
-        // Setting view and return partial view to be added in manage
-        $this->layout('layout/empty');
-        return new ViewModel(array(
-            'event' => $event,
-        ));
-    }
-
-    public function deleteAction() {
-        // Authentification
-        if (! $this->auth()->hasIdentity() ){
-            return $this->redirect()->toRoute('admin', array('action' => 'login'));
-        }
-        // Getting event
-        $eventRepository = $this->entity()->getEventRepository();
-        $event = $eventRepository->findOneBy(array('id' => $this->params()->fromRoute('id', 0)));
-        // Delete event from database
-        $this->entity()->getEntityManager()->remove($event);
-        $this->entity()->getEntityManager()->flush();
     }
 
 }

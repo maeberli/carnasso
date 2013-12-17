@@ -32,10 +32,10 @@ if(!isset($ajaxMode)) {?>
         </div>
     </div>
     <div class="title col-md-8">
-        <h2><?php echo utf8_encode($title); ?></h2>
+        <h2><?php echo $title; ?></h2>
     </div>
     <div class="description col-md-<?php echo $editMode?"10":"12";?>">
-        <p><?php echo utf8_encode($content); ?></p>
+        <p><?php echo $content; ?></p>
     </div>
     <?php if(isset($editMode) && $editMode){ ?>
     <div class="management-buttons col-md-2">

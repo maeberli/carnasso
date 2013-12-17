@@ -22,7 +22,8 @@ echo $this->partial('application/events/partial/event_form.phtml', array('addFor
     function show_fill_error() {
         document.getElementById('posting_errors').innerHTML = '<div class="alert alert-danger"><a class="close" data-dismiss="alert">&times;</a>Please fill all fields</div>';
     }
-$(".postButton").click(function() {
+    
+    $(document).delegate('.postButton', 'click',function() {
         var title = $('input#title').val();
         var description = $('textarea#description').val();
         var day = $('#days').val();
@@ -34,7 +35,7 @@ $(".postButton").click(function() {
             show_fill_error();
         }else{
             $.ajax({
-                url: 'add',
+                url: '<?php echo $base_url;?>add',
                 type: 'POST',
                 dataType: 'html',
                 data: {
@@ -56,7 +57,7 @@ $(".postButton").click(function() {
         var id = $(this).attr('data-id');
         
             $.ajax({
-                url: 'geteditform/'+id,
+                url: '<?php echo $base_url;?>geteditform/'+id,
                 type: 'POST',
                 dataType: 'html',
                 data: {},
@@ -81,7 +82,7 @@ $(".postButton").click(function() {
             show_fill_error();
         }else{
             $.ajax({
-                url: 'edit/'+id,
+                url: '<?php echo $base_url;?>edit/'+id,
                 type: 'POST',
                 dataType: 'html',
                 data: {
@@ -99,22 +100,24 @@ $(".postButton").click(function() {
         }
     });
     
-    $(".deleteButton").click(function() {
-        var id = $(this).attr('data-id');
-        
-        // Remove from page
-        var div = document.getElementById('event-'+id);
-        div.parentNode.removeChild(div);
-        
-        // TODO Verification
+    $(document).delegate('.deleteButton', 'click', function() {
+        if(confirm("Delete this event ?"))
+        {
+            var id = $(this).attr('data-id');
+
+            // Remove from page
+            var div = document.getElementById('event-'+id);
+            div.parentNode.removeChild(div);
+
+            // TODO Verification
             $.ajax({
-                url: 'delete/'+id,
+                url: '<?php echo $base_url;?>delete/'+id,
                 type: 'POST',
                 dataType: 'JSON',
                 data: {},
                 success: function(json) {
                 }
             });
-        
+        }
     });
     </script>
