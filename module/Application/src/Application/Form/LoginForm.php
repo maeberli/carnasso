@@ -14,6 +14,7 @@ class LoginForm extends Form
             'name' => 'username',
             'attributes' => array(
                 'type'  => 'text',
+                'class' => 'form-control',
             ),
             'options' => array(
                 'label' => 'Benutzername',
@@ -23,6 +24,7 @@ class LoginForm extends Form
             'name' => 'password',
             'attributes' => array(
                 'type'  => 'password',
+                'class' => 'form-control',
             ),
             'options' => array(
                 'label' => 'Passwort',
@@ -35,6 +37,7 @@ class LoginForm extends Form
                 'type'  => 'submit',
                 'value' => 'Anmelden',
                 'id' => 'submitbutton',
+                'class' => 'btn btn-default',
             ),
         )); 
     }
