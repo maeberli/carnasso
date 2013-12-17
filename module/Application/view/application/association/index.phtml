@@ -1,14 +1,25 @@
 <?php
 echo $this->partial('partial/menu', $menuParams);
 
+?>
+
+<div class="row">
+<?php
 // Receiving event list and parsing
 foreach($organisatorList as $organisator)
 {
-	$member = $organisator->getMember();
-    echo $this->partial('application/association/partial/member.phtml', array(
-        'id' => $member->getId(),
-        'prename' => $member->getPrename(),
-        'name' => $member->getName(),
-        'imagePath' => $imagePath.$member->getImagePath(),
-		'responsabilites' =>$organisator->getResponsabilites() ));
+    $member = $organisator->getMember();
+    echo($this->partial(
+        'application/association/partial/member.phtml',
+        array(
+            'id' => $member->getId(),
+            'prename' => $member->getPrename(),
+            'name' => $member->getName(),
+            'imagePath' => $imagePath.$member->getImagePath(),
+            'responsabilites' => $organisator->getResponsabilites(),
+        )
+    ));
 }
+
+?>
+</div>
