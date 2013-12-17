@@ -1,0 +1,10 @@
+<?php 
+	$member = $organisator->getMember();
+    echo $this->partial('application/association/partial/member.phtml', array(
+        'id' => $member->getId(),
+        'prename' => $member->getPrename(),
+        'name' => $member->getName(),
+        'imagePath' => $imagePath.$member->getImagePath(),
+		'responsabilites' =>$organisator->getResponsabilites(),
+        'ajaxMode' => true,
+        'editMode' => true));

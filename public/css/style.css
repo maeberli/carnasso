@@ -246,6 +246,10 @@ centered{
     margin-top: 5px; 
  } 
 
+.member{
+	margin: 5px 0;
+}
+
 /******************
  * Bootstrap modifications
  ******************/

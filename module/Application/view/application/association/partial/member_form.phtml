@@ -10,10 +10,13 @@
     $addForm->prepare();
     echo $this->form()->openTag($addForm);
     ?>
-    <div class="col-md-2">
-		<p>photo</p>
-    </div>
-	<div class="name col-md-8">
+	<div class="title col-md-12">
+	</br>
+		<form enctype="multipart/form-data" action="parse_file.php" method="post"> 
+		<p> Photo : <input type="file" name="uploaded_file"> </p>
+		</form>
+	</div>
+	<div class="name col-md-12">
 		<div class="title col-md-6">
 			<h2><?php echo $this->formText($addForm->get('name')); ?></h2>
 		</div>
@@ -22,15 +25,17 @@
 		</div>
 	</div>
     <div class="description col-md-10">
-        <p><?php echo $this->formTextarea($addForm->get('description')); ?></p>
+        <p><?php echo $this->formTextarea($addForm->get('responsabilities')); ?></p>
     </div>
     <div class="management-buttons col-md-2">
-        <?php 
-        echo $this->formSubmit($addForm->get('append'));
+         <?php
+        if($editMode)
+            echo $this->formElement($addForm->get('saveButton'));
+        else
+            echo $this->formElement($addForm->get('postButton'));
         ?>
     </div>
-    <?php
-    echo $this->form()->closeTag();
-    ?>
     <div style="clear:both;"></div>
+<?php if(!$editMode) {?>
 </div>
+<?php }?>

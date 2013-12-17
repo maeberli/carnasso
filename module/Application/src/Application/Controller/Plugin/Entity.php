@@ -34,6 +34,12 @@ class Entity extends AbstractPlugin {
         $em = $this->getEntityManager();
         return $em->getRepository('Application\Model\Entity\Member');
     }
+	
+    public function getOrganisatorRepository()
+    {
+        $em = $this->getEntityManager();
+        return $em->getRepository('Application\Model\Entity\Organisator');
+    }
 
     public function getUserRepository()
     {

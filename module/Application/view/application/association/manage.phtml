@@ -1,7 +1,10 @@
 <?php
 echo $this->partial('partial/menu', $menuParams);
 
-// Receiving event list and parsing
+echo '<div id="posting_errors"></div>';
+// Receiving member list and parsing
+echo '<div class="membersContainer" id="allMembers">';
+
 foreach($organisatorList as $organisator)
 {
 	$member = $organisator->getMember();
@@ -11,9 +14,108 @@ foreach($organisatorList as $organisator)
         'name' => $member->getName(),
         'imagePath' => $imagePath.$member->getImagePath(),
 		'responsabilites' =>$organisator->getResponsabilites(),
-        'editMode' => true,
-        'editForm' => $editForm,
-        'deleteForm' => $deleteForm,));
+        'editMode' => true,));
 }
+echo '</div>';
 
-echo $this->partial('application/association/partial/member_form.phtml', array('addForm' => $addForm,));
+echo $this->partial('application/association/partial/member_form.phtml', array('addForm' => $addForm,
+                                                                        'editMode' => false)); ?>
+																		
+
+<script type="text/javascript">
+    function show_fill_error() {
+        document.getElementById('posting_errors').innerHTML = '<div class="alert alert-danger"><a class="close" data-dismiss="alert">&times;</a>Please fill all fields</div>';
+    }
+    
+    $(document).delegate('.postButton', 'click',function() {
+		
+		var imagePath = $('input#imagePath').val();
+        var name = $('input#name').val();
+		var prename = $('input#prename').val();
+		var responsabilites = $('textarea#responsabilites').val();
+        
+        if(name == '' || prename == '') {
+            show_fill_error();
+        }else{
+            $.ajax({
+                url: '<?php echo $base_url;?>add',
+                type: 'POST',
+                dataType: 'html',
+                data: {
+                    imagePath: imagePath,
+                    name: name,
+                    prename: prename,
+                    responsabilites: responsabilites,
+                },
+                success: function(html) {
+                    document.getElementById('allMembers').innerHTML += html;
+                }
+            });
+        }
+    });
+    
+    $(document).delegate('.editButton', 'click', function() {
+        var id = $(this).attr('data-id');
+        
+            $.ajax({
+                url: '<?php echo $base_url;?>geteditform/'+id,
+                type: 'POST',
+                dataType: 'html',
+                data: {},
+                success: function(html) {
+                    document.getElementById('allMembers').innerHTML = document.getElementById('allMembers').innerHTML.replace(document.getElementById('member-'+id).innerHTML,html);
+                }
+            });
+        
+    });
+    
+    $(document).delegate('.saveButton', 'click', function() {
+        var id = $(this).attr('data-id');
+        
+        
+		var imagePath = $('input#imagePath-'+id).val();
+        var name = $('input#name-'+id).val();
+		var prename = $('input#prename-'+id).val();
+		var responsabilites = $('textarea#responsabilites-'+id).val();
+        
+        if(name == '' || prename == '') {
+            show_fill_error();
+        }else{
+            $.ajax({
+                url: '<?php echo $base_url;?>edit/'+id,
+                type: 'POST',
+                dataType: 'html',
+                data: {
+                    imagePath: imagePath,
+                    name: name,
+                    prename: prename,
+                    responsabilites: responsabilites,
+                },
+                success: function(html) {
+                    document.getElementById('allMembers').innerHTML = document.getElementById('allMembers').innerHTML.replace(document.getElementById('member-'+id).innerHTML,html);
+                }
+            });
+        }
+    });
+    
+    $(document).delegate('.deleteButton', 'click', function() {
+        if(confirm("Delete this member ?"))
+        {
+            var id = $(this).attr('data-id');
+
+            // Remove from page
+            var div = document.getElementById('member-'+id);
+            div.parentNode.removeChild(div);
+
+            // TODO Verification
+            $.ajax({
+                url: '<?php echo $base_url;?>delete/'+id,
+                type: 'POST',
+                dataType: 'JSON',
+                data: {},
+                success: function(json) {
+                }
+            });
+        }
+    });
+    </script>
