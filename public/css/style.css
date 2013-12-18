@@ -239,7 +239,7 @@ centered{
  * Member page
  ******************/
  
- #photo {
+.memberPhoto {
     width: 90px;
     display: block;
     margin-left: 0px;

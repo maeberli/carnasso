@@ -2,25 +2,25 @@
 echo $this->partial('partial/menu', $menuParams);
 
 echo '<div id="posting_errors"></div>';
-// Receiving member list and parsing
-echo '<div class="membersContainer" id="allMembers">';
 
-foreach($organisatorList as $organisator)
+// Receiving member list and parsing
+?>
+<div class="row" id="allMembers">
+<?php foreach($organisatorList as $organisator)
 {
-	$member = $organisator->getMember();
+    $member = $organisator->getMember();
     echo $this->partial('application/association/partial/member.phtml', array(
         'id' => $member->getId(),
         'prename' => $member->getPrename(),
         'name' => $member->getName(),
         'imagePath' => $imagePath.$member->getImagePath(),
-		'responsabilites' =>$organisator->getResponsabilites(),
+        'responsabilites' =>$organisator->getResponsabilites(),
         'editMode' => true,));
 }
-echo '</div>';
-
-echo $this->partial('application/association/partial/member_form.phtml', array('addForm' => $addForm,
+?>
+<?php echo $this->partial('application/association/partial/member_form.phtml', array('addForm' => $addForm,
                                                                         'editMode' => false)); ?>
-																		
+</div>
 
 <script type="text/javascript">
     function show_fill_error() {
@@ -28,11 +28,11 @@ echo $this->partial('application/association/partial/member_form.phtml', array('
     }
     
     $(document).delegate('.postButton', 'click',function() {
-		
-		var imagePath = $('input#imagePath').val();
+        
+        var imagePath = $('input#imagePath').val();
         var name = $('input#name').val();
-		var prename = $('input#prename').val();
-		var responsabilites = $('textarea#responsabilites').val();
+        var prename = $('input#prename').val();
+        var responsabilites = $('textarea#responsabilites').val();
         
         if(name == '' || prename == '') {
             show_fill_error();
@@ -73,10 +73,10 @@ echo $this->partial('application/association/partial/member_form.phtml', array('
         var id = $(this).attr('data-id');
         
         
-		var imagePath = $('input#imagePath-'+id).val();
+        var imagePath = $('input#imagePath-'+id).val();
         var name = $('input#name-'+id).val();
-		var prename = $('input#prename-'+id).val();
-		var responsabilites = $('textarea#responsabilites-'+id).val();
+        var prename = $('input#prename-'+id).val();
+        var responsabilites = $('textarea#responsabilites-'+id).val();
         
         if(name == '' || prename == '') {
             show_fill_error();
