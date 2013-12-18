@@ -13,6 +13,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Model\Entity\Organisator;
 use Application\Model\Entity\Member;
+use Application\Model\Entity\StaticPageInfo;
 use Application\Form\EditEventButton;
 use Application\Form\DeleteEventButton;
 use Application\Form\AddMemberForm;
@@ -25,12 +26,16 @@ class AssociationController extends AbstractCarnassoController
     {   
         // Getting last year
         $currentCarnivalYear = $this->getCurrentCarnivalYear();
-
+        
+        $staticContent = $this->getStaticContent();
+        
         // Setting view
         return new ViewModel(array(
             'menuParams' => $this->getMenuParameters(),
             'organisatorList' => $currentCarnivalYear->getOrganisators(),
-			'imagePath' => $this->getBasePath().self::MEMBERIMGPATH,
+            'association' => $staticContent[0]->getStaticText(),
+            'joinus' => $staticContent[1]->getStaticText(),
+            'imagePath' => $this->getBasePath().self::MEMBERIMGPATH,
         ));
     }
 	
@@ -180,5 +185,25 @@ class AssociationController extends AbstractCarnassoController
 	$organisator->setMember($member);
 	$organisator->setCarnivalYear($this->getCurrentCarnivalYear());
 	$organisator->setResponsabilities($request->getPost('responsabilities'));
+    }
+    
+    private function getStaticContent(){
+        $staticPageInfoRepository = $this->entity()->getStaticPageInfoRepository();
+        $joinus = $staticPageInfoRepository->findOneBy(array('id' => StaticPageInfo::JOINUS_ID));
+        $aboutus = $staticPageInfoRepository->findOneBy(array('id' => StaticPageInfo::ABOUTUS_ID));
+        
+        if($joinus == null)
+        {
+            $joinus = new StaticPageInfo();
+            $joinus->setStaticText("");
+        }
+        
+        if($aboutus == null)
+        {
+            $aboutus = new StaticPageInfo();
+            $aboutus->setStaticText("");
+        }
+        
+        return [$aboutus, $joinus];
     }
 }
