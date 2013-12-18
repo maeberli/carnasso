@@ -7,13 +7,40 @@
     $editForm->prepare();
     echo $this->form()->openTag($editForm);
     ?>
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Hintergrund</h2>
+            <div class="fileinput fileinput-new" data-provides="fileinput">
+                <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; min-height: 100px;">
+                    <img src="<?php echo $backgroundImg ?>" alt="Flyer">
+                </div>
+                <div>
+                    <span class="btn btn-default btn-file">
+                        <span class="fileinput-new">&Auml;ndern</span>
+                        <span class="fileinput-exists">&Auml;ndern</span>
+                        <?php echo $this->formFile($editForm->get('backgroundImgPathNew'));?>
+                    </span>
+                </div> 
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h2>Flyer</h2>
+            <div class="fileinput fileinput-new" data-provides="fileinput">
+                <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; min-height: 100px;">
+                    <img src="<?php echo $flyerImg ?>" alt="Flyer">
+                </div>
+                <div>
+                    <span class="btn btn-default btn-file">
+                        <span class="fileinput-new">&Auml;ndern</span>
+                        <span class="fileinput-exists">&Auml;ndern</span>
+                        <?php echo $this->formFile($editForm->get('flyerImgPathNew'));?>
+                    </span>
+                </div> 
+            </div>
+        </div>
+    </div>
     
-    <h2>Hintergrund Bild</h2>
-    <img class="preview" src="<?php echo $backgroundImg ?>" alt="Hintergrund">
-    <?php echo $this->formRow($editForm->get('backgroundImgPathNew'));?><br /><br />
-    <h2>Flyer</h2>
-    <img class="preview" src="<?php echo $flyerImg ?>" alt="Flyer">
-    <?php echo $this->formRow($editForm->get('flyerImgPathNew'));?><br /><br/>
+    
     <?php echo $this->formSubmit($editForm->get('savebutton')); ?><br />
     
     <?php echo $this->form()->closeTag(); ?>
