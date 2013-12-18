@@ -19,7 +19,7 @@ use Application\Form\AddMemberForm;
 
 class AssociationController extends AbstractCarnassoController
 {
-    const MEMBERIMGPATH = "/img/members/";
+    const MEMBERIMGPATH = "/img/carnasso/";
 	
     public function indexAction()
     {   
