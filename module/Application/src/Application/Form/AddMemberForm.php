@@ -54,7 +54,7 @@ class AddMemberForm extends Form {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'value' => 'Save',
-                'class' => 'btn btn-sm',
+                'class' => 'btn btn-sm postButton',
             ),
         ));
 

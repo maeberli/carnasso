@@ -103,7 +103,7 @@ class AddEventForm extends Form {
             'attributes' => array(
                 'type' => 'button',
                 'value' => 'Append',
-                'class' => 'insertButton postButton',
+                'class' => 'btn btn-default insertButton postButton',
             ),
         ));
         
@@ -112,7 +112,7 @@ class AddEventForm extends Form {
             'attributes' => array(
                 'type' => 'button',
                 'value' => 'Save',
-                'class' => 'insertButton saveButton',
+                'class' => 'btn btn-default insertButton saveButton',
             ),
         ));
     }
