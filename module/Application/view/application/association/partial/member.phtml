@@ -19,7 +19,7 @@ echo '<div class="col-md-6">';?>
     <div class="event rounded opacity2">
         <div class="row" >
             <div class="image col-md-3">
-                <img id="photo" src="<?php echo $imagePath ?>" alt="Photo">
+                <img class="memberPhoto" src="<?php echo $imagePath ?>" alt="Photo">
             </div>
             <div class="col-md-9">
                 <h3><?php echo utf8_encode($name . " " . $prename); ?></h3>
@@ -28,11 +28,10 @@ echo '<div class="col-md-6">';?>
         </div>
         
         <?php if(isset($editMode) && $editMode){ ?>
-        <div class="management-buttons col-md-2">
-        <button class="editButton" data-id="<?php echo $id;?>">Edit</button>
-        <button class="deleteButton" data-id="<?php echo $id;?>">Delete</button>
+        <div class="col-md-12">
+            <button class="editButton" data-id="<?php echo $id;?>">Edit</button>
+            <button class="deleteButton" data-id="<?php echo $id;?>">Delete</button>
         </div>
         <?php }?>
     </div>
-<?php echo '</div>';
-?>
+<?php echo '</div>';?>
