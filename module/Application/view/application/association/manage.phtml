@@ -32,7 +32,7 @@ echo '<div id="posting_errors"></div>';
         var imagePath = $('input#imagePath').val();
         var name = $('input#name').val();
         var prename = $('input#prename').val();
-        var responsabilites = $('textarea#responsabilites').val();
+        var responsabilities = $('input#responsabilities').val();
         
         if(name == '' || prename == '') {
             show_fill_error();
@@ -45,7 +45,7 @@ echo '<div id="posting_errors"></div>';
                     imagePath: imagePath,
                     name: name,
                     prename: prename,
-                    responsabilites: responsabilites,
+                    responsabilities: responsabilities,
                 },
                 success: function(html) {
                     document.getElementById('allMembers').innerHTML += html;
@@ -76,7 +76,7 @@ echo '<div id="posting_errors"></div>';
         var imagePath = $('input#imagePath-'+id).val();
         var name = $('input#name-'+id).val();
         var prename = $('input#prename-'+id).val();
-        var responsabilites = $('textarea#responsabilites-'+id).val();
+        var responsabilities = $('input#responsabilities-'+id).val();
         
         if(name == '' || prename == '') {
             show_fill_error();
@@ -89,7 +89,7 @@ echo '<div id="posting_errors"></div>';
                     imagePath: imagePath,
                     name: name,
                     prename: prename,
-                    responsabilites: responsabilites,
+                    responsabilities: responsabilities,
                 },
                 success: function(html) {
                     document.getElementById('allMembers').innerHTML = document.getElementById('allMembers').innerHTML.replace(document.getElementById('member-'+id).innerHTML,html);

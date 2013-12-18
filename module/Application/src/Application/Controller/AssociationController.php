@@ -66,8 +66,8 @@ class AssociationController extends AbstractCarnassoController
 		
         $request = $this->getRequest();
         // Creating new Member entity
-        $member = new Member;
-		$organisator = new Organisator;
+        $member = new Member();
+		$organisator = new Organisator();
         
 		$this->setOrganisatorWithRequest($member, $organisator, $request);		
         
@@ -172,12 +172,13 @@ class AssociationController extends AbstractCarnassoController
 	
     public function setOrganisatorWithRequest($member, $organisator, $request)
     {
-        $member->setImagePath($request->getPost('imagePath'));
+        //$member->setImagePath($request->getPost('imagePath'));
+        $member->setImagePath('path');
         $member->setPrename($request->getPost('prename'));
         $member->setName($request->getPost('name'));
 		
-		$organisator->setMember($member);
-		$organisator->setCarnivalYear($this->getCurrentCarnivalYear());
-		$organisator->setResponsabilities($request->getPost('responsabilities'));
+	$organisator->setMember($member);
+	$organisator->setCarnivalYear($this->getCurrentCarnivalYear());
+	$organisator->setResponsabilities($request->getPost('responsabilities'));
     }
 }
