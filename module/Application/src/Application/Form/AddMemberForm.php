@@ -17,41 +17,51 @@ class AddMemberForm extends Form {
         
         $this->add(array(
             'name' => 'name',
+            'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'type' => 'text',
-                'value' => 'Name',
                 'id' => 'name',
-                'onClick' => 'if(this.value=="Name")this.value = ""',
-                'onBlur' => 'if(this.value=="")this.value="Name"',
+                'placeholder' => 'Name',
+                'required' => 'required',
+                'class' => 'form-control',
             ),
         ));
 
         $this->add(array(
             'name' => 'prename',
+            'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'type' => 'text',
-                'value' => 'Prename',
                 'id' => 'prename',
-                'onClick' => 'if(this.value=="Prename")this.value = ""',
-                'onBlur' => 'if(this.value=="")this.value="Prename"',
+                'placeholder' => 'Prename',
+                'required' => 'required',
+                'class' => 'form-control',
             ),
         ));
 
         $this->add(array(
             'name' => 'responsabilities',
-            'attributes' => array(
-                'type' => 'textarea',
-                'value' => 'Responsabilities',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array( 
+                'required' => 'required',
                 'id' => 'responsabilities',
-                'onClick' => 'if(this.value=="Responsabilities")this.value = ""',
-                'onBlur' => 'if(this.value=="")this.value="Responsabilities"',
+                'placeholder' => 'Responsabilities',
+                'class' => 'form-control',
+            ),
+        ));
+        
+        
+        $this->add(array(
+            'name' => 'postButton',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'value' => 'Save',
+                'class' => 'btn btn-sm',
             ),
         ));
 
         $this->add(array(
             'name' => 'append',
+            'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'type' => 'submit',
                 'value' => 'Append',
                 'id' => 'addButton',
             ),
