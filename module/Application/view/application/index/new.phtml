@@ -1,4 +1,10 @@
-<?php echo $this->partial('partial/menu', $menuParams);?>
+<?php
+    echo $this->partial('partial/menu', $menuParams);
+    
+    $backgroundImgPath = $newForm->get('backgroundImgPath');
+    $flyerImgPath = $newForm->get('flyerImgPath');
+
+?>
 
 
 <div>
@@ -6,13 +12,44 @@
     $newForm->setAttribute('action', $this->url('index', array('action' => 'new', 'year'=>$menuParams['currentYear'])));
     $newForm->prepare();
     echo $this->form()->openTag($newForm);
-    ?>
-    <h2>Neues Jahr</h2>
-    <?php echo $this->formRow($newForm->get('year'));?><br /><br />
-    <h2>Hintergrund Bild</h2>
-    <?php echo $this->formRow($newForm->get('backgroundImgPath'));?><br /><br />
-    <h2>Flyer</h2>
-    <?php echo $this->formRow($newForm->get('flyerImgPath'));?><br /><br/>
+    ?>    
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Neues Jahr</h2>
+            <?php echo $this->formRow($newForm->get('year'));?><br /><br />
+        </div>
+        <div class="col-md-4">
+            <h2>Hintergrund</h2>
+            <div class="fileinput fileinput-new" data-provides="fileinput">
+                <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; min-height: 100px;">
+                </div>
+                <div>
+                    <?php echo $this->formElementErrors($backgroundImgPath); ?>
+                    <span class="btn btn-default btn-file">
+                        <span class="fileinput-new">Laden</span>
+                        <span class="fileinput-exists">Laden</span>
+                        <?php echo $this->formFile($backgroundImgPath); ?>
+                    </span>
+                </div> 
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h2>Flyer</h2>
+            <div class="fileinput fileinput-new" data-provides="fileinput">
+                <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; min-height: 100px;">
+                </div>
+                <div>
+                    <?php echo $this->formElementErrors($flyerImgPath); ?>
+                    <span class="btn btn-default btn-file">
+                        <span class="fileinput-new">Laden</span>
+                        <span class="fileinput-exists">Laden</span>
+                        <?php echo $this->formFile($flyerImgPath); ?>
+                    </span>
+                </div> 
+            </div>
+        </div>
+    </div>
+    
     <?php echo $this->formSubmit($newForm->get('savebutton')); ?><br />
     
     <?php echo $this->form()->closeTag();?>
