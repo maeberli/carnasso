@@ -13,6 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @author marco.aeberli
  */
 class StaticPageInfo {
+    
+    const ABOUTUS_ID = 1;
+    const JOINUS_ID = 2;
 
     /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue * */
     protected $id;
