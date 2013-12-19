@@ -28,6 +28,7 @@ class AddEventForm extends Form {
             'attributes' => array(
                 'value' => '01', //set selected to '0'
                 'id' => 'days',
+                'class' => 'form-control',
             )
         ));
         
@@ -43,6 +44,7 @@ class AddEventForm extends Form {
             'attributes' => array(
                 'value' => '01',
                 'id' => 'month',
+                'class' => 'form-control',
             )
         ));
         
@@ -63,6 +65,7 @@ class AddEventForm extends Form {
             'attributes' => array(
                 'value' => '00:00:00',
                 'id' => 'start_time',
+                'class' => 'form-control',
             )
         ));
         
@@ -75,6 +78,7 @@ class AddEventForm extends Form {
             'attributes' => array(
                 'value' => '00:00:00',
                 'id' => 'stop_time',
+                'class' => 'form-control',
             )
         ));
 
@@ -85,6 +89,7 @@ class AddEventForm extends Form {
                 'value' => '',
                 'id' => 'title',
                 'placeholder' => 'Title',
+                'class' => 'form-control',
             ),
         ));
 
@@ -95,6 +100,7 @@ class AddEventForm extends Form {
                 'value' => '',
                 'id' => 'description',
                 'placeholder' => 'Description',
+                'class' => 'form-control',
             ),
         ));
         
