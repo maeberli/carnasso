@@ -8,17 +8,20 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="StaticPageInfo")
+ * @ORM\Table(name="StaticPageInfo", uniqueConstraints={@ORM\UniqueConstraint(name="pagename_unique", columns={"pagename"})})
  *
  * @author marco.aeberli
  */
 class StaticPageInfo {
     
-    const ABOUTUS_ID = 1;
-    const JOINUS_ID = 2;
+    const ABOUTUS_ID = "ABOUT_ASSOCIATION";
+    const JOINUS_ID = "JOINUS";
 
     /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue * */
     protected $id;
+    
+    /** @ORM\Column(type="string") * */
+    protected $pagename;
 
     /** @ORM\Column(type="string") * */
     protected $staticText;
@@ -38,6 +41,20 @@ class StaticPageInfo {
      */
     public function setId($id) {
         $this->id = $id;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getPagename() {
+        return $this->pagename;
+    }
+    
+    /**
+     * @param string $pagename
+     */
+    public function setPagename($pagename) {
+        $this->pagename = $pagename;
     }
     
     /**
