@@ -1,5 +1,28 @@
 <?php
 echo $this->partial('partial/menu', $menuParams);
+$this->headScript()->prependFile($this->basePath() . '/js/tinymce/tinymce.min.js');
+
+function createStaticEditForm($info, $title)
+{
+    echo '<div class="col-md-12">';
+    echo '    <div class="event rounded opacity2 staticinfo_view" data-id="'.$info->getId().'">';
+    echo '        <h2>'.$title.'</h2>';
+    echo '        <div class="staticinfo_view_div" data-id="'.$info->getId().'">';
+    echo $info->getStaticText();
+    echo '        </div>';
+    echo '        <button class="btn btn-sm edit_staticinfo" data-id="'.$info->getId().'">Bearbeiten</button>';
+    echo '    </div>';
+    echo '    <div class="event rounded opacity2 staticinfo_edit" style="display: none;" data-id="'.$info->getId().'">';
+    echo '        <h2>'.$title.'</h2>';
+    echo '        <textarea class="staticinfo_textarea" data-id="'.$info->getId().'">';
+    echo  $info->getStaticText();
+    echo '        </textarea>';
+    echo '        <button class="btn btn-sm cancel_staticinfo" data-id="'.$info->getId().'" >Abbrechen</button>';
+    echo '        <button class="btn btn-sm save_staticinfo" data-id="'.$info->getId().'" >Speichern</button>';
+    echo '    </div>';
+    echo '</div>';
+}
+
 
 echo '<div id="posting_errors"></div>';
 
@@ -20,6 +43,11 @@ echo '<div id="posting_errors"></div>';
 ?>
 <?php echo $this->partial('application/association/partial/member_form.phtml', array('addForm' => $addForm,
                                                                         'editMode' => false)); ?>
+</div>
+
+<div class="row">
+    <?php echo createStaticEditForm($association, 'Vereinsgeschichte'); ?>
+    <?php echo createStaticEditForm($joinus, 'Mitglied werden'); ?>
 </div>
 
 <script type="text/javascript">
@@ -118,4 +146,63 @@ echo '<div id="posting_errors"></div>';
             });
         }
     });
+    
+
+    
+    $(document).delegate('.edit_staticinfo', 'click', function() {
+        var id = $(this).attr('data-id');
+        
+        $('.staticinfo_view[data-id=' + id + ']').slideUp('hide', function(){
+            $('.staticinfo_edit[data-id=' + id + ']').slideDown();
+        });
+        
+        $('.staticinfo_textarea[data-id=' + id + ']').attr('name', 'currentmce'+id);
+        tinymce.init({
+            selector: '.staticinfo_textarea[data-id=' + id + ']',
+            theme: "modern",
+            add_unload_trigger: false,
+            schema: "html5",
+            inline: false,
+            statusbar: true,
+            menubar: false,
+        });
+    });
+    
+    $(document).delegate('.cancel_staticinfo', 'click', function() {
+        var id = $(this).attr('data-id');
+        $('.staticinfo_edit[data-id=' + id + ']').slideUp('hide', function(){
+            $('.staticinfo_view[data-id=' + id + ']').slideDown();
+        });
+    });
+    
+    
+    $(document).delegate('.save_staticinfo', 'click', function() {
+        var id = $(this).attr('data-id');
+        var ed = tinyMCE.get('currentmce'+id);
+        
+        var newStaticInfo = ed.getContent();
+        
+        $.ajax({
+            url: '<?php echo $this->url('association', array('action' => 'updateStaticPageInfo'));?>',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                'staticPageInfo': newStaticInfo,
+                'id': id
+            },
+            success: function(json) {
+                $('.staticinfo_view_div[data-id=' + id + ']').html(newStaticInfo);
+                $('.staticinfo_textarea[data-id=' + id + ']').html(newStaticInfo);
+            },
+            error: function( jqXHR, textStatus, errorThrown ) {
+                alert('Save process not succesfull' );
+            },
+        });
+    
+        $('.staticinfo_edit[data-id=' + id + ']').slideUp('hide', function(){
+            $('.staticinfo_view[data-id=' + id + ']').slideDown();
+        });
+        
+    });
+    
     </script>
