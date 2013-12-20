@@ -46,6 +46,12 @@ class Entity extends AbstractPlugin {
         $em = $this->getEntityManager();
         return $em->getRepository('Application\Model\Entity\User');
     }
+
+    public function getStaticPageInfoRepository()
+    {
+        $em = $this->getEntityManager();
+        return $em->getRepository('Application\Model\Entity\StaticPageInfo');
+    }
 }
 
 ?>

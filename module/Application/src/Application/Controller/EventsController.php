@@ -10,11 +10,10 @@
 
 namespace Application\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Model\Entity\Event;
 use Application\Form\AddEventForm;
-use Zend\Form\Element;
+use Application\Form\EventFilter;
 
 class EventsController extends AbstractCarnassoController {
 
@@ -45,7 +44,7 @@ class EventsController extends AbstractCarnassoController {
         // Setting view
         return new ViewModel(array(
             'menuParams' => $this->getMenuParameters(),
-            'eventList' => $currentCarnivalYear->getEvents(),
+            'carnivalYear' => $currentCarnivalYear,
             'addForm' => $addForm,
             'base_url' => preg_replace('#manage.*#', '', $this->getRequest()->getUri()),
         ));
@@ -58,21 +57,31 @@ class EventsController extends AbstractCarnassoController {
         }
         
         $request = $this->getRequest();
+        $form = new AddEventForm();
+        
         // Creating new Event entity
         $event = new Event;
         $this->setEventWithRequest($event, $request);
-        
         $event->setCarnivalYear($this->getCurrentCarnivalYear());
         
-        // Inserting event to database
-        $this->entity()->getEntityManager()->persist($event);
-        $this->entity()->getEntityManager()->flush();
-        
-        // Setting view and return partial view to be added in manage
-        $this->layout('layout/empty');
-        return new ViewModel(array(
-            'event' => $event,
-        ));
+        if ($request->isPost())
+        {
+            $form->setInputFilter(new EventFilter());
+            $form->setData($request->getPost());
+            
+            if ($form->isValid())
+            {
+                // Inserting event to database
+                $this->entity()->getEntityManager()->persist($event);
+                $this->entity()->getEntityManager()->flush();
+            }
+                
+            // Setting view and return partial view to be added in manage
+            $this->layout('layout/empty');
+            return new ViewModel(array(
+                'event' => $event,
+            ));
+        }
     }
     
     public function geteditformAction() {
