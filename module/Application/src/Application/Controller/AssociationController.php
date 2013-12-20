@@ -29,7 +29,7 @@ class AssociationController extends AbstractCarnassoController
         // Setting view
         return new ViewModel(array(
             'menuParams' => $this->getMenuParameters(),
-            'organisatorList' => $currentCarnivalYear->getOrganisators(),
+			'carnivalYear' => $currentCarnivalYear,
 			'imagePath' => $this->getBasePath().self::MEMBERIMGPATH,
         ));
     }
@@ -51,7 +51,7 @@ class AssociationController extends AbstractCarnassoController
         // Setting view
         return new ViewModel(array(
             'menuParams' => $this->getMenuParameters(),
-            'organisatorList' => $currentCarnivalYear->getOrganisators(),
+			'carnivalYear' => $currentCarnivalYear,
 			'imagePath' => $this->getBasePath().self::MEMBERIMGPATH,
             'addForm' => $addForm,
             'base_url' => preg_replace('#manage.*#', '', $this->getRequest()->getUri()),
@@ -80,6 +80,7 @@ class AssociationController extends AbstractCarnassoController
         $this->layout('layout/empty');
         return new ViewModel(array(
             'organisator' => $organisator,
+			'imagePath' => $this->getBasePath().self::MEMBERIMGPATH,
         ));
     }
 	
@@ -111,8 +112,9 @@ class AssociationController extends AbstractCarnassoController
         // Setting view and return partial view to be added in manage
         $this->layout('layout/empty');
         return new ViewModel(array(
-            'organisator' => $organisator,
+			'organisator' => $organisator,
             'addForm' => $addForm,
+			'imagePath' => $this->getBasePath().self::MEMBERIMGPATH,
         ));
     }
 
@@ -144,7 +146,8 @@ class AssociationController extends AbstractCarnassoController
         // Setting view and return partial view to be added in manage
         $this->layout('layout/empty');
         return new ViewModel(array(
-            'organisator' => $organisator,
+			'organisator' => $organisator,
+			'imagePath' => $this->getBasePath().self::MEMBERIMGPATH,
         ));
     }
 
@@ -172,13 +175,20 @@ class AssociationController extends AbstractCarnassoController
 	
     public function setOrganisatorWithRequest($member, $organisator, $request)
     {
-        //$member->setImagePath($request->getPost('imagePath'));
-        $member->setImagePath('path');
+		/*
+		TODO : MAE will finish it
+		$memberImgPath = $this->uploadFile($request->getPost('imagePath'));
+        $member->setImagePath($memberImgPath);
+		if($memberImgPath == null)
+			*/
+			
+		$member->setImagePath('default.png');
+		
         $member->setPrename($request->getPost('prename'));
         $member->setName($request->getPost('name'));
 		
-	$organisator->setMember($member);
-	$organisator->setCarnivalYear($this->getCurrentCarnivalYear());
-	$organisator->setResponsabilities($request->getPost('responsabilities'));
+		$organisator->setMember($member);
+		$organisator->setCarnivalYear($this->getCurrentCarnivalYear());
+		$organisator->setResponsabilities($request->getPost('responsabilities'));
     }
 }

@@ -6,7 +6,7 @@ echo $this->partial('partial/menu', $menuParams);
 <div class="row">
 <?php
 // Receiving event list and parsing
-foreach($organisatorList as $organisator)
+foreach($carnivalYear->getOrganisators() as $organisator)
 {
     $member = $organisator->getMember();
     echo($this->partial(

@@ -6,7 +6,7 @@ echo '<div id="posting_errors"></div>';
 // Receiving member list and parsing
 ?>
 <div class="row" id="allMembers">
-<?php foreach($organisatorList as $organisator)
+<?php foreach($carnivalYear->getOrganisators() as $organisator)
 {
     $member = $organisator->getMember();
     echo $this->partial('application/association/partial/member.phtml', array(
@@ -38,7 +38,7 @@ echo '<div id="posting_errors"></div>';
             show_fill_error();
         }else{
             $.ajax({
-                url: '<?php echo $base_url;?>add',
+                url: '<?php echo $base_url;?>add/<?php echo $carnivalYear->getYear(); ?>',
                 type: 'POST',
                 dataType: 'html',
                 data: {
@@ -63,7 +63,7 @@ echo '<div id="posting_errors"></div>';
                 dataType: 'html',
                 data: {},
                 success: function(html) {
-                    document.getElementById('allMembers').innerHTML = document.getElementById('allMembers').innerHTML.replace(document.getElementById('member-'+id).innerHTML,html);
+                   document.getElementById('member-'+id).innerHTML = html;
                 }
             });
         
@@ -92,7 +92,7 @@ echo '<div id="posting_errors"></div>';
                     responsabilities: responsabilities,
                 },
                 success: function(html) {
-                    document.getElementById('allMembers').innerHTML = document.getElementById('allMembers').innerHTML.replace(document.getElementById('member-'+id).innerHTML,html);
+                   document.getElementById('member-'+id).innerHTML = html;
                 }
             });
         }

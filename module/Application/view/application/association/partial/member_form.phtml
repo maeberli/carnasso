@@ -13,7 +13,8 @@
     <div class="event rounded opacity2">
         <div class="row" >
             <div class="image col-md-3">
-                Photo : <input type="file" name="uploaded_file" /> 
+				<?php echo $this->formFile($addForm->get('imagePath'));?>
+                
             </div>
             <div class="col-md-9">
                 <h3><?php echo $this->formText($addForm->get('name')); ?><?php echo $this->formText($addForm->get('prename')); ?></h3>
