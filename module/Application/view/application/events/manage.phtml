@@ -3,7 +3,7 @@ echo $this->partial('partial/menu', $menuParams);
 echo '<div id="posting_errors"></div>';
 // Receiving event list and parsing
 echo '<div class="eventsContainer" id="allEvents">';
-foreach($eventList as $event)
+foreach($carnivalYear->getEvents() as $event)
 {
     echo $this->partial('application/events/partial/event.phtml', array(
         'date' => $event->getDate(),
@@ -35,7 +35,7 @@ echo $this->partial('application/events/partial/event_form.phtml', array('addFor
             show_fill_error();
         }else{
             $.ajax({
-                url: '<?php echo $base_url;?>add',
+                url: '<?php echo $base_url;?>add/<?php echo $carnivalYear->getYear(); ?>',
                 type: 'POST',
                 dataType: 'html',
                 data: {
@@ -66,7 +66,7 @@ echo $this->partial('application/events/partial/event_form.phtml', array('addFor
                 dataType: 'html',
                 data: {},
                 success: function(html) {
-                    document.getElementById('allEvents').innerHTML = document.getElementById('allEvents').innerHTML.replace(document.getElementById('event-'+id).innerHTML,html);
+                    document.getElementById('event-'+id).innerHTML = html;
                 }
             });
         
@@ -98,7 +98,7 @@ echo $this->partial('application/events/partial/event_form.phtml', array('addFor
                     stop_time: stop_time,
                 },
                 success: function(html) {
-                    document.getElementById('allEvents').innerHTML = document.getElementById('allEvents').innerHTML.replace(document.getElementById('event-'+id).innerHTML,html);
+                    document.getElementById('event-'+id).innerHTML = html;
                 }
             });
         }

@@ -1,14 +1,11 @@
 <?php
 namespace Application\Form;
 
-use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
-
-use Application\Model\Entity\Event;
 
 class EventFilter extends InputFilter
 {
-    public function __construct($eventRepository)
+    public function __construct()
     {
         $this->add(array(
             'name'     => 'title',
@@ -45,6 +42,6 @@ class EventFilter extends InputFilter
                     ),
                 ),
             ),
-        ));                
+        )); 
     }
 }
