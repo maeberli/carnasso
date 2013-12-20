@@ -171,15 +171,12 @@ centered{
 }
 
 .date {
-	background: #000000;
-	color: white;
         float: left;
 }
 .time {
-	background: #000000;
-	color: white;
         float: right;
 }
+
 .title{
     margin-top: -10px;
 }
@@ -200,14 +197,16 @@ centered{
 
 .description {
     padding: 0 5px;
+    margin-top: 10px;
 }
 
 .description textarea {
     width:100%;
 }
 
-.blackBackground {
-    background-color: black;
+.date, .time, .colorBackground {
+    background: darkgrey;
+    color:white;
 }
 
 .management-buttons button {
