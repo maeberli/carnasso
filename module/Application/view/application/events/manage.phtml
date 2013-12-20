@@ -48,6 +48,10 @@ echo $this->partial('application/events/partial/event_form.phtml', array('addFor
                 },
                 success: function(html) {
                     document.getElementById('allEvents').innerHTML += html;
+                    // Show effect
+                    $(".event").filter(":eq(-2)").hide();
+                    $(".event").filter(":eq(-2)").slideDown();
+                    
                 }
             });
         }
@@ -107,8 +111,9 @@ echo $this->partial('application/events/partial/event_form.phtml', array('addFor
 
             // Remove from page
             var div = document.getElementById('event-'+id);
-            div.parentNode.removeChild(div);
-
+            $(div).slideUp('hide', function() {
+                div.parentNode.removeChild(div);
+            });
             // TODO Verification
             $.ajax({
                 url: '<?php echo $base_url;?>delete/'+id,
