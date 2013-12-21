@@ -48,8 +48,7 @@ class AssociationController extends AbstractCarnassoController
         }
 		
         // Getting last year
-        $carinvalYearRepository = $this->entity()->getCarnivalYearRepository();
-        $currentCarnivalYear = $carinvalYearRepository->findOneBy(array('year' => $this->getCurrentCarnivalYear()->getYear()), array('year' => 'DESC'));
+        $currentCarnivalYear = $this->getCurrentCarnivalYear();
         
         $staticContent = $this->getStaticContent();
         
