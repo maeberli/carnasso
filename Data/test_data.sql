@@ -8,15 +8,10 @@ INSERT INTO `Event` VALUES (2,'Maskenball','Der winderbare Maskenball.','2013-01
 INSERT INTO `Event` VALUES (3,'Ü30','Die Party für alle über 30 jährigen.','2013-01-30','20:30','03:30','Gemeindesaal Schützenmatt, Hirzel',2);
 INSERT INTO `Event` VALUES (4,'Seniorenfasnacht','Der gemütliche Kaffee- und Kuchen-Nachmittag für die Senioren.','2013-01-29','20:30','03:30','Gemeindesaal Schützenmatt, Hirzel',2);
 
-INSERT INTO `Member` VALUES (1,'Marco','Aeberli','imagePathPhotoAeberli.jpg');
-INSERT INTO `Member` VALUES (2,'Christoph','Girsperger','imagePathPhotoGirspergerC.jpg');
-INSERT INTO `Member` VALUES (3,'Gabi','Girsperger','imagePathPhotoGirspergerG.jpg');
-INSERT INTO `Member` VALUES (4,'Martin','Winkler','imagePathPhotoWinkler.jpg');
-
-INSERT INTO `Organisator` VALUES (1,1,'Hallung',2);
-INSERT INTO `Organisator` VALUES (2,4,'Chef',2);
-INSERT INTO `Organisator` VALUES (3,2,'Bar, Gastronomie',2);
-INSERT INTO `Organisator` VALUES (4,3,'MFA',2);
+INSERT INTO `Member` VALUES (1,'Marco','Aeberli','imagePathPhotoAeberli.jpg','Hallung',2);
+INSERT INTO `Member` VALUES (2,'Christoph','Girsperger','imagePathPhotoGirspergerC.jpg','Chef',2);
+INSERT INTO `Member` VALUES (3,'Gabi','Girsperger','imagePathPhotoGirspergerG.jpg','Bar, Gastronomie',2);
+INSERT INTO `Member` VALUES (4,'Martin','Winkler','imagePathPhotoWinkler.jpg', 'MFA',2);
 
 INSERT INTO `StaticPageInfo` VALUES (1,'JOINUS','Möchtest du Mitglied werden? Melde dich unter mailto:marco.aeberli@rae.ch');
 INSERT INTO `StaticPageInfo` VALUES (2,'ABOUT_ASSOCIATION','Der Verein Fasnacht Hirzel organisiert diverse Fasnachtevents.');

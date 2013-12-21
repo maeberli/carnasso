@@ -26,14 +26,13 @@ class Member {
     /** @ORM\Column(type="string") * */
     protected $imagePath;
     
-    /**
-     * @ORM\OneToMany(targetEntity="Organisator",mappedBy="member")
-     * @var Organisators[]
-     */
-    protected $organisators;
+    /** @ORM\Column(type="string") * */
+    protected $responsabilities;
+    
+    /** @ORM\ManyToOne(targetEntity="CarnivalYear",inversedBy="getMembers") * */
+    protected $carnivalYear;
     
     public function __construct() {
-        $this->organisators = new ArrayCollection();
     }
 
     /**
@@ -95,9 +94,9 @@ class Member {
     /**
      * @return ArrayCollection
      */
-    public function getOrganisators()
+    public function getCarnivalYear()
     {
-        return $this->organisators;
+        return $this->carnivalYear;
     }
 }
 

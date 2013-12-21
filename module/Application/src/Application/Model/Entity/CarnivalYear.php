@@ -28,11 +28,11 @@ class CarnivalYear {
     protected $flyerImgPath;
 
     /**
-     * @ORM\OneToMany(targetEntity="Organisator",mappedBy="carnivalYear", cascade={"remove"})
-     * @var Organisator[]
+     * @ORM\OneToMany(targetEntity="Member",mappedBy="carnivalYear", cascade={"remove"})
+     * @var Member[]
      */
-    protected $organisators;
-    
+    protected $members;
+
     /**
      * @ORM\OneToMany(targetEntity="Event",mappedBy="carnivalYear", cascade={"remove"})
      * @var Event[]
@@ -40,7 +40,7 @@ class CarnivalYear {
     protected $events;
     
     public function __construct() {
-        $this->organisators = new ArrayCollection();
+        $this->members = new ArrayCollection();
         $this->events = new ArrayCollection();
     }
 
@@ -103,8 +103,8 @@ class CarnivalYear {
     /**
      * @return ArrayCollection
      */
-    public function getOrganisators() {
-        return $this->organisators;
+    public function getMembers() {
+        return $this->members;
     }
     
     /**
