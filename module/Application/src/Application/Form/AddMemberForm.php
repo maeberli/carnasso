@@ -15,6 +15,14 @@ class AddMemberForm extends Form {
         $this->setName('add_form');
         $this->setAttribute('method', 'post');
         
+		$this->add(array(
+            'name' => 'imagePath',
+            'attributes' => array(
+                'type'  => 'file',
+                'id' => 'imagePath',
+            ),
+        ));
+		
         $this->add(array(
             'name' => 'name',
             'type' => 'Zend\Form\Element\Text',

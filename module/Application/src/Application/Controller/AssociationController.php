@@ -11,8 +11,10 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\View\Model\JsonModel;
 use Application\Model\Entity\Organisator;
 use Application\Model\Entity\Member;
+use Application\Model\Entity\StaticPageInfo;
 use Application\Form\EditEventButton;
 use Application\Form\DeleteEventButton;
 use Application\Form\AddMemberForm;
@@ -25,12 +27,16 @@ class AssociationController extends AbstractCarnassoController
     {   
         // Getting last year
         $currentCarnivalYear = $this->getCurrentCarnivalYear();
-
+        
+        $staticContent = $this->getStaticContent();
+        
         // Setting view
         return new ViewModel(array(
             'menuParams' => $this->getMenuParameters(),
-            'organisatorList' => $currentCarnivalYear->getOrganisators(),
-			'imagePath' => $this->getBasePath().self::MEMBERIMGPATH,
+			'carnivalYear' => $currentCarnivalYear,
+            'association' => $staticContent[0]->getStaticText(),
+            'joinus' => $staticContent[1]->getStaticText(),
+            'imagePath' => $this->getBasePath().self::MEMBERIMGPATH,
         ));
     }
 	
@@ -45,15 +51,19 @@ class AssociationController extends AbstractCarnassoController
         $carinvalYearRepository = $this->entity()->getCarnivalYearRepository();
         $currentCarnivalYear = $carinvalYearRepository->findOneBy(array('year' => $this->getCurrentCarnivalYear()->getYear()), array('year' => 'DESC'));
         
+        $staticContent = $this->getStaticContent();
+        
         // Management buttons
         $addForm = new AddMemberForm();
 
         // Setting view
         return new ViewModel(array(
             'menuParams' => $this->getMenuParameters(),
-            'organisatorList' => $currentCarnivalYear->getOrganisators(),
+			'carnivalYear' => $currentCarnivalYear,
 			'imagePath' => $this->getBasePath().self::MEMBERIMGPATH,
             'addForm' => $addForm,
+            'association' => $staticContent[0],
+            'joinus' => $staticContent[1],
             'base_url' => preg_replace('#manage.*#', '', $this->getRequest()->getUri()),
        ));
     }
@@ -80,6 +90,7 @@ class AssociationController extends AbstractCarnassoController
         $this->layout('layout/empty');
         return new ViewModel(array(
             'organisator' => $organisator,
+			'imagePath' => $this->getBasePath().self::MEMBERIMGPATH,
         ));
     }
 	
@@ -111,8 +122,9 @@ class AssociationController extends AbstractCarnassoController
         // Setting view and return partial view to be added in manage
         $this->layout('layout/empty');
         return new ViewModel(array(
-            'organisator' => $organisator,
+			'organisator' => $organisator,
             'addForm' => $addForm,
+			'imagePath' => $this->getBasePath().self::MEMBERIMGPATH,
         ));
     }
 
@@ -144,7 +156,8 @@ class AssociationController extends AbstractCarnassoController
         // Setting view and return partial view to be added in manage
         $this->layout('layout/empty');
         return new ViewModel(array(
-            'organisator' => $organisator,
+			'organisator' => $organisator,
+			'imagePath' => $this->getBasePath().self::MEMBERIMGPATH,
         ));
     }
 
@@ -169,16 +182,91 @@ class AssociationController extends AbstractCarnassoController
         $this->entity()->getEntityManager()->remove($organisator);
         $this->entity()->getEntityManager()->flush();
     }
+    
+    public function updateStaticPageInfoAction()
+    {
+        $request = $this->getRequest();
+        $data = $request->getPost();
+        
+        $message = "";
+        if($data['staticPageInfo'] != null && $data['id'] != null)
+        {
+            $text = $data['staticPageInfo'];
+            $id = $data['id'];
+            
+            $staticPageInfoRepository = $this->entity()->getStaticPageInfoRepository();
+            $info = $staticPageInfoRepository->findOneBy(array('id' => $id));
+            
+            if($info != null)
+            {
+                $info->setStaticText($text);
+                
+                
+                $this->entity()->getEntityManager()->persist($info);
+                $this->entity()->getEntityManager()->flush();
+                
+                return new JsonModel(array(
+                    'success' => true,
+                    'message' => '',
+                ));
+            }
+            else
+                $message = "no corresponding element found:";
+        }
+        else
+            $message = "not enough parameters";
+            
+        return new JsonModel(array(
+            'success' => false,
+            'message' => $message,
+        ));
+    }
 	
     public function setOrganisatorWithRequest($member, $organisator, $request)
     {
-        //$member->setImagePath($request->getPost('imagePath'));
-        $member->setImagePath('path');
+		/*
+		TODO : MAE will finish it
+		$memberImgPath = $this->uploadFile($request->getPost('imagePath'));
+        $member->setImagePath($memberImgPath);
+		if($memberImgPath == null)
+			*/
+			
+		$member->setImagePath('default.png');
+		
         $member->setPrename($request->getPost('prename'));
         $member->setName($request->getPost('name'));
 		
-	$organisator->setMember($member);
-	$organisator->setCarnivalYear($this->getCurrentCarnivalYear());
-	$organisator->setResponsabilities($request->getPost('responsabilities'));
+        $organisator->setMember($member);
+        $organisator->setCarnivalYear($this->getCurrentCarnivalYear());
+        $organisator->setResponsabilities($request->getPost('responsabilities'));
+    }
+    
+    
+    private function getStaticContent(){
+        $staticPageInfoRepository = $this->entity()->getStaticPageInfoRepository();
+        $joinus = $staticPageInfoRepository->findOneBy(array('pagename' => StaticPageInfo::JOINUS_ID));
+        $aboutus = $staticPageInfoRepository->findOneBy(array('pagename' => StaticPageInfo::ABOUTUS_ID));
+        
+        if($joinus == null)
+        {
+            $joinus = new StaticPageInfo();
+            $joinus->setStaticText("");
+            $joinus->setPagename(StaticPageInfo::JOINUS_ID);
+            
+            $this->entity()->getEntityManager()->persist($joinus);
+            $this->entity()->getEntityManager()->flush();
+        }
+        
+        if($aboutus == null)
+        {
+            $aboutus = new StaticPageInfo();
+            $aboutus->setStaticText("");
+            $aboutus->setPagename(StaticPageInfo::ABOUTUS_ID);
+            
+            $this->entity()->getEntityManager()->persist($aboutus);
+            $this->entity()->getEntityManager()->flush();
+        }
+        
+        return [$aboutus, $joinus];
     }
 }
