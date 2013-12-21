@@ -90,7 +90,21 @@ class Member {
     public function setImagePath($imagePath) {
         $this->imagePath = $imagePath;
     }
-    
+
+    /**
+     * @return string
+     */
+    public function getResponsabilites() {
+        return $this->responsabilities;
+    }
+
+    /**
+     * @return string $responsabilities
+     */
+    public function setResponsabilities($responsabilities) {
+        $this->responsabilities = $responsabilities;
+    }
+
     /**
      * @return ArrayCollection
      */
