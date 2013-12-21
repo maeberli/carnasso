@@ -54,6 +54,7 @@ class AbstractCarnassoController extends AbstractActionController
             {
                 // set the background image for every page charged.
                 $controller->setBackgroundImage();
+                date_default_timezone_set('Europe/Zurich');
             }
             
             return;
