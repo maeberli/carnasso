@@ -222,45 +222,4 @@ class IndexController extends AbstractCarnassoController
             'deleteForm' => $deleteForm,
         ));
     }
-    
-    private function uploadFile($editForm, $files, $fieldname)
-    {
-        $fileextension = new \Zend\Validator\File\Extension(array('extension'=>array('jpg','jpeg','png')));
-        
-        $adapter = new \Zend\File\Transfer\Adapter\Http(); 
-        $adapter->addValidator($fileextension);
-        
-        if (!$adapter->isValid($files[$fieldname]['name']))
-        {
-            $dataError = $adapter->getMessages();
-            $error = array();
-            foreach($dataError as $key=>$row)
-            {
-                $error[] = $row;
-            }
-            $editForm->setMessages(array($fieldname=>$error ));
-            
-            return null;
-        }
-        else
-        {
-            // get file extension
-            $ext = pathinfo($files[$fieldname]['name'], PATHINFO_EXTENSION);
-            
-            // create file Rename instance to automatically move and rename the file.
-            $filter = new \Zend\Filter\File\Rename(array(
-                "target"    => self::LOCAL_IMGPATH."carnassoImg.".$ext,
-                "randomize" => true,
-            ));
-            
-            $filterResult = $filter->filter($files[$fieldname]);
-            $newFileName = pathinfo($filterResult['tmp_name'], PATHINFO_BASENAME);
-            return $newFileName;
-        }
-    }
-    
-    private function removeImage($image)
-    {
-        unlink(self::LOCAL_IMGPATH.$image);
-    }
 }
