@@ -32,6 +32,9 @@ class CarnivalYearNewForm extends Form
             'options' => array(
                 'value_options' => $this->getYearSelectOptions(),
             ),
+            'attributes' => array(
+                'class' => 'form-control',
+            )
         ));
         
         $this->add(array(
