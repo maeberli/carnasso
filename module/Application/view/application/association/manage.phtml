@@ -63,25 +63,57 @@ echo '<div id="posting_errors"></div>';
         document.getElementById('posting_errors').innerHTML = '<div class="alert alert-danger"><a class="close" data-dismiss="alert">&times;</a>Please fill all fields</div>';
     }
     
-    $(document).delegate('.appendButton', 'click',function() {
-        var id = $(this).attr('data-id');
+    function submitMember(id, url, successAction)
+    {
+        var form = 'form[name="add_form"][data-id="'+id+'"]';
+        var name =             $(form+' input[name="name"]').val();
+        var prename =          $(form+' input[name="prename"]').val();
+        var responsabilities = $(form+' input[name="responsabilities"]').val();
         
-        var filesList = $("#memberPhoto")[0].files[0];  
-        var name = $('input#name').val();
-        var prename = $('input#prename').val();
-        var responsabilities = $('input#responsabilities').val();
-        
-        if(name == '' || prename == '' || filesList == undefined) {
+        if(name == '' || prename == '' ) {
             show_fill_error();
         }else{
-                      
-            var url = '<?php echo $base_url.'add/'.$carnivalYear->getYear(); ?>';
-            
+            $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'html',
+                data: {
+                    name: name,
+                    prename: prename,
+                    responsabilities: responsabilities,
+                },
+                success: function(html, textStatus, jqXHR) {
+                    successAction(html, textStatus, jqXHR);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log('error ' + textStatus + "->" + errorThrown );
+                },
+                complete: function (result, textStatus, jqXHR) {
+                    console.log('complete ' + textStatus + " " + jqXHR );
+                }
+            });
+        }
+        
+    }
+    
+    function submitMemberWithFile(id,url,successAction)
+    {
+        var form = 'form[name="add_form"][data-id="'+id+'"]';
+        
+        var filesList =        $(form+' input[name="memberPhoto"]')[0].files[0];  
+        var name =             $(form+' input[name="name"]').val();
+        var prename =          $(form+' input[name="prename"]').val();
+        var responsabilities = $(form+' input[name="responsabilities"]').val();
+        
+        if(name == '' || prename == '' || filesList == undefined ) {
+            show_fill_error();
+        }else{
+                        
             // initializes the update request handler
-            $('form[name=add_form]').fileupload();
+            $(form).fileupload();
             
             // parametrize the update request handler
-            $('form[name=add_form]').fileupload(
+            $(form).fileupload(
                 'option', {
                     files: filesList,
                     url: url,
@@ -98,11 +130,9 @@ echo '<div id="posting_errors"></div>';
                 });
                 
             // Send the request and define the callback handlers
-            var jqXHR = $('form[name=add_form]').fileupload('send', {files: filesList})
+            var jqXHR = $(form).fileupload('send', {files: filesList})
                 .success(function (result, textStatus, jqXHR) {
-                    console.log('success ' + textStatus + " " + jqXHR )
-                    
-                    $( result ).appendTo($('#allMembers')).slideDown();
+                    successAction(result, textStatus, jqXHR);
                     
                 })
                 .error(function (jqXHR, textStatus, errorThrown) {
@@ -110,52 +140,67 @@ echo '<div id="posting_errors"></div>';
                 })
                 .complete(function (result, textStatus, jqXHR) {
                     console.log('complete ' + textStatus + " " + jqXHR );
-                    $('form[name=add_form]').fileupload('destroy');
+                    $(form).fileupload('destroy');
                 }
             );
         }
+        
+    }
+    
+    $(document).delegate('.appendButton', 'click',function() {
+        var id = $(this).attr('data-id');
+        var url = '<?php echo $base_url.'add/'.$carnivalYear->getYear(); ?>';
+        
+        successAction = function(result, textStatus, jqXHR){
+            console.log('success ' + textStatus + " " + jqXHR );
+            
+            // Hide first to get a cool slide down animation
+            result = $(result);
+            result.hide();
+            $( result ).appendTo($('#allMembers')).slideDown();
+        }
+        
+        submitMemberWithFile(id, url, successAction);
     });
     
     $(document).delegate('.editButton', 'click', function() {
         var id = $(this).attr('data-id');
         
-            $.ajax({
-                url: '<?php echo $base_url;?>geteditform/'+id,
-                type: 'POST',
-                dataType: 'html',
-                data: {},
-                success: function(html) {
-                   document.getElementById('member-'+id).innerHTML = html;
-                }
-            });
+        $.ajax({
+            url: '<?php echo $base_url;?>geteditform/'+id,
+            type: 'POST',
+            dataType: 'html',
+            data: {},
+            success: function(html) {
+                $('.member[data-id='+id+']').replaceWith(html);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(textStatus + " " + errorThrown);
+                alert('Edit error: Please contact the site admin.');
+            }
+        });
         
     });
     
     $(document).delegate('.saveButton', 'click', function() {
         var id = $(this).attr('data-id');
-
-        var imagePath = $('input#imagePath-'+id).val();
-        var name = $('input#name-'+id).val();
-        var prename = $('input#prename-'+id).val();
-        var responsabilities = $('input#responsabilities-'+id).val();
-
-        if(name == '' || prename == '') {
-            show_fill_error();
-        }else{
-            $.ajax({
-                url: '<?php echo $base_url;?>edit/'+id,
-                type: 'POST',
-                dataType: 'html',
-                data: {
-                    imagePath: imagePath,
-                    name: name,
-                    prename: prename,
-                    responsabilities: responsabilities,
-                },
-                success: function(html) {
-                   document.getElementById('member-'+id).innerHTML = html;
-                }
+        var url = '<?php echo $base_url;?>edit/'+id;
+        
+        successAction = function(result, textStatus, jqXHR){
+                console.log('success ' + textStatus + " " + jqXHR );
+                $('.member[data-id='+id+']').slideUp(400, function() {
+                $('.member[data-id='+id+']').replaceWith(result);
+                $('.member[data-id='+id+']').slideDown(400);
             });
+        }
+        
+        if( $('form[name="add_form"][data-id="'+id+'"] input[name="memberPhoto"]')[0].files[0] != undefined )
+        {
+            submitMemberWithFile(id, url, successAction);
+        }
+        else
+        {
+            submitMember(id, url, successAction);
         }
     });
     
@@ -175,7 +220,7 @@ echo '<div id="posting_errors"></div>';
                     // Remove from page
                     var div = $('.member[data-id=' + id + ']');
                     
-                    div.slideUp('hide', function() {
+                    div.slideUp(400, function() {
                         div.remove();
                     });
                 },

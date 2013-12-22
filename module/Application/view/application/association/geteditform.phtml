@@ -1,0 +1,9 @@
+<?php
+    echo $this->partial(
+        'application/association/partial/member_form.phtml',
+        array(
+            'addForm' => $this->addForm,
+            'id' => $this->id,
+            'editMode' => true
+        )
+    );

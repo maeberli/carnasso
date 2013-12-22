@@ -20,7 +20,6 @@ class AddMemberForm extends Form {
             'name' => 'memberPhoto',
             'attributes' => array(
                 'type'  => 'file',
-                'id' => 'memberPhoto',
             ),
             'options' => array(
                 'label' => 'ersetzen',
@@ -31,7 +30,6 @@ class AddMemberForm extends Form {
             'name' => 'name',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'id' => 'name',
                 'placeholder' => 'Name',
                 'required' => 'required',
                 'class' => 'form-control',
@@ -42,7 +40,6 @@ class AddMemberForm extends Form {
             'name' => 'prename',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'id' => 'prename',
                 'placeholder' => 'Prename',
                 'required' => 'required',
                 'class' => 'form-control',
@@ -54,7 +51,6 @@ class AddMemberForm extends Form {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array( 
                 'required' => 'required',
-                'id' => 'responsabilities',
                 'placeholder' => 'Responsabilities',
                 'class' => 'form-control',
             ),

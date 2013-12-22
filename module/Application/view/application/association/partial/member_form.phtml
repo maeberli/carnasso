@@ -8,7 +8,7 @@ $memberPhoto = $addForm->get('memberPhoto');
 ?>
 
 <div class="clearfix"></div>
-<div class="col-md-12">
+<div class="member col-md-12"  data-id="<?php echo $id ?>">
     <?php
     $addForm->setAttribute('data-id', $id);
     $addForm->prepare();

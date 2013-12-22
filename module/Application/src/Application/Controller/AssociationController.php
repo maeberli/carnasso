@@ -77,7 +77,9 @@ class AssociationController extends AbstractCarnassoController
         
         // Creating new Member entity
         $member = new Member();
-        $this->setMemberWithRequest($member, $request);     
+        $this->setMemberWithRequest($member, $request);
+        $member->setCarnivalYear($this->getCurrentCarnivalYear());
+   
         
         // Inserting member to database
         $this->entity()->getEntityManager()->persist($member);
@@ -102,26 +104,18 @@ class AssociationController extends AbstractCarnassoController
         // TODO Control ID
         $member = $memerRepository->findOneBy(array('id' => $this->params()->fromRoute('id', 0)));
         
-        // Member form
         $addForm = new AddMemberForm();
 
-        $addForm->get('imagePath')->setValue($member->getImagePath());
-        $addForm->get('imagePath')->setAttribute('id',$addForm->get('imagePath')->getAttribute('id').'-'.$member->getId());
-        
+        $addForm->get('memberPhoto')->setValue($this->getBasePath().self::PUBLIC_IMGPATH.$member->getImagePath());   
         $addForm->get('prename')->setValue($member->getPrename());
-        $addForm->get('prename')->setAttribute('id',$addForm->get('prename')->getAttribute('id').'-'.$member->getId());
         $addForm->get('name')->setValue($member->getName());
-        $addForm->get('name')->setAttribute('id',$addForm->get('name')->getAttribute('id').'-'.$member->getId());
-        
-        $addForm->get('responsabilities')->setValue($organisator->getResponsabilites());
-        $addForm->get('responsabilities')->setAttribute('id',$addForm->get('responsabilities')->getAttribute('id').'-'.$organisator->getId());
-        
+        $addForm->get('responsabilities')->setValue($member->getResponsabilites());
+                
         // Setting view and return partial view to be added in manage
         $this->layout('layout/empty');
         return new ViewModel(array(
-            'organisator' => $organisator,
-            'addForm' => $addForm,
-            'imagePath' => $this->getBasePath().self::MEMBERIMGPATH,
+            'id' => $member->getId(),
+            'addForm' => $addForm
         ));
     }
 
@@ -133,27 +127,19 @@ class AssociationController extends AbstractCarnassoController
         
         // Getting member
         $memberRepository = $this->entity()->getMemberRepository();
-        // TODO Control ID
         $member = $memberRepository->findOneBy(array('id' => $this->params()->fromRoute('id', 0)));
         
-        // Getting organisator
-        $organisatorRepository = $this->entity()->getOrganisatorRepository();
-        // TODO Control ID
-        $organisator = $organisatorRepository->findOneBy(array('id' => $this->params()->fromRoute('id', 0)));
-        
-        $request = $this->getRequest();
-        
-        $this->setOrganisatorWithRequest($member, $organisator, $request);      
+        $request = $this->getRequest();        
+        $this->setMemberWithRequest($member, $request);     
         
         // Updating member to database
         $this->entity()->getEntityManager()->persist($member);
-        $this->entity()->getEntityManager()->persist($organisator);
         $this->entity()->getEntityManager()->flush();
         
         // Setting view and return partial view to be added in manage
         $this->layout('layout/empty');
         return new ViewModel(array(
-            'organisator' => $organisator,
+            'member' => $member,
             'imagePath' => $this->getBasePath().self::MEMBERIMGPATH,
         ));
     }
@@ -217,12 +203,13 @@ class AssociationController extends AbstractCarnassoController
     
     public function setMemberWithRequest($member, $request)
     {
-        $imagePath = $this->uploadFile(new AddMemberForm(), $request->getFiles(), 'memberPhoto');
-        
-        $member->setImagePath($imagePath);
+        if($request->getFiles()['memberPhoto']['name'] != "")
+        {
+            $imagePath = $this->uploadFile(new AddMemberForm(), $request->getFiles(), 'memberPhoto');
+            $member->setImagePath($imagePath);
+        }
         $member->setPrename($request->getPost('prename'));
         $member->setName($request->getPost('name'));
-        $member->setCarnivalYear($this->getCurrentCarnivalYear());
         $member->setResponsabilities($request->getPost('responsabilities'));
     }
     
