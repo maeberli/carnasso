@@ -3,20 +3,37 @@
 // 
 // Arguments :
 // addForm     Zend Form       AddMemberForm
+
+$memberPhoto = $addForm->get('memberPhoto');
 ?>
 
 <div class="clearfix"></div>
 <div class="col-md-12">
     <?php
+    $addForm->setAttribute('data-id', $id);
     $addForm->prepare();
+    echo $this->form()->openTag($addForm);
     ?>
     <div class="event rounded opacity2">
         <div class="row" >
-            <div class="image col-md-3">
-				<?php echo $this->formFile($addForm->get('imagePath'));?>
+            <div class="image col-md-4">
                 
+                <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 150px; min-height: 100px;">
+                        <img src="<?php echo $memberPhoto->getValue(); ?>" alt="Flyer">
+                    </div>
+                    <div>
+                        <?php echo $this->formElementErrors($memberPhoto); ?>
+                        <span class="btn btn-default btn-file">
+                            <span class="fileinput-new">Laden</span>
+                            <span class="fileinput-exists">Laden</span>
+                            <?php echo $this->formFile($memberPhoto); ?>
+                        </span>
+                    </div> 
+                </div>
+            
             </div>
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <h3><?php echo $this->formText($addForm->get('name')); ?><?php echo $this->formText($addForm->get('prename')); ?></h3>
                 <p><?php echo $this->formText($addForm->get('responsabilities')); ?></p>
             </div>
@@ -24,11 +41,17 @@
         
         <div class="col-md-12">
             <?php
+            $saveButton = $addForm->get('saveButton');
+            $appendButton = $addForm->get('appendButton');
+            $saveButton->setAttribute('data-id', $id);
+            $appendButton->setAttribute('data-id', $id);
+            
             if($editMode)
-                echo $this->formElement($addForm->get('saveButton'));
+                echo $this->formElement($saveButton);
             else
-                echo $this->formElement($addForm->get('postButton'));
+                echo $this->formElement($appendButton);
             ?>
         </div>
     </div>
+    <?php echo $this->form()->closeTag(); ?>
 </div>

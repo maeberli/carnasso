@@ -14,12 +14,16 @@ class AddMemberForm extends Form {
         
         $this->setName('add_form');
         $this->setAttribute('method', 'post');
+        $this->setAttribute('enctype','multipart/form-data');
         
-		$this->add(array(
-            'name' => 'imagePath',
+        $this->add(array(
+            'name' => 'memberPhoto',
             'attributes' => array(
                 'type'  => 'file',
-                'id' => 'imagePath',
+                'id' => 'memberPhoto',
+            ),
+            'options' => array(
+                'label' => 'ersetzen',
             ),
         ));
 		
@@ -58,20 +62,20 @@ class AddMemberForm extends Form {
         
         
         $this->add(array(
-            'name' => 'postButton',
-            'type' => 'Zend\Form\Element\Text',
+            'name' => 'appendButton',
             'attributes' => array(
-                'value' => 'Save',
-                'class' => 'btn btn-sm postButton',
+                'type'  => 'button',
+                'value' => 'Hinzufügen',
+                'class' => 'btn btn-sm appendButton',
             ),
         ));
 
         $this->add(array(
-            'name' => 'append',
-            'type' => 'Zend\Form\Element\Text',
+            'name' => 'saveButton', 
             'attributes' => array(
-                'value' => 'Append',
-                'id' => 'addButton',
+                'type'  => 'button',
+                'value' => 'Speichern',
+                'class' => 'btn btn-sm saveButton',
             ),
         ));
     }

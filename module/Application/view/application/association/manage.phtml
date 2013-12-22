@@ -1,18 +1,24 @@
 <?php
 echo $this->partial('partial/menu', $menuParams);
-$this->headScript()->prependFile($this->basePath() . '/js/tinymce/tinymce.min.js');
+
+// The basic File Upload plugin
+$this->headScript()->prependFile($this->basePath() . '/js/jquery.fileupload.js');
+// The Iframe Transport is required for browsers without support for XHR file uploads
+$this->headScript()->prependFile($this->basePath() . '/js/jquery.iframe-transport.js');
+// The jQuery UI widget factory, can be omitted if jQuery UI is already included
+$this->headScript()->prependFile($this->basePath() . '/js/vendor/jquery.ui.widget.js');
 
 function createStaticEditForm($info, $title)
 {
     echo '<div class="col-md-12">';
-    echo '    <div class="event rounded opacity2 staticinfo_view" data-id="'.$info->getId().'">';
+    echo '    <div class="rounded opacity2 staticinfo_view" data-id="'.$info->getId().'">';
     echo '        <h2>'.$title.'</h2>';
     echo '        <div class="staticinfo_view_div" data-id="'.$info->getId().'">';
     echo $info->getStaticText();
     echo '        </div>';
     echo '        <button class="btn btn-sm edit_staticinfo" data-id="'.$info->getId().'">Bearbeiten</button>';
     echo '    </div>';
-    echo '    <div class="event rounded opacity2 staticinfo_edit" style="display: none;" data-id="'.$info->getId().'">';
+    echo '    <div class="rounded opacity2 staticinfo_edit" style="display: none;" data-id="'.$info->getId().'">';
     echo '        <h2>'.$title.'</h2>';
     echo '        <textarea class="staticinfo_textarea" data-id="'.$info->getId().'">';
     echo  $info->getStaticText();
@@ -40,8 +46,11 @@ echo '<div id="posting_errors"></div>';
         'editMode' => true,));
 }
 ?>
+</div>
+<div class="row">
 <?php echo $this->partial('application/association/partial/member_form.phtml', array('addForm' => $addForm,
-                                                                        'editMode' => false)); ?>
+                                                                        'editMode' => false,
+                                                                        'id' => '-1')); ?>
 </div>
 
 <div class="row">
@@ -54,30 +63,57 @@ echo '<div id="posting_errors"></div>';
         document.getElementById('posting_errors').innerHTML = '<div class="alert alert-danger"><a class="close" data-dismiss="alert">&times;</a>Please fill all fields</div>';
     }
     
-    $(document).delegate('.postButton', 'click',function() {
+    $(document).delegate('.appendButton', 'click',function() {
+        var id = $(this).attr('data-id');
         
-        var imagePath = $('input#imagePath').val();
+        var filesList = $("#memberPhoto")[0].files[0];  
         var name = $('input#name').val();
         var prename = $('input#prename').val();
         var responsabilities = $('input#responsabilities').val();
         
-        if(name == '' || prename == '') {
+        if(name == '' || prename == '' || filesList == undefined) {
             show_fill_error();
         }else{
-            $.ajax({
-                url: '<?php echo $base_url;?>add/<?php echo $carnivalYear->getYear(); ?>',
-                type: 'POST',
-                dataType: 'html',
-                data: {
-                    imagePath: imagePath,
-                    name: name,
-                    prename: prename,
-                    responsabilities: responsabilities,
-                },
-                success: function(html) {
-                    document.getElementById('allMembers').innerHTML += html;
+                      
+            var url = '<?php echo $base_url.'add/'.$carnivalYear->getYear(); ?>';
+            
+            // initializes the update request handler
+            $('form[name=add_form]').fileupload();
+            
+            // parametrize the update request handler
+            $('form[name=add_form]').fileupload(
+                'option', {
+                    files: filesList,
+                    url: url,
+                    formData: {
+                        name: name,
+                        prename: prename,
+                        responsabilities: responsabilities
+                    },
+                    dataType: 'html',
+                    type: 'POST',
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+                
+            // Send the request and define the callback handlers
+            var jqXHR = $('form[name=add_form]').fileupload('send', {files: filesList})
+                .success(function (result, textStatus, jqXHR) {
+                    console.log('success ' + textStatus + " " + jqXHR )
+                    
+                    document.getElementById('allMembers').innerHTML += result;
+                    $(".event").filter(":eq(-2)").hide();
+                    $(".event").filter(":eq(-2)").slideDown();
+                })
+                .error(function (jqXHR, textStatus, errorThrown) {
+                    console.log('error ' + textStatus + "->" + errorThrown );
+                })
+                .complete(function (result, textStatus, jqXHR) {
+                    console.log('complete ' + textStatus + " " + jqXHR );
+                    $('form[name=add_form]').fileupload('destroy');
                 }
-            });
+            );
         }
     });
     
@@ -98,13 +134,12 @@ echo '<div id="posting_errors"></div>';
     
     $(document).delegate('.saveButton', 'click', function() {
         var id = $(this).attr('data-id');
-        
-        
+
         var imagePath = $('input#imagePath-'+id).val();
         var name = $('input#name-'+id).val();
         var prename = $('input#prename-'+id).val();
         var responsabilities = $('input#responsabilities-'+id).val();
-        
+
         if(name == '' || prename == '') {
             show_fill_error();
         }else{

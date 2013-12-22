@@ -22,7 +22,7 @@ use Application\Form\AddMemberForm;
 class AssociationController extends AbstractCarnassoController
 {
     const MEMBERIMGPATH = "/img/carnasso/";
-	
+    
     public function indexAction()
     {   
         // Getting last year
@@ -33,20 +33,20 @@ class AssociationController extends AbstractCarnassoController
         // Setting view
         return new ViewModel(array(
             'menuParams' => $this->getMenuParameters(),
-			'carnivalYear' => $currentCarnivalYear,
+            'carnivalYear' => $currentCarnivalYear,
             'association' => $staticContent[0]->getStaticText(),
             'joinus' => $staticContent[1]->getStaticText(),
             'imagePath' => $this->getBasePath().self::MEMBERIMGPATH,
         ));
     }
-	
-	
+    
+    
     public function manageAction() {
-		// Authentification
+        // Authentification
         if (! $this->auth()->hasIdentity() ){
             return $this->redirect()->toRoute('admin', array('action' => 'login'));
         }
-		
+        
         // Getting last year
         $currentCarnivalYear = $this->getCurrentCarnivalYear();
         
@@ -58,8 +58,8 @@ class AssociationController extends AbstractCarnassoController
         // Setting view
         return new ViewModel(array(
             'menuParams' => $this->getMenuParameters(),
-			'carnivalYear' => $currentCarnivalYear,
-			'imagePath' => $this->getBasePath().self::MEMBERIMGPATH,
+            'carnivalYear' => $currentCarnivalYear,
+            'imagePath' => $this->getBasePath().self::MEMBERIMGPATH,
             'addForm' => $addForm,
             'association' => $staticContent[0],
             'joinus' => $staticContent[1],
@@ -68,31 +68,29 @@ class AssociationController extends AbstractCarnassoController
     }
 
     public function addAction() {
-		// Authentification
+        // Authentification
         if (! $this->auth()->hasIdentity() ){
             return $this->redirect()->toRoute('admin', array('action' => 'login'));
         }
-		
+        
         $request = $this->getRequest();
+        
         // Creating new Member entity
         $member = new Member();
-		$organisator = new Organisator();
-        
-		$this->setOrganisatorWithRequest($member, $organisator, $request);		
+        $this->setMemberWithRequest($member, $request);     
         
         // Inserting member to database
         $this->entity()->getEntityManager()->persist($member);
-        $this->entity()->getEntityManager()->persist($organisator);
         $this->entity()->getEntityManager()->flush();
-		
-		// Setting view and return partial view to be added in manage
+        
+        // Setting view and return partial view to be added in manage
         $this->layout('layout/empty');
         return new ViewModel(array(
-            'organisator' => $organisator,
-			'imagePath' => $this->getBasePath().self::MEMBERIMGPATH,
+            'member' => $member,
+            'imagePath' => $this->getBasePath().self::MEMBERIMGPATH,
         ));
     }
-	
+    
     public function geteditformAction() {
         // Authentification
         if (! $this->auth()->hasIdentity() ){
@@ -107,65 +105,32 @@ class AssociationController extends AbstractCarnassoController
         // Member form
         $addForm = new AddMemberForm();
 
-		$addForm->get('imagePath')->setValue($member->getImagePath());
-		$addForm->get('imagePath')->setAttribute('id',$addForm->get('imagePath')->getAttribute('id').'-'.$member->getId());
-		
-		$addForm->get('prename')->setValue($member->getPrename());
-		$addForm->get('prename')->setAttribute('id',$addForm->get('prename')->getAttribute('id').'-'.$member->getId());
-		$addForm->get('name')->setValue($member->getName());
-		$addForm->get('name')->setAttribute('id',$addForm->get('name')->getAttribute('id').'-'.$member->getId());
-		
-		$addForm->get('responsabilities')->setValue($organisator->getResponsabilites());
-		$addForm->get('responsabilities')->setAttribute('id',$addForm->get('responsabilities')->getAttribute('id').'-'.$organisator->getId());
-		
+        $addForm->get('imagePath')->setValue($member->getImagePath());
+        $addForm->get('imagePath')->setAttribute('id',$addForm->get('imagePath')->getAttribute('id').'-'.$member->getId());
+        
+        $addForm->get('prename')->setValue($member->getPrename());
+        $addForm->get('prename')->setAttribute('id',$addForm->get('prename')->getAttribute('id').'-'.$member->getId());
+        $addForm->get('name')->setValue($member->getName());
+        $addForm->get('name')->setAttribute('id',$addForm->get('name')->getAttribute('id').'-'.$member->getId());
+        
+        $addForm->get('responsabilities')->setValue($organisator->getResponsabilites());
+        $addForm->get('responsabilities')->setAttribute('id',$addForm->get('responsabilities')->getAttribute('id').'-'.$organisator->getId());
+        
         // Setting view and return partial view to be added in manage
         $this->layout('layout/empty');
         return new ViewModel(array(
-			'organisator' => $organisator,
+            'organisator' => $organisator,
             'addForm' => $addForm,
-			'imagePath' => $this->getBasePath().self::MEMBERIMGPATH,
+            'imagePath' => $this->getBasePath().self::MEMBERIMGPATH,
         ));
     }
 
     public function editAction() {
-		// Authentification
+        // Authentification
         if (! $this->auth()->hasIdentity() ){
             return $this->redirect()->toRoute('admin', array('action' => 'login'));
         }
-		
-        // Getting member
-        $memberRepository = $this->entity()->getMemberRepository();
-        // TODO Control ID
-        $member = $memberRepository->findOneBy(array('id' => $this->params()->fromRoute('id', 0)));
         
-        // Getting organisator
-		$organisatorRepository = $this->entity()->getOrganisatorRepository();
-        // TODO Control ID
-        $organisator = $organisatorRepository->findOneBy(array('id' => $this->params()->fromRoute('id', 0)));
-        
-        $request = $this->getRequest();
-		
-		$this->setOrganisatorWithRequest($member, $organisator, $request);		
-        
-        // Updating member to database
-        $this->entity()->getEntityManager()->persist($member);
-        $this->entity()->getEntityManager()->persist($organisator);
-        $this->entity()->getEntityManager()->flush();
-		
-        // Setting view and return partial view to be added in manage
-        $this->layout('layout/empty');
-        return new ViewModel(array(
-			'organisator' => $organisator,
-			'imagePath' => $this->getBasePath().self::MEMBERIMGPATH,
-        ));
-    }
-
-    public function deleteAction() {
-		// Authentification
-        if (! $this->auth()->hasIdentity() ){
-            return $this->redirect()->toRoute('admin', array('action' => 'login'));
-        }
-		
         // Getting member
         $memberRepository = $this->entity()->getMemberRepository();
         // TODO Control ID
@@ -176,7 +141,40 @@ class AssociationController extends AbstractCarnassoController
         // TODO Control ID
         $organisator = $organisatorRepository->findOneBy(array('id' => $this->params()->fromRoute('id', 0)));
         
-		// Delete member from database
+        $request = $this->getRequest();
+        
+        $this->setOrganisatorWithRequest($member, $organisator, $request);      
+        
+        // Updating member to database
+        $this->entity()->getEntityManager()->persist($member);
+        $this->entity()->getEntityManager()->persist($organisator);
+        $this->entity()->getEntityManager()->flush();
+        
+        // Setting view and return partial view to be added in manage
+        $this->layout('layout/empty');
+        return new ViewModel(array(
+            'organisator' => $organisator,
+            'imagePath' => $this->getBasePath().self::MEMBERIMGPATH,
+        ));
+    }
+
+    public function deleteAction() {
+        // Authentification
+        if (! $this->auth()->hasIdentity() ){
+            return $this->redirect()->toRoute('admin', array('action' => 'login'));
+        }
+        
+        // Getting member
+        $memberRepository = $this->entity()->getMemberRepository();
+        // TODO Control ID
+        $member = $memberRepository->findOneBy(array('id' => $this->params()->fromRoute('id', 0)));
+        
+        // Getting organisator
+        $organisatorRepository = $this->entity()->getOrganisatorRepository();
+        // TODO Control ID
+        $organisator = $organisatorRepository->findOneBy(array('id' => $this->params()->fromRoute('id', 0)));
+        
+        // Delete member from database
         $this->entity()->getEntityManager()->remove($member);
         $this->entity()->getEntityManager()->remove($organisator);
         $this->entity()->getEntityManager()->flush();
@@ -220,24 +218,16 @@ class AssociationController extends AbstractCarnassoController
             'message' => $message,
         ));
     }
-	
-    public function setOrganisatorWithRequest($member, $organisator, $request)
+    
+    public function setMemberWithRequest($member, $request)
     {
-		/*
-		TODO : MAE will finish it
-		$memberImgPath = $this->uploadFile($request->getPost('imagePath'));
-        $member->setImagePath($memberImgPath);
-		if($memberImgPath == null)
-			*/
-			
-		$member->setImagePath('default.png');
-		
+        $imagePath = $this->uploadFile(new AddMemberForm(), $request->getFiles(), 'memberPhoto');
+        
+        $member->setImagePath($imagePath);
         $member->setPrename($request->getPost('prename'));
         $member->setName($request->getPost('name'));
-		
-        $organisator->setMember($member);
-        $organisator->setCarnivalYear($this->getCurrentCarnivalYear());
-        $organisator->setResponsabilities($request->getPost('responsabilities'));
+        $member->setCarnivalYear($this->getCurrentCarnivalYear());
+        $member->setResponsabilities($request->getPost('responsabilities'));
     }
     
     

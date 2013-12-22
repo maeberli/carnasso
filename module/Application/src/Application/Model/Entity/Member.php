@@ -112,6 +112,13 @@ class Member {
     {
         return $this->carnivalYear;
     }
+    
+    /**
+     * @param CarnivalYear $carnivalYear
+     */
+    public function setCarnivalYear($carnivalYear) {
+        $this->carnivalYear = $carnivalYear;
+    }
 }
 
 ?>
