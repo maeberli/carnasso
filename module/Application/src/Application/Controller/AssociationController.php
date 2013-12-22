@@ -166,18 +166,14 @@ class AssociationController extends AbstractCarnassoController
         
         // Getting member
         $memberRepository = $this->entity()->getMemberRepository();
-        // TODO Control ID
         $member = $memberRepository->findOneBy(array('id' => $this->params()->fromRoute('id', 0)));
         
-        // Getting organisator
-        $organisatorRepository = $this->entity()->getOrganisatorRepository();
-        // TODO Control ID
-        $organisator = $organisatorRepository->findOneBy(array('id' => $this->params()->fromRoute('id', 0)));
-        
         // Delete member from database
-        $this->entity()->getEntityManager()->remove($member);
-        $this->entity()->getEntityManager()->remove($organisator);
-        $this->entity()->getEntityManager()->flush();
+        if($member != null)
+        {
+            $this->entity()->getEntityManager()->remove($member);
+            $this->entity()->getEntityManager()->flush();
+        }
     }
     
     public function updateStaticPageInfoAction()

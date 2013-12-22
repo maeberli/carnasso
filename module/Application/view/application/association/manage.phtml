@@ -102,9 +102,8 @@ echo '<div id="posting_errors"></div>';
                 .success(function (result, textStatus, jqXHR) {
                     console.log('success ' + textStatus + " " + jqXHR )
                     
-                    document.getElementById('allMembers').innerHTML += result;
-                    $(".event").filter(":eq(-2)").hide();
-                    $(".event").filter(":eq(-2)").slideDown();
+                    $( result ).appendTo($('#allMembers')).slideDown();
+                    
                 })
                 .error(function (jqXHR, textStatus, errorThrown) {
                     console.log('error ' + textStatus + "->" + errorThrown );
@@ -165,17 +164,24 @@ echo '<div id="posting_errors"></div>';
         {
             var id = $(this).attr('data-id');
 
-            // Remove from page
-            var div = document.getElementById('member-'+id);
-            div.parentNode.removeChild(div);
 
-            // TODO Verification
+            
             $.ajax({
                 url: '<?php echo $base_url;?>delete/'+id,
                 type: 'POST',
-                dataType: 'JSON',
+                dataType: 'html',
                 data: {},
                 success: function(json) {
+                    // Remove from page
+                    var div = $('.member[data-id=' + id + ']');
+                    
+                    div.slideUp('hide', function() {
+                        div.remove();
+                    });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus + " " + errorThrown);
+                    alert('Surpression error: Please contact the site admin.');
                 }
             });
         }
