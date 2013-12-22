@@ -8,7 +8,7 @@ echo $this->partial('partial/menu', $menuParams);
 // Receiving event list and parsing
 foreach($carnivalYear->getMembers() as $member)
 {
-    echo($this->partial(
+    echo ($this->partial(
         'application/association/partial/member.phtml',
         array(
             'id' => $member->getId(),
@@ -25,19 +25,19 @@ foreach($carnivalYear->getMembers() as $member)
 
 <div class="row">
     <div class="col-md-12">
-        <div class="event rounded opacity2">
+        <div class="staticInfo rounded opacity2">
             <h2>Vereinsgeschichte</h2>
-            <p>
+            <div>
                 <?php echo( $association ); ?>
-            </p>
+            </div>
         </div>
     </div>
     <div class="col-md-12">
-        <div class="event rounded opacity2">
+        <div class="staticInfo rounded opacity2">
             <h2>Mitglied werden</h2>
-            <p>
+            <div>
                 <?php echo( $joinus ); ?>
-            </p>
+            </div>
         </div>
     </div>
 </div>

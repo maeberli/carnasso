@@ -10,5 +10,6 @@ foreach($eventList as $event)
         'startHour' => $event->getStartTime(),
         'endHour' => $event->getEndTime(),
         'title' => $event->getTitle(),
-        'content' => $event->getDescription()));
+        'content' => $event->getDescription(),
+        'editMode' => false));
 }

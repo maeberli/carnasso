@@ -13,14 +13,14 @@ $this->headScript()->prependFile($this->basePath() . '/js/vendor/jquery.ui.widge
 function createStaticEditForm($info, $title)
 {
     echo '<div class="col-md-12">';
-    echo '    <div class="rounded opacity2 staticinfo_view" data-id="'.$info->getId().'">';
+    echo '    <div class="rounded opacity2 staticinfo_view staticInfo" data-id="'.$info->getId().'">';
     echo '        <h2>'.$title.'</h2>';
     echo '        <div class="staticinfo_view_div" data-id="'.$info->getId().'">';
     echo $info->getStaticText();
     echo '        </div>';
     echo '        <button class="btn btn-sm edit_staticinfo" data-id="'.$info->getId().'">Bearbeiten</button>';
     echo '    </div>';
-    echo '    <div class="rounded opacity2 staticinfo_edit" style="display: none;" data-id="'.$info->getId().'">';
+    echo '    <div class="rounded opacity2 staticinfo_edit staticInfo" style="display: none;" data-id="'.$info->getId().'">';
     echo '        <h2>'.$title.'</h2>';
     echo '        <textarea class="staticinfo_textarea" data-id="'.$info->getId().'">';
     echo  $info->getStaticText();

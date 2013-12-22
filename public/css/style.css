@@ -220,7 +220,7 @@ centered{
 }
 
 /******************
- * Event page
+ * Index page
  ******************/
  
  #flyerImage {
@@ -237,16 +237,22 @@ centered{
  /******************
  * Member page
  ******************/
+.member {
+    margin-bottom: 15px;
+}
+
+.memberInner {
+    padding: 15px;
+}
  
 .memberPhoto {
     width: 90px;
     display: block;
-    margin-left: 0px;
-    margin-top: 5px; 
- } 
-
-.member{
-	margin: 5px 0;
+ }
+ 
+.staticInfo {
+    padding: 15px;
+    margin-bottom: 15px;
 }
 
 /******************
