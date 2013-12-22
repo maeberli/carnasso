@@ -105,7 +105,7 @@ echo $this->partial('application/events/partial/event_form.phtml', array('addFor
     });
     
     $(document).delegate('.deleteButton', 'click', function() {
-        if(confirm("Delete this event ?"))
+        if(confirm("Event wirklich löschen ?"))
         {
             var id = $(this).attr('data-id');
 

@@ -62,7 +62,7 @@ echo '<div id="posting_errors"></div>';
 
 <script type="text/javascript">
     function show_fill_error() {
-        document.getElementById('posting_errors').innerHTML = '<div class="alert alert-danger"><a class="close" data-dismiss="alert">&times;</a>Please fill all fields</div>';
+        document.getElementById('posting_errors').innerHTML = '<div class="alert alert-danger"><a class="close" data-dismiss="alert">Bitte <b>Event Titel</b> und <b>Beschreibung</b> ausfüllen.</div>';
     }
     
     function submitMember(id, url, successAction)
@@ -207,7 +207,7 @@ echo '<div id="posting_errors"></div>';
     });
     
     $(document).delegate('.deleteButton', 'click', function() {
-        if(confirm("Delete this member ?"))
+        if(confirm("Mitglied wirklich löschen ?"))
         {
             var id = $(this).attr('data-id');
 

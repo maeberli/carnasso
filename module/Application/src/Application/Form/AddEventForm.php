@@ -88,7 +88,7 @@ class AddEventForm extends Form {
                 'type' => 'text',
                 'value' => '',
                 'id' => 'title',
-                'placeholder' => 'Title',
+                'placeholder' => 'Event Titel',
                 'class' => 'form-control',
             ),
         ));
@@ -99,7 +99,7 @@ class AddEventForm extends Form {
                 'type' => 'textarea',
                 'value' => '',
                 'id' => 'description',
-                'placeholder' => 'Description',
+                'placeholder' => 'Beschreibung',
                 'class' => 'form-control',
             ),
         ));
@@ -108,7 +108,7 @@ class AddEventForm extends Form {
             'name' => 'postButton',
             'attributes' => array(
                 'type' => 'button',
-                'value' => 'Append',
+                'value' => 'Hinzufügen',
                 'class' => 'btn btn-default insertButton postButton',
             ),
         ));
@@ -117,7 +117,7 @@ class AddEventForm extends Form {
             'name' => 'saveButton',
             'attributes' => array(
                 'type' => 'button',
-                'value' => 'Save',
+                'value' => 'Speichern',
                 'class' => 'btn btn-default insertButton saveButton',
             ),
         ));
