@@ -192,6 +192,7 @@ echo '<div id="posting_errors"></div>';
                 console.log('success ' + textStatus + " " + jqXHR );
                 $('.member[data-id='+id+']').slideUp(400, function() {
                 $('.member[data-id='+id+']').replaceWith(result);
+                $('.member[data-id='+id+']').prev().remove();
                 $('.member[data-id='+id+']').slideDown(400);
             });
         }
