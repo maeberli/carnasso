@@ -1,6 +1,8 @@
 <?php
 echo $this->partial('partial/menu', $menuParams);
 
+$this->headScript()->prependFile($this->basePath() . '/js/tinymce/tinymce.min.js');
+ 
 // The basic File Upload plugin
 $this->headScript()->prependFile($this->basePath() . '/js/jquery.fileupload.js');
 // The Iframe Transport is required for browsers without support for XHR file uploads
